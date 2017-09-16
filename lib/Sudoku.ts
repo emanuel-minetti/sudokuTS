@@ -6,14 +6,14 @@ export class Sudoku {
     static squareIndices: number[] = _.range(81);
     static unitIndices: number[] = _.range(9);
     static rowIndicesArray: number[][] =
-        Sudoku.unitIndices.map(value => _.range(value, value + 9, 1));
+        Sudoku.unitIndices.map(unitIndex => _.range(unitIndex, unitIndex + 9, 1));
     static columnIndicesArray: number[][] =
-        Sudoku.unitIndices.map(value => _.range(value, value + 72, 9));
+        Sudoku.unitIndices.map(unitIndex => _.range(unitIndex, unitIndex + 72, 9));
     static boxIndicesArray: number[][] =
-        Sudoku.unitIndices.map(value => _.union(
-            _.range(value, value + 3, 1),
-            _.range(value + 9, value + 12, 1),
-            _.range(value + 18, value + 21, 1)));
+        Sudoku.unitIndices.map(unitIndex => _.union(
+            _.range(unitIndex, unitIndex + 3, 1),
+            _.range(unitIndex + 9, unitIndex + 12, 1),
+            _.range(unitIndex + 18, unitIndex + 21, 1)));
 
     private squares: Square[];
     private rows: Square[][];
@@ -21,27 +21,25 @@ export class Sudoku {
     private boxes: Square[][];
 
     constructor() {
-        this.squares = Sudoku.squareIndices.map(value => new Square(value));
-        this.rows = Sudoku.unitIndices.map(
-            value => Sudoku.rowIndicesArray[value].map(
-                value2 => this.squares[value2]));
-        this.columns = Sudoku.unitIndices.map(
-            value => Sudoku.columnIndicesArray[value].map(
-                value2 => this.squares[value2]));
-        this.boxes = Sudoku.unitIndices.map(
-            value => Sudoku.boxIndicesArray[value].map(
-                value2 => this.squares[value2]));
+        this.squares = Sudoku.squareIndices.map(squareIndex => new Square(squareIndex));
+        this.rows = Sudoku.unitIndices.map(unitIndex => Sudoku.rowIndicesArray[unitIndex].map(
+            squareIndex => this.squares[squareIndex]));
+        this.columns = Sudoku.unitIndices.map(unitIndex => Sudoku.columnIndicesArray[unitIndex].map(
+            squareIndex => this.squares[squareIndex]));
+        this.boxes = Sudoku.unitIndices.map(unitIndex => Sudoku.boxIndicesArray[unitIndex].map(
+            squareIndex => this.squares[squareIndex]));
 
     }
 
     setValue(index: number, value: number) {
         if (this.squares[index].getValue() !== null) {
-            throw new Error("Square aledy filled!");
+            throw new Error("Square already filled!");
         }
         let peersValues: (number | null)[] =
             this.squares[index].getPeerIndices().map(
                 value2 => this.squares[value2].getValue());
         if (peersValues.indexOf(value) !== -1) {
+            //TODO find offending squareIndex and adjust error message
             throw new Error("Value already filled by peer!");
         }
     }
