@@ -15,6 +15,16 @@ export class Sudoku {
             _.range(unitIndex + 9, unitIndex + 12, 1),
             _.range(unitIndex + 18, unitIndex + 21, 1)));
 
+    static createSudokuByString(sudokuString: string) {
+        let sudoku = new Sudoku();
+        try {
+            sudoku.parseString(sudokuString);
+        } catch (e) {
+            throw e;
+        }
+        return sudoku;
+    }
+
     private squares: Square[];
     private rows: Square[][];
     private columns: Square[][];
@@ -75,5 +85,19 @@ export class Sudoku {
             }
             throw new Error(errorMessage);
         }
+    }
+
+    parseString(sudokuString: string) {
+        let charArray = sudokuString.split('');
+        _.remove(charArray,char => _.indexOf(['1','2','3','4','5','6','7','8','9','*'], char) === -1);
+        if (charArray.length !== 81) {
+            throw new Error('Wrong length of input!');
+        }
+        charArray.forEach((char, index) => {
+            let value = parseInt(char);
+            if (!isNaN(value)) {
+                this.setValue(index, value);
+            }
+        });
     }
 }
