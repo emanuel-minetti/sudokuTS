@@ -10,19 +10,21 @@ export class Square {
     private readonly row: number;
     private readonly column: number;
     private readonly box: number;
-    private readonly peersIndices: number[];
+    private readonly peerIndices: number[];
     private value: number | null;
     private candidates: number[] | null;
+    private name: string;
 
     constructor(index: number) {
         this.index = index;
         this.row = _.findIndex(Sudoku.rowIndicesArray, (a) => _.indexOf(a, index) !== -1);
         this.column = _.findIndex(Sudoku.columnIndicesArray, (a) => _.indexOf(a, index) !== -1);
         this.box = _.findIndex(Sudoku.boxIndicesArray, (a) => _.indexOf(a, index) !== -1);
-        this.peersIndices = _.pull(_.union(Sudoku.rowIndicesArray[this.row],
+        this.peerIndices = _.pull(_.union(Sudoku.rowIndicesArray[this.row],
             Sudoku.columnIndicesArray[this.column], Sudoku.boxIndicesArray[this.box]), index);
         this.value = null;
         this.candidates = _.range(1, 10, 1);
+        this.name = Square.columnNames[this.row] + Square.rowNames[this.column];
     }
 
     getValue(): number | null {
@@ -35,7 +37,7 @@ export class Square {
     }
 
     getPeerIndices(): number[] {
-        return this.peersIndices;
+        return this.peerIndices;
     }
 
     getCandidates(): number[] | null {
@@ -51,7 +53,7 @@ export class Square {
     }
 
     getName() {
-        return Square.columnNames[this.row] + Square.rowNames[this.column];
+        return this.name;
     }
 
     getColumnIndex() {

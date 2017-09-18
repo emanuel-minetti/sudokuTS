@@ -2,7 +2,8 @@ import {Sudoku} from "./lib/Sudoku";
 
 console.log('Hello from sudoko_cli!');
 
-let sudokuString = '300 000 000 \n' +
+let sudokuString =
+    '300 000 000 \n' +
     '970 010 000 \n' +
     '600 583 000 \n' +
     '            \n' +
