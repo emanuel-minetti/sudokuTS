@@ -2,9 +2,9 @@ import {Sudoku} from "./Sudoku";
 import * as _ from "lodash";
 
 export class Square {
-    static rowNames: string[] = ['1','2','3','4','5','6','7','8','9'];
-    static columnNames: string[] = ['A','B','C','D','E','F','G','H','I'];
-    static boxNames: string[] = ['I','II','III','IV','V','VI','VII','VIII','IX'];
+    static rowNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    static columnNames: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+    static boxNames: string[] = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
 
     private readonly index: number;
     private readonly row: number;
@@ -22,7 +22,7 @@ export class Square {
         this.peersIndices = _.pull(_.union(Sudoku.rowIndicesArray[this.row],
             Sudoku.columnIndicesArray[this.column], Sudoku.boxIndicesArray[this.box]), index);
         this.value = null;
-        this.candidates = Sudoku.unitIndices.slice();
+        this.candidates = _.range(1, 10, 1);
     }
 
     getValue(): number | null {
@@ -30,8 +30,8 @@ export class Square {
     }
 
     setValue(value: number): void {
-            this.value = value;
-            this.candidates = null;
+        this.value = value;
+        this.candidates = null;
     }
 
     getPeerIndices(): number[] {

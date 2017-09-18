@@ -1,4 +1,3 @@
-
 import * as _ from "lodash";
 import {Square} from "./Square";
 
@@ -14,17 +13,6 @@ export class Sudoku {
             _.range(unitIndex, unitIndex + 3, 1),
             _.range(unitIndex + 9, unitIndex + 12, 1),
             _.range(unitIndex + 18, unitIndex + 21, 1)));
-
-    static createSudokuByString(sudokuString: string) {
-        let sudoku = new Sudoku();
-        try {
-            sudoku.parseString(sudokuString);
-        } catch (e) {
-            throw e;
-        }
-        return sudoku;
-    }
-
     private squares: Square[];
     private rows: Square[][];
     private columns: Square[][];
@@ -41,6 +29,16 @@ export class Sudoku {
 
     }
 
+    static createSudokuByString(sudokuString: string) {
+        let sudoku = new Sudoku();
+        try {
+            sudoku.parseString(sudokuString);
+        } catch (e) {
+            throw e;
+        }
+        return sudoku;
+    }
+
     setValue(index: number, value: number) {
         let square = this.squares[index];
 
@@ -54,7 +52,7 @@ export class Sudoku {
             square.setValue(value);
             square.getPeerIndices().forEach(peerIndex => {
                 let candidates = this.squares[peerIndex].getCandidates();
-                if(candidates !== null) {
+                if (candidates !== null) {
                     _.pull(candidates, value);
                 }
             });
@@ -65,21 +63,21 @@ export class Sudoku {
             // check rows
             let rowValues = this.rows[square.getRowIndex()].map(squareInRow => squareInRow.getValue());
             let rowValuesIndex = _.indexOf(rowValues, value);
-            if( rowValuesIndex !== -1) {
+            if (rowValuesIndex !== -1) {
                 errorMessage += 'Value: ' + value + ' is already set in row: ' + square.getRowName() +
                     ' by square: ' + this.rows[square.getRowIndex()][rowValuesIndex].getName() + '!\n';
             }
             // check columns
             let columnValues = this.columns[square.getColumnIndex()].map(squareInColumn => squareInColumn.getValue());
             let columnValuesIndex = _.indexOf(columnValues, value);
-            if( columnValuesIndex !== -1) {
+            if (columnValuesIndex !== -1) {
                 errorMessage += 'Value: ' + value + ' is already set in column: ' + square.getColumnName() +
                     ' by square: ' + this.columns[square.getColumnIndex()][columnValuesIndex].getName() + '!\n';
             }
             // check boxes
             let boxValues = this.boxes[square.getBoxIndex()].map(squareInBox => squareInBox.getValue());
             let boxValuesIndex = _.indexOf(boxValues, value);
-            if( boxValuesIndex !== -1) {
+            if (boxValuesIndex !== -1) {
                 errorMessage += 'Value: ' + value + ' is already set in box: ' + square.getBoxName() +
                     ' by square: ' + this.boxes[square.getBoxIndex()][boxValuesIndex].getName() + '!\n';
             }
@@ -89,13 +87,13 @@ export class Sudoku {
 
     parseString(sudokuString: string) {
         let charArray = sudokuString.split('');
-        _.remove(charArray,char => _.indexOf(['1','2','3','4','5','6','7','8','9','*'], char) === -1);
+        _.remove(charArray, char => _.indexOf(['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0'], char) === -1);
         if (charArray.length !== 81) {
             throw new Error('Wrong length of input!');
         }
         charArray.forEach((char, index) => {
             let value = parseInt(char);
-            if (!isNaN(value)) {
+            if (!isNaN(value) && value !== 0) {
                 this.setValue(index, value);
             }
         });
