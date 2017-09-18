@@ -2,6 +2,9 @@ import {Sudoku} from "./Sudoku";
 import * as _ from "lodash";
 
 export class Square {
+    static rowNames: string[] = ['1','2','3','4','5','6','7','8','9'];
+    static columnNames: string[] = ['A','B','C','D','E','F','G','H','I'];
+    static boxNames: string[] = ['I','II','III','IV','V','VI','VII','VIII','IX'];
 
     private readonly index: number;
     private readonly row: number;
@@ -28,9 +31,42 @@ export class Square {
 
     setValue(value: number): void {
             this.value = value;
+            this.candidates = null;
     }
 
     getPeerIndices(): number[] {
         return this.peersIndices;
+    }
+
+    getCandidates(): number[] | null {
+        return this.candidates;
+    }
+
+    getRowIndex() {
+        return this.row;
+    }
+
+    getRowName() {
+        return Square.rowNames[this.row];
+    }
+
+    getName() {
+        return Square.columnNames[this.row] + Square.rowNames[this.column];
+    }
+
+    getColumnIndex() {
+        return this.column;
+    }
+
+    getColumnName() {
+        return Square.columnNames[this.column];
+    }
+
+    getBoxIndex() {
+        return this.box;
+    }
+
+    getBoxName() {
+        return Square.boxNames[this.box];
     }
 }

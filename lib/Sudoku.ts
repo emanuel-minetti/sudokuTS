@@ -32,15 +32,48 @@ export class Sudoku {
     }
 
     setValue(index: number, value: number) {
-        if (this.squares[index].getValue() !== null) {
+        let square = this.squares[index];
+
+        if (square.getCandidates() === null) {
             throw new Error("Square already filled!");
         }
-        let peersValues: (number | null)[] =
-            this.squares[index].getPeerIndices().map(
-                value2 => this.squares[value2].getValue());
-        if (peersValues.indexOf(value) !== -1) {
-            //TODO find offending squareIndex and adjust error message
-            throw new Error("Value already filled by peer!");
+
+        if (_.indexOf(square.getCandidates(), value) !== -1) {
+            // 'value' is 'candidate', so set it and remove it
+            // from 'candidates' of all peers
+            square.setValue(value);
+            square.getPeerIndices().forEach(peerIndex => {
+                let candidates = this.squares[peerIndex].getCandidates();
+                if(candidates !== null) {
+                    _.pull(candidates, value);
+                }
+            });
+        }
+        else {
+            // 'value' isn't candidate, so find offending peers
+            let errorMessage = '';
+            // check rows
+            let rowValues = this.rows[square.getRowIndex()].map(squareInRow => squareInRow.getValue());
+            let rowValuesIndex = _.indexOf(rowValues, value);
+            if( rowValuesIndex !== -1) {
+                errorMessage += 'Value: ' + value + ' is already set in row: ' + square.getRowName() +
+                    ' by square: ' + this.rows[square.getRowIndex()][rowValuesIndex].getName() + '!\n';
+            }
+            // check columns
+            let columnValues = this.columns[square.getColumnIndex()].map(squareInColumn => squareInColumn.getValue());
+            let columnValuesIndex = _.indexOf(columnValues, value);
+            if( columnValuesIndex !== -1) {
+                errorMessage += 'Value: ' + value + ' is already set in column: ' + square.getColumnName() +
+                    ' by square: ' + this.columns[square.getColumnIndex()][columnValuesIndex].getName() + '!\n';
+            }
+            // check boxes
+            let boxValues = this.boxes[square.getBoxIndex()].map(squareInBox => squareInBox.getValue());
+            let boxValuesIndex = _.indexOf(boxValues, value);
+            if( boxValuesIndex !== -1) {
+                errorMessage += 'Value: ' + value + ' is already set in box: ' + square.getBoxName() +
+                    ' by square: ' + this.boxes[square.getBoxIndex()][boxValuesIndex].getName() + '!\n';
+            }
+            throw new Error(errorMessage);
         }
     }
 }
