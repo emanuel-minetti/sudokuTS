@@ -5,14 +5,14 @@ export class Sudoku {
     static squareIndices: number[] = _.range(81);
     static unitIndices: number[] = _.range(9);
     static rowIndicesArray: number[][] =
-        Sudoku.unitIndices.map(unitIndex => _.range(unitIndex, unitIndex + 9, 1));
+        Sudoku.unitIndices.map(unitIndex => _.range(unitIndex * 9, unitIndex * 9 + 9, 1));
     static columnIndicesArray: number[][] =
-        Sudoku.unitIndices.map(unitIndex => _.range(unitIndex, unitIndex + 72, 9));
+        Sudoku.unitIndices.map(unitIndex => _.range(unitIndex, unitIndex + 73, 9));
     static boxIndicesArray: number[][] =
         Sudoku.unitIndices.map(unitIndex => _.union(
-            _.range(unitIndex, unitIndex + 3, 1),
-            _.range(unitIndex + 9, unitIndex + 12, 1),
-            _.range(unitIndex + 18, unitIndex + 21, 1)));
+            _.range(unitIndex * 3, unitIndex * 3 + 3, 1),
+            _.range(unitIndex * 3 + 9, unitIndex * 3 + 12, 1),
+            _.range(unitIndex * 3 + 18, unitIndex * 3 + 21, 1)));
     private squares: Square[];
     private rows: Square[][];
     private columns: Square[][];
