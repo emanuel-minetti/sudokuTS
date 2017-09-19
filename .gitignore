@@ -4,3 +4,4 @@ package-lock.json
 **.js
 **.js.map
 .directory
+!/karma.conf.js
