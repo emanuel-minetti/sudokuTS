@@ -9,10 +9,15 @@ export class Sudoku {
     static columnIndicesArray: number[][] =
         Sudoku.unitIndices.map(unitIndex => _.range(unitIndex, unitIndex + 73, 9));
     static boxIndicesArray: number[][] =
-        Sudoku.unitIndices.map(unitIndex => _.union(
-            _.range(unitIndex * 3, unitIndex * 3 + 3, 1),
-            _.range(unitIndex * 3 + 9, unitIndex * 3 + 12, 1),
-            _.range(unitIndex * 3 + 18, unitIndex * 3 + 21, 1)));
+        Sudoku.unitIndices.map(unitIndex => {
+            let intQuotient = Math.floor(unitIndex / 3);
+            let intRemainder = unitIndex % 3;
+            let baseValue = intRemainder * 3 + intQuotient * 27;
+            return _.union(
+                _.range(baseValue, baseValue + 3, 1),
+                _.range(baseValue + 9, baseValue + 12, 1),
+                _.range(baseValue + 18, baseValue + 21, 1));
+        });
     private squares: Square[];
     private rows: Square[][];
     private columns: Square[][];
