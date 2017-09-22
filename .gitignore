@@ -5,3 +5,4 @@ package-lock.json
 **.js.map
 .directory
 !/karma.conf.js
+/coverage/

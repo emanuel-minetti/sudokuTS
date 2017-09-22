@@ -103,4 +103,8 @@ export class Sudoku {
             }
         });
     }
+
+    getSquares(): Square[] {
+        return this.squares;
+    }
 }
