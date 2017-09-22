@@ -24,7 +24,7 @@ export class Square {
             Sudoku.columnIndicesArray[this.column], Sudoku.boxIndicesArray[this.box]), index);
         this.value = null;
         this.candidates = _.range(1, 10, 1);
-        this.name = Square.columnNames[this.row] + Square.rowNames[this.column];
+        this.name = Square.columnNames[this.column] + Square.rowNames[this.row];
     }
 
     getValue(): number | null {
