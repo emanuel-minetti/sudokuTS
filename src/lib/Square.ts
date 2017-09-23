@@ -1,6 +1,11 @@
 import {Sudoku} from "./Sudoku";
 import * as _ from "lodash";
 
+/**
+ * Represent a square of a {@code Sudoku}.
+ *
+ *
+ */
 export class Square {
     static rowNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
     static columnNames: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
