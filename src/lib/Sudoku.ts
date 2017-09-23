@@ -1,6 +1,13 @@
 import * as _ from "lodash";
 import {Square} from "./Square";
 
+/**
+ * A class that represents a valid state of a sudoku game.
+ *
+ * It provides the units of a sudoku as well as the rows,
+ * columns, boxes and individual squares of a single state
+ * of a sudoku game.
+ */
 export class Sudoku {
     static squareIndices: number[] = _.range(81);
     static unitIndices: number[] = _.range(9);
@@ -34,6 +41,19 @@ export class Sudoku {
 
     }
 
+    /**
+     * Creates a new {@code Sudoku] from a string representing a puzzle.
+     *
+     * It awaits a string containing 81 values of a sudoku puzzle
+     * and arbitrary many other characters, A value may be one of
+     * numbers from one to nine or one of the characters '*' or '0'
+     * to represent a missing value. It returns a new valid instance of
+     * the Sudoku class or an error if the given string doesn't
+     * represent a valid state of a sudoku.
+     *
+     * @param {string} sudokuString the representing string
+     * @returns {Sudoku} the new instance of the Sudoku class.
+     */
     static createSudokuByString(sudokuString: string) {
         let sudoku = new Sudoku();
         try {
@@ -44,6 +64,15 @@ export class Sudoku {
         return sudoku;
     }
 
+    /**
+     * Sets a value of a square or throws an error.
+     *
+     * Sets the given value of the {@code Square} with the given
+     * index.
+     *
+     * @param {number} index
+     * @param {number} value
+     */
     setValue(index: number, value: number) {
         let square = this.squares[index];
 
@@ -90,7 +119,13 @@ export class Sudoku {
         }
     }
 
-    parseString(sudokuString: string) {
+    /**
+     * Parses a string and sets the values of {@code this} or throws an error if
+     * string doesn't represent a valid state of a sudoku.
+     *
+     * @param {string} sudokuString the string to parse
+     */
+    private parseString(sudokuString: string) {
         let charArray = sudokuString.split('');
         _.remove(charArray, char => _.indexOf(['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0'], char) === -1);
         if (charArray.length !== 81) {
