@@ -2,9 +2,15 @@ import {Sudoku} from "./Sudoku";
 import * as _ from "lodash";
 
 /**
- * Represent a square of a {@code Sudoku}.
+ * Represents a square of a {@code Sudoku}.
  *
+ * A {@code Square} is part of a collection of {@code Square}s in
+ * a {@code Sudoku}.
  *
+ * Provides a collection of candidates which are valid values
+ * to fill in this square. It also provides it's units, row, column
+ * and peers as indices of the owning {@code Sudoku}. In addition
+ * it provides a name of the square.
  */
 export class Square {
     static rowNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
