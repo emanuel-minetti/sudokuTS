@@ -1,7 +1,7 @@
 import {Sudoku} from '../../lib/Sudoku';
 
-describe('Sudoku', function () {
-    it('Square names ', function () {
+describe('A Sudoku.ts ', function () {
+    it('should report right square names  for an given index ', function () {
         let sudoku: Sudoku = new Sudoku;
         expect(sudoku.getSquares()[26].getName()).toBe('I3');
     })
