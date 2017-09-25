@@ -142,4 +142,9 @@ export class Sudoku {
     getSquares(): Square[] {
         return this.squares;
     }
+
+    solved(): boolean {
+        //TODO implement
+        return false;
+    }
 }
