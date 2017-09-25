@@ -29,6 +29,7 @@ export class Sudoku {
     private rows: Square[][];
     private columns: Square[][];
     private boxes: Square[][];
+    private numberOfSetSquares: number;
 
     constructor() {
         this.squares = Sudoku.squareIndices.map(squareIndex => new Square(squareIndex));
@@ -38,7 +39,7 @@ export class Sudoku {
             squareIndex => this.squares[squareIndex]));
         this.boxes = Sudoku.unitIndices.map(unitIndex => Sudoku.boxIndicesArray[unitIndex].map(
             squareIndex => this.squares[squareIndex]));
-
+        this.numberOfSetSquares = 0;
     }
 
     /**
@@ -81,8 +82,8 @@ export class Sudoku {
         }
 
         if (_.indexOf(square.getCandidates(), value) !== -1) {
-            // 'value' is 'candidate', so set it and remove it
-            // from 'candidates' of all peers
+            // 'value' is 'candidate', so set it, remove it
+            // from 'candidates' of all peers and increment numberOfSetSquares
             square.setValue(value);
             square.getPeerIndices().forEach(peerIndex => {
                 let candidates = this.squares[peerIndex].getCandidates();
@@ -90,6 +91,7 @@ export class Sudoku {
                     _.pull(candidates, value);
                 }
             });
+            this.numberOfSetSquares++;
         }
         else {
             // 'value' isn't candidate, so find offending peers
@@ -141,5 +143,9 @@ export class Sudoku {
 
     getSquares(): Square[] {
         return this.squares;
+    }
+
+    solved(): boolean {
+        return this.numberOfSetSquares === 81;
     }
 }
