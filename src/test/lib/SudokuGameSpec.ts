@@ -31,7 +31,8 @@ describe('A newly created SudokuGame', () => {
 
     it('should report its current state', () => {
         let sudoku = Sudoku.createSudokuByString(sudokuString);
-        sudokuGame.currentState.getSquares().forEach((square, index) => expect(square).toEqual(sudoku.getSquares()[index]));
+        sudokuGame.currentState.getSquares().forEach((square, index) =>
+            expect(square).toEqual(sudoku.getSquares()[index]));
     });
 
     it('should not report a solution', () => {
