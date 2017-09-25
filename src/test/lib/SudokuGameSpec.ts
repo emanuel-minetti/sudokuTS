@@ -22,25 +22,25 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should report its original state', () => {
-        expect(sudokuGame.originalState).toEqual(Sudoku.createSudokuByString(sudokuString));
+        expect(sudokuGame.getOriginalState()).toEqual(Sudoku.createSudokuByString(sudokuString));
     });
     
     it('report a list of changes', () => {
-        expect(sudokuGame.changes).toEqual([]);
+        expect(sudokuGame.getChanges()).toEqual([]);
     });
 
     it('should report its current state', () => {
         let sudoku = Sudoku.createSudokuByString(sudokuString);
-        sudokuGame.currentState.getSquares().forEach((square, index) =>
+        sudokuGame.getCurrentState().getSquares().forEach((square, index) =>
             expect(square).toEqual(sudoku.getSquares()[index]));
     });
 
     it('should not report a solution', () => {
-        expect(sudokuGame.solvedState).toBeUndefined();
+        expect(sudokuGame.getSolvedState()).toBeUndefined();
     });
 
     it('should not report a rating', () => {
-        expect(sudokuGame.rating).toBeUndefined();
+        expect(sudokuGame.getRating()).toBeUndefined();
     });
 
     it('should not be able to change the state of a game illegally', () => {
@@ -52,7 +52,7 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should report its rating', () => {
-        expect(sudokuGame.rating).toBeUndefined();
+        expect(sudokuGame.getRating()).toBeUndefined();
     });
 
     it('should be able to change the state of a game legally', () => {
@@ -65,7 +65,7 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should report its rating', () => {
-        expect(sudokuGame.rating).toEqual(0.1);
+        expect(sudokuGame.getRating()).toEqual(0.1);
     });
 
     it('should be able to change again the state of a game legally', () => {
@@ -79,6 +79,6 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should report its rating', () => {
-        expect(sudokuGame.rating).toEqual(0.2);
+        expect(sudokuGame.getRating()).toEqual(0.2);
     });
 });

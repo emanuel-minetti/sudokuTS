@@ -15,16 +15,37 @@ class SudokuStateChange {
 }
 
 export class SudokuGame {
-    originalState: Sudoku;
-    changes: SudokuStateChange[];
-    currentState: Sudoku;
-    solvedState?: Sudoku;
-    rating?: number;
+
+    private readonly originalState: Sudoku;
+    private changes: SudokuStateChange[];
+    private currentState: Sudoku;
+    private solvedState?: Sudoku;
+    private rating?: number;
 
     constructor(sudokuString: string) {
         this.originalState = Sudoku.createSudokuByString(sudokuString);
         this.changes = [];
         this.currentState = Object.create(this.originalState);
+    }
+
+    getChanges(): SudokuStateChange[] {
+        return this.changes;
+    }
+
+    getOriginalState(): Sudoku {
+        return this.originalState;
+    }
+
+    getCurrentState() {
+        return this.currentState;
+    }
+
+    getSolvedState() {
+        return this.solvedState;
+    }
+
+    getRating() {
+        return this.rating;
     }
 
     changeState(index: number, value: number, reason?: string, rating?: number): boolean {
