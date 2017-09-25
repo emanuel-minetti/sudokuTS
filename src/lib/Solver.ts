@@ -19,6 +19,10 @@ export class SolverRule {
     getRating() {
         return this.baseRating;
     }
+
+    getName() {
+        return this.name;
+    }
 }
 
 export class Solver {
@@ -44,6 +48,8 @@ export class Solver {
                 if (numberOfMoves !== 0) {
                     let rating = rule.getRating() / numberOfMoves;
                     let move = moves[0];
+                    move.rating = rating;
+                    move.reason = rule.getName() + move.reason;
                     this.game.changeState(move);
                     solved = this.game.isSolved();
                 }
