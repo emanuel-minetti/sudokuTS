@@ -1,7 +1,7 @@
 import {Sudoku} from "./Sudoku";
 import {StringRepresentable} from "lodash";
 
-class SudokuStateChange {
+export class SudokuStateChange {
     index: number;
     value: number;
     reason?: string;
