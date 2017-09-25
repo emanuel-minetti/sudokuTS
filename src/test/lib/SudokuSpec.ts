@@ -76,7 +76,7 @@ describe('The sudoku class', () => {
 
     it('should be able to create a new Sudoku from a correct string', () => {
         sudoku = Sudoku.createSudokuByString(sudokuString);
-        expect(sudoku).not.toBeNull();
+        expect(sudoku).toEqual(jasmine.any(Sudoku));
     });
 
     it('should report correct values for set values', () => {
