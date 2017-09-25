@@ -19,7 +19,7 @@ export class SudokuGame {
     changes: SudokuStateChange[];
     currentState: Sudoku;
     solvedState?: Sudoku;
-    rating: number | undefined;
+    rating?: number;
 
     constructor(sudokuString: string) {
         this.originalState = Sudoku.createSudokuByString(sudokuString);
