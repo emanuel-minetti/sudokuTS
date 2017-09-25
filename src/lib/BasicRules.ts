@@ -1,10 +1,27 @@
 import {SolverRule} from "./Solver";
 import {SudokuStateChange} from "./SudokuGame";
 
-let rules: SolverRule[] = [];
+export class BasicRules {
+    rules: SolverRule[];
 
-rules.push(new SolverRule('last candidate', 0.5, (dryRun => {
-    //TODO rethink architecture
-    //TODO implement
-    return [new SudokuStateChange(1, 2,)];
-})));
+    constructor() {
+        this.rules = [];
+        let rule = new SolverRule('last candidate', 0.5, (sudoku) => {
+            let moves: SudokuStateChange[] = [];
+            let squares = sudoku.getSquares()
+            squares.forEach((square) => {
+                let candidates = square.getCandidates();
+                if (candidates !== null && candidates.length === 1) {
+                    moves.push(new SudokuStateChange(square.getIndex(), candidates[0],
+                        'in square ' + square.getName()));
+                }
+            });
+            return moves;
+        });
+        this.rules.push(rule);
+    }
+
+    getRules(): SolverRule[] {
+        return this.rules;
+    }
+}

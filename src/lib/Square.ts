@@ -82,4 +82,8 @@ export class Square {
     getBoxName() {
         return Square.boxNames[this.box];
     }
+
+    getIndex() {
+        return this.index;
+    }
 }

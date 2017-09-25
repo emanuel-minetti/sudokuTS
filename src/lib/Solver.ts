@@ -1,12 +1,16 @@
+///<reference path="BasicRules.ts"/>
 import {SudokuGame, SudokuStateChange} from "./SudokuGame";
+import {Sudoku} from "./Sudoku";
+import {BasicRules} from "./BasicRules";
+import * as _ from "lodash";
 
-type TRuleFunction = (game: SudokuGame)=> SudokuStateChange[];
+type TRuleFunction = (sudoku: Sudoku)=> SudokuStateChange[];
 export class SolverRule {
-
 
     constructor(private name: string,
                 private baseRating: number,
-                private rule: TRuleFunction) { }
+                private rule: TRuleFunction) {
+    }
 }
 
 export class Solver {
@@ -15,11 +19,12 @@ export class Solver {
     constructor(private game: SudokuGame) {}
 
     addRules() {
-        //TODO implement
+        let basicRules = new BasicRules();
+        this.rules = _.union(this.rules, basicRules.rules)
     }
 
     solve(): boolean {
         //TODO implement
-        return undefined === this.game.getSolvedState();
+        return undefined !== this.game.getSolvedState();
     }
 }

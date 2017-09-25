@@ -148,4 +148,8 @@ export class Sudoku {
     solved(): boolean {
         return this.numberOfSetSquares === 81;
     }
+
+    getRows() {
+    return this.rows;
+    }
 }
