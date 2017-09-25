@@ -42,4 +42,40 @@ describe('A newly created SudokuGame', () => {
     it('should not report a rating', () => {
         expect(sudokuGame.rating).toBeUndefined();
     });
+
+    it('should not be able to change the state of a game illegally', () => {
+        expect(sudokuGame.changeState(60, 8, 'last possibility', 0.1)).toBe(false);
+    });
+
+    it('should report a string containing the made changes', () => {
+        expect(sudokuGame.getChangesString()).toEqual('');
+    });
+
+    it('should report its rating', () => {
+        expect(sudokuGame.rating).toBeUndefined();
+    });
+
+    it('should be able to change the state of a game legally', () => {
+        expect(sudokuGame.changeState(60, 6, 'last possibility', 0.1)).toBe(true);
+    });
+
+    it('should report a string containing the made changes', () => {
+        expect(sudokuGame.getChangesString()).toEqual('last possibility');
+    });
+
+    it('should report its rating', () => {
+        expect(sudokuGame.rating).toEqual(0.1);
+    });
+
+    it('should be able to change again the state of a game legally', () => {
+        expect(sudokuGame.changeState(66, 6, 'last possibility', 0.1)).toBe(true);
+    });
+
+    it('should report a string containing the made changes', () => {
+        expect(sudokuGame.getChangesString()).toEqual('last possibility\nlast possibility');
+    });
+
+    it('should report its rating', () => {
+        expect(sudokuGame.rating).toEqual(0.2);
+    });
 });
