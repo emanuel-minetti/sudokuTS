@@ -24,7 +24,9 @@ export class SolverRule {
 export class Solver {
     private rules: SolverRule[];
 
-    constructor(private game: SudokuGame) {}
+    constructor(private game: SudokuGame) {
+        this.addRules();
+    }
 
     addRules() {
         let basicRules = new BasicRules();

@@ -1,4 +1,5 @@
-import {Sudoku} from "./lib/Sudoku";
+import {SudokuGame} from "./lib/SudokuGame";
+import {Solver} from "./lib/Solver";
 
 console.log('Hello from sudoku_cli!');
 
@@ -14,5 +15,8 @@ let sudokuString =
     '**3 9** **2 \n' +
     '*** *42 5** \n' +
     '*6* *** **7 \n';
-let sudoku: Sudoku = Sudoku.createSudokuByString(sudokuString);
-console.log(sudoku.toString());
+
+let game = new SudokuGame(sudokuString);
+let solver = new Solver(game);
+solver.solve();
+console.log(game.getCurrentState().toString());
