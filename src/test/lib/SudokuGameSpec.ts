@@ -56,11 +56,11 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should be able to change the state of a game legally', () => {
-        expect(sudokuGame.changeState(60, 6, 'last possibility', 0.1)).toBe(true);
+        expect(sudokuGame.changeState(60, 6, 'last possibility rule', 0.1)).toBe(true);
     });
 
     it('should report a string containing the made changes', () => {
-        expect(sudokuGame.getChangesString()).toEqual('last possibility');
+        expect(sudokuGame.getChangesString()).toEqual('Changed Square G7 to value 6 because last possibility rule\n');
     });
 
     it('should report its rating', () => {
@@ -68,11 +68,13 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should be able to change again the state of a game legally', () => {
-        expect(sudokuGame.changeState(66, 6, 'last possibility', 0.1)).toBe(true);
+        expect(sudokuGame.changeState(66, 6, 'last possibility rule', 0.1)).toBe(true);
     });
 
     it('should report a string containing the made changes', () => {
-        expect(sudokuGame.getChangesString()).toEqual('last possibility\nlast possibility');
+        expect(sudokuGame.getChangesString()).toEqual(
+            'Changed Square G7 to value 6 because last possibility rule\n' +
+            'Changed Square D8 to value 6 because last possibility rule\n');
     });
 
     it('should report its rating', () => {

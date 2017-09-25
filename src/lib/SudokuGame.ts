@@ -46,7 +46,13 @@ export class SudokuGame {
 
     getChangesString(): string {
         let stringArray: string[] = [];
-        this.changes.forEach((change) => stringArray.push(change.reason ? change.reason : '\n'));
-        return stringArray.join('\n');
+        this.changes.forEach((change) => {
+            let changeString: string;
+            changeString = 'Changed Square ' + this.currentState.getSquares()[change.index].getName();
+            changeString += ' to value ' + change.value;
+            changeString += change.reason ? ' because ' + change.reason + '\n' : '\n';
+            stringArray.push(changeString)
+        });
+        return stringArray.join('');
     }
 }
