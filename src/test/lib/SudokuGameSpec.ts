@@ -36,7 +36,7 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should not report a solution', () => {
-        expect(sudokuGame.getSolvedState()).toBeUndefined();
+        expect(sudokuGame.getSolvedState()).toBeNull();
     });
 
     it('should not report a rating', () => {
@@ -44,7 +44,7 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should not be able to change the state of a game illegally', () => {
-        expect(sudokuGame.changeState(60, 8, 'last possibility', 0.1)).toBe(false);
+        expect(sudokuGame.doChangeState(60, 8, 'last possibility', 0.1)).toBe(false);
     });
 
     it('should report a string containing the made changes', () => {
@@ -56,7 +56,7 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should be able to change the state of a game legally', () => {
-        expect(sudokuGame.changeState(60, 6, 'last possibility rule in Unit IX', 0.1)).toBe(true);
+        expect(sudokuGame.doChangeState(60, 6, 'last possibility rule in Unit IX', 0.1)).toBe(true);
     });
 
     it('should report a string containing the made changes', () => {
@@ -69,7 +69,7 @@ describe('A newly created SudokuGame', () => {
     });
 
     it('should be able to change again the state of a game legally', () => {
-        expect(sudokuGame.changeState(66, 6, 'last possibility rule in Unit H', 0.1)).toBe(true);
+        expect(sudokuGame.doChangeState(66, 6, 'last possibility rule in Unit H', 0.1)).toBe(true);
     });
 
     it('should report a string containing the made changes', () => {

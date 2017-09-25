@@ -19,13 +19,15 @@ export class SudokuGame {
     private readonly originalState: Sudoku;
     private changes: SudokuStateChange[];
     private currentState: Sudoku;
-    private solvedState?: Sudoku;
+    private solvedState: Sudoku | null;
     private rating?: number;
 
     constructor(sudokuString: string) {
         this.originalState = Sudoku.createSudokuByString(sudokuString);
         this.changes = [];
+        //TODO write copy method for Sudoku
         this.currentState = Object.create(this.originalState);
+        this.solvedState = null;
     }
 
     getChanges(): SudokuStateChange[] {
@@ -48,7 +50,7 @@ export class SudokuGame {
         return this.rating;
     }
 
-    changeState(index: number, value: number, reason?: string, rating?: number): boolean {
+    doChangeState(index: number, value: number, reason?: string, rating?: number): boolean {
         try {
             this.currentState.setValue(index, value);
             this.changes.push(new SudokuStateChange(index, value, reason, rating));
@@ -65,6 +67,10 @@ export class SudokuGame {
         }
     };
 
+    changeState(move: SudokuStateChange): boolean {
+        return this.doChangeState(move.index, move.value, move.reason, move.rating);
+    }
+
     getChangesString(): string {
         let stringArray: string[] = [];
         this.changes.forEach((change) => {
@@ -75,5 +81,9 @@ export class SudokuGame {
             stringArray.push(changeString)
         });
         return stringArray.join('');
+    }
+
+    isSolved(): boolean {
+        return this.solvedState !== null;
     }
 }
