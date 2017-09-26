@@ -25,11 +25,17 @@ export class Sudoku {
                 _.range(baseValue + 9, baseValue + 12, 1),
                 _.range(baseValue + 18, baseValue + 21, 1));
         });
+    static rowNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    static columnNames: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+    static boxNames: string[] = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+    static unitNames = _.concat(Sudoku.rowNames, Sudoku.columnNames, Sudoku.boxNames);
+    static values = _.range(1, 10, 1);
 
     private squares: Square[];
     private rows: Square[][];
     private columns: Square[][];
     private boxes: Square[][];
+    private units: Square[][];
     private numberOfSetSquares: number;
 
     constructor() {
@@ -40,6 +46,7 @@ export class Sudoku {
             squareIndex => this.squares[squareIndex]));
         this.boxes = Sudoku.unitIndices.map(unitIndex => Sudoku.boxIndicesArray[unitIndex].map(
             squareIndex => this.squares[squareIndex]));
+        this.units = _.concat(this.rows, this.columns, this.boxes);
         this.numberOfSetSquares = 0;
     }
 
@@ -169,5 +176,9 @@ export class Sudoku {
 
     getRows() {
     return this.rows;
+    }
+
+    getUnits() {
+        return this.units;
     }
 }

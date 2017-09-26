@@ -13,9 +13,6 @@ import * as _ from "lodash";
  * it provides a name of the square.
  */
 export class Square {
-    static rowNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    static columnNames: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-    static boxNames: string[] = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
 
     private readonly index: number;
     private readonly row: number;
@@ -34,8 +31,8 @@ export class Square {
         this.peerIndices = _.pull(_.union(Sudoku.rowIndicesArray[this.row],
             Sudoku.columnIndicesArray[this.column], Sudoku.boxIndicesArray[this.box]), index);
         this.value = null;
-        this.candidates = _.range(1, 10, 1);
-        this.name = Square.columnNames[this.column] + Square.rowNames[this.row];
+        this.candidates = Sudoku.values.slice();
+        this.name = Sudoku.columnNames[this.column] + Sudoku.rowNames[this.row];
     }
 
     getValue(): number | null {
@@ -60,7 +57,7 @@ export class Square {
     }
 
     getRowName() {
-        return Square.rowNames[this.row];
+        return Sudoku.rowNames[this.row];
     }
 
     getName() {
@@ -72,7 +69,7 @@ export class Square {
     }
 
     getColumnName() {
-        return Square.columnNames[this.column];
+        return Sudoku.columnNames[this.column];
     }
 
     getBoxIndex() {
@@ -80,7 +77,7 @@ export class Square {
     }
 
     getBoxName() {
-        return Square.boxNames[this.box];
+        return Sudoku.boxNames[this.box];
     }
 
     getIndex() {
