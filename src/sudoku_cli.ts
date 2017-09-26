@@ -19,4 +19,6 @@ let sudokuString =
 let game = new SudokuGame(sudokuString);
 let solver = new Solver(game);
 solver.solve();
-console.log(game.getChangesString());
+console.log('Moves:\n' + game.getChangesString());
+console.log('\nRating: ' + game.getRating());
+console.log('\nSolved: ' + game.isSolved());
