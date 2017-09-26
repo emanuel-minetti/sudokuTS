@@ -65,7 +65,7 @@ export class Sudoku {
         return sudoku;
     }
 
-    //TODO create a static copy method for sudoku
+    //TODO Second: create a static copy method for sudoku
     // static copy(orig: Sudoku): Sudoku {
     //
     // }
