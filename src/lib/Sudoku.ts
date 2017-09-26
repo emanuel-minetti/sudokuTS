@@ -25,6 +25,7 @@ export class Sudoku {
                 _.range(baseValue + 9, baseValue + 12, 1),
                 _.range(baseValue + 18, baseValue + 21, 1));
         });
+
     private squares: Square[];
     private rows: Square[][];
     private columns: Square[][];
@@ -65,10 +66,22 @@ export class Sudoku {
         return sudoku;
     }
 
-    //TODO Second: create a static copy method for sudoku
-    // static copy(orig: Sudoku): Sudoku {
-    //
-    // }
+    /**
+     * Creates and returns a copy of the given sudoku.
+     *
+     * @param {Sudoku} original
+     * @returns {Sudoku}
+     */
+    static copy(original: Sudoku): Sudoku {
+        let copy = new Sudoku();
+        Sudoku.squareIndices.forEach((index) => {
+            let value = original.squares[index].getValue();
+            if (value) {
+                copy.setValue(index, value);
+            }
+        })
+        return copy;
+    }
 
     /**
      * Sets a value of a square or throws an error.

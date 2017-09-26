@@ -26,7 +26,7 @@ export class SudokuGame {
         this.originalState = Sudoku.createSudokuByString(sudokuString);
         this.changes = [];
         //TODO Third: use a newly created static copy method for copying sudokus
-        this.currentState = Object.create(this.originalState);
+        this.currentState = Sudoku.copy(this.originalState);
         this.solvedState = null;
     }
 

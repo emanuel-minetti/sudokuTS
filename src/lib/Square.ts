@@ -38,8 +38,6 @@ export class Square {
         this.name = Square.columnNames[this.column] + Square.rowNames[this.row];
     }
 
-    //TODO First: create static copy method
-
     getValue(): number | null {
         return this.value;
     }
