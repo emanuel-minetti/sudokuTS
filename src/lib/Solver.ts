@@ -38,7 +38,6 @@ export class Solver {
     }
 
     solve(): boolean {
-        //TODO implement a better loop
         let solved = false;
         let allTried = false;
         while (!solved && !allTried) {
