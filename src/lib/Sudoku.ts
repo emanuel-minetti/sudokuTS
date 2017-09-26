@@ -66,6 +66,9 @@ export class Sudoku {
     }
 
     //TODO create a static copy method for sudoku
+    // static copy(orig: Sudoku): Sudoku {
+    //
+    // }
 
     /**
      * Sets a value of a square or throws an error.
