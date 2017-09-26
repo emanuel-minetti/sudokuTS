@@ -6,7 +6,7 @@ export class BasicRules {
 
     constructor() {
         this.rules = [];
-        let rule = new SolverRule('last candidate rule ', 0.5, (sudoku) => {
+        let rule = new SolverRule('last candidate rule ', 1, (sudoku) => {
             let moves: SudokuStateChange[] = [];
             let squares = sudoku.getSquares()
             squares.forEach((square) => {

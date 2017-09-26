@@ -25,7 +25,6 @@ export class SudokuGame {
     constructor(sudokuString: string) {
         this.originalState = Sudoku.createSudokuByString(sudokuString);
         this.changes = [];
-        //TODO write copy method for Sudoku
         this.currentState = Object.create(this.originalState);
         this.solvedState = null;
     }
