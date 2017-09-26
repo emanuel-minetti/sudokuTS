@@ -38,24 +38,29 @@ export class Solver {
     }
 
     solve(): boolean {
-        let solved = false;
         let allTried = false;
+        let solved = false;
+        let ruleApplied: boolean;
         while (!solved && !allTried) {
+            ruleApplied = false;
             this.rules.forEach((rule) => {
-                let moves = rule.getRule()(this.game.getCurrentState());
-                let numberOfMoves = moves.length;
-                if (numberOfMoves !== 0) {
-                    let rating = rule.getRating() / numberOfMoves;
-                    let move = moves[0];
-                    move.rating = rating;
-                    move.reason = rule.getName() + move.reason;
-                    this.game.changeState(move);
-                    solved = this.game.isSolved();
-                }
-                else {
-                    allTried = true;
+                if (!ruleApplied) {
+                    let moves = rule.getRule()(this.game.getCurrentState());
+                    let numberOfMoves = moves.length;
+                    if (numberOfMoves !== 0) {
+                        let rating = rule.getRating() / numberOfMoves;
+                        let move = moves[0];
+                        move.rating = rating;
+                        move.reason = rule.getName() + move.reason;
+                        this.game.changeState(move);
+                        solved = this.game.isSolved();
+                        ruleApplied = true;
+                    }
                 }
             })
+            if (!ruleApplied) {
+                allTried = true;
+            }
         }
         return undefined !== this.game.getSolvedState();
     }
