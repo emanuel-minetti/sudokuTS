@@ -77,6 +77,7 @@ export class SudokuGame {
             changeString = 'Changed Square ' + this.currentState.getSquares()[change.index].getName();
             changeString += ' to value ' + change.value;
             changeString += change.reason ? ' because ' + change.reason + '\n' : '\n';
+            changeString += '\tRating: ' + change.rating + '\n';
             stringArray.push(changeString)
         });
         return stringArray.join('');
