@@ -15,6 +15,10 @@ describe('A Square of an empty Sudoku ', () => {
         expect(square.getName()).toBe('I3');
     });
 
+    it ('should report its index', () => {
+        expect(square.getIndex()).toBe(26);
+    });
+
     it('should report a full list of candidates', () => {
         expect(square.getCandidates()).not.toBeNull();
         expect(square.getCandidates()).toEqual(_.range(1,10,1));
@@ -114,4 +118,15 @@ describe('A sudoku', () => {
         expect(() => sudoku.setValue(9, 2)).toThrowError();
         expect(() => sudoku.setValue(2, 2)).toThrowError();
     })
+
+    it ('should report a correct row', () => {
+        expect(sudoku.getRows()[1].map((square) => square.getValue())).
+        toEqual([null, null, 2, 8, 9, null, null, null, null]);
+    });
+
+    it ('should report a correct unit', () => {
+        //unit[22] is unit V
+        expect(sudoku.getUnits()[22].map((square) => square.getValue())).
+        toEqual([null, null, 7, 1, null, 9, 4, null, null]);
+    });
 })
