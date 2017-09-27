@@ -129,4 +129,8 @@ describe('A sudoku', () => {
         expect(sudoku.getUnits()[22].map((square) => square.getValue())).
         toEqual([null, null, 7, 1, null, 9, 4, null, null]);
     });
+
+    it('should give a nicely formatted strin representation', () => {
+        //TODO implement
+    });
 })

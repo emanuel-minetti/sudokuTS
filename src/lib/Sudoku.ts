@@ -91,6 +91,16 @@ export class Sudoku {
     }
 
     /**
+     * Returns a nicely formatted string representation of a sudoku
+     *
+     * @returns {string}
+     */
+    toString():string {
+        //TODO implement
+        return '';
+    }
+
+    /**
      * Sets a value of a square or throws an error.
      *
      * Sets the given value of the {@code Square} with the given
