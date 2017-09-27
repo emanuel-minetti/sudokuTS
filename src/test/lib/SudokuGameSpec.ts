@@ -61,7 +61,7 @@ describe('A newly created SudokuGame', () => {
 
     it('should report a string containing the made changes', () => {
         expect(sudokuGame.getChangesString()).toEqual(
-            'Changed Square G7 to value 6 because last possibility rule in Unit IX\n');
+            'Changed Square G7 to value 6 because last possibility rule in Unit IX\n\tRating: 0.1\n');
     });
 
     it('should report its rating', () => {
@@ -74,8 +74,8 @@ describe('A newly created SudokuGame', () => {
 
     it('should report a string containing the made changes', () => {
         expect(sudokuGame.getChangesString()).toEqual(
-            'Changed Square G7 to value 6 because last possibility rule in Unit IX\n' +
-            'Changed Square D8 to value 6 because last possibility rule in Unit H\n');
+            'Changed Square G7 to value 6 because last possibility rule in Unit IX\n\tRating: 0.1\n' +
+            'Changed Square D8 to value 6 because last possibility rule in Unit H\n\tRating: 0.1\n');
     });
 
     it('should report its rating', () => {
