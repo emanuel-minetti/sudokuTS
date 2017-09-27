@@ -4,7 +4,7 @@ import {Sudoku} from "./Sudoku";
 import {BasicRules} from "./BasicRules";
 import * as _ from "lodash";
 
-type TRuleFunction = (sudoku: Sudoku)=> SudokuStateChange[];
+export type TRuleFunction = (sudoku: Sudoku)=> SudokuStateChange[];
 export class SolverRule {
 
     constructor(private name: string,
@@ -29,12 +29,13 @@ export class Solver {
     private rules: SolverRule[];
 
     constructor(private game: SudokuGame) {
+        this.rules = [];
         this.addRules();
     }
 
     addRules() {
         let basicRules = new BasicRules();
-        this.rules = _.union(this.rules, basicRules.rules)
+        this.rules = _.concat(this.rules, basicRules.rules)
     }
 
     solve(): boolean {
