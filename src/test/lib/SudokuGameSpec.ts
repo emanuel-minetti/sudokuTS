@@ -82,3 +82,26 @@ describe('A newly created SudokuGame', () => {
         expect(sudokuGame.getRating()).toEqual(0.2);
     });
 });
+
+describe('A Game should report when it\'s solved', () => {
+    //TODO create sudoku game with one last square
+   it('should report not to be solved when there is one missing square', () => {
+       //TODO implement
+   }); 
+   
+   it('should report false to an illegal move', () => {
+       //TODO implement
+   });
+
+   it('should report true to a legal last move', () => {
+      //TODO implement
+   });
+
+   it('should report to be solved', () => {
+       //TODO implement
+   });
+
+   it('should report a solved sudoku', () => {
+       //TODO implement
+   });
+});
