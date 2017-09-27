@@ -14,7 +14,7 @@ export class BasicRules {
         rule = new SolverRule('last square free rule ', 0.05, (sudoku) => {
            let moves: SudokuStateChange[] = [];
             let units = sudoku.getUnits();
-            units.forEach((unit) => {
+            units.forEach((unit, unitIndex) => {
                 let count = 0;
                 Sudoku.unitIndices.forEach((index) => {
                     if(unit[index].getValue()) {
@@ -27,8 +27,7 @@ export class BasicRules {
                         let candidates = square.getCandidates();
                         if (candidates) {
                             moves.push(new SudokuStateChange(square.getIndex(),
-                                //TODO see #SuTS-20
-                                candidates[0], 'in unit ' + Sudoku.unitNames[index]));
+                                candidates[0], 'in unit ' + Sudoku.unitNames[unitIndex]));
                         }
                     })
                 }
