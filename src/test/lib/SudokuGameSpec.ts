@@ -84,7 +84,21 @@ describe('A newly created SudokuGame', () => {
 });
 
 describe('A Game should report when it\'s solved', () => {
-    //TODO create sudoku game with one last square
+    let nearlySolvedSudokuString =
+        '935 214 768 \n' +
+        '672 893 154 \n' +
+        '148 765 239 \n' +
+        '            \n' +
+        '421 587 396 \n' +
+        '786 139 425 \n' +
+        '359 426 871 \n' +
+        '            \n' +
+        '513 978 642 \n' +
+        '897 642 513 \n' +
+        '264 351 98* \n';
+
+    let game = new SudokuGame(nearlySolvedSudokuString);
+
    it('should report not to be solved when there is one missing square', () => {
        //TODO implement
    }); 
