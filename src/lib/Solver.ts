@@ -30,10 +30,13 @@ export class Solver {
 
     constructor(private game: SudokuGame) {
         this.rules = [];
-        this.addRules();
     }
 
-    addRules() {
+    addRules(rules: SolverRule[]) {
+        _.concat(this.rules, rules);
+    }
+
+    addStandardRules() {
         let basicRules = new BasicRules();
         this.rules = _.concat(this.rules, basicRules.rules)
     }
