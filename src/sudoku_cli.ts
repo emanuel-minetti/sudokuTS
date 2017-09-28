@@ -22,3 +22,4 @@ solver.solve();
 console.log('Moves:\n' + game.getChangesString());
 console.log('\nRating: ' + game.getRating());
 console.log('\nSolved: ' + game.isSolved());
+console.log('\nSulution: ' + game.getCurrentState().toString());

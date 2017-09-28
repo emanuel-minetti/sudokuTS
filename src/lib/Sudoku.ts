@@ -96,8 +96,26 @@ export class Sudoku {
      * @returns {string}
      */
     toString():string {
-        //TODO implement
-        return '';
+        let resultArray: string[] = [];
+        let values: (number | null)[] = this.squares.map((square) => square.getValue());
+        values.forEach((value, index) => {
+            resultArray.push(value ? value.toString() : '*');
+            let pos = index + 1;
+            if (pos % 3 === 0) {              //end of column block
+                resultArray.push(' ');
+                if (pos % 9 === 0) {          //end of row
+                    if (pos % 27 === 0) {     //end of row block
+                        if (pos !== 81) {
+                            resultArray.push('\n            \n');
+                        }
+                    }
+                    else {
+                        resultArray.push('\n')
+                    }
+                }
+            }
+        });
+        return resultArray.join('');
     }
 
     /**
