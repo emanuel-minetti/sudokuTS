@@ -26,9 +26,11 @@ export class SolverRule {
 }
 
 export class Solver {
+    private game: SudokuGame;
     private rules: SolverRule[];
 
-    constructor(private game: SudokuGame) {
+    constructor(game: SudokuGame) {
+        this.game = game;
         this.rules = [];
     }
 
