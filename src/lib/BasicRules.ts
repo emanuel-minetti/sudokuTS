@@ -20,10 +20,6 @@ export class BasicRules {
         this.rules.push(lcRule);
     }
 
-    getRules(): SolverRule[] {
-        return this.rules;
-    }
-
     static lsfRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
