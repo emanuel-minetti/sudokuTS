@@ -1,4 +1,5 @@
-import {SudokuGame} from "../../lib/SudokuGame";
+///<reference path="../../lib/SudokuGame.ts"/>
+import {SudokuGame, SudokuStateChange} from "../../lib/SudokuGame";
 import {Sudoku} from "../../lib/Sudoku";
 
 describe('A newly created SudokuGame', () => {
@@ -98,24 +99,42 @@ describe('A Game should report when it\'s solved', () => {
         '264 351 98* \n';
 
     let game = new SudokuGame(nearlySolvedSudokuString);
+    let move = new SudokuStateChange(80, 8,'test', 0.1);
 
    it('should report not to be solved when there is one missing square', () => {
-       //TODO implement
+       expect(game.isSolved()).toBe(false);
    }); 
    
    it('should report false to an illegal move', () => {
-       //TODO implement
+       expect(game.changeState(move)).toBe(false);
    });
 
    it('should report true to a legal last move', () => {
-      //TODO implement
+       move.value = 7;
+       expect(game.changeState(move)).toBe(true);
    });
 
    it('should report to be solved', () => {
-       //TODO implement
+       expect(game.isSolved()).toBe(true);
    });
 
    it('should report a solved sudoku', () => {
-       //TODO implement
+       let solvedState = game.getSolvedState();
+       expect(solvedState).not.toBeNull();
+       if (solvedState !== null) {
+           expect(solvedState.toString()).toEqual(
+               '935 214 768 \n' +
+               '672 893 154 \n' +
+               '148 765 239 \n' +
+               '            \n' +
+               '421 587 396 \n' +
+               '786 139 425 \n' +
+               '359 426 871 \n' +
+               '            \n' +
+               '513 978 642 \n' +
+               '897 642 513 \n' +
+               '264 351 987 \n'
+           );
+       }
    });
 });
