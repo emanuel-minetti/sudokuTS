@@ -18,7 +18,6 @@ describe('A newly created Solver', () => {
         let game = new SudokuGame(sudokuString);
         let solver: Solver;
         let rules: SolverRule[];
-        let rule: SolverRule;
 
         it('could be constructed with a sudoku game given', () => {
             solver = new Solver(game);
@@ -26,11 +25,12 @@ describe('A newly created Solver', () => {
         });
 
         it('should be possible to create a new rule', () => {
-            rule = new SolverRule('last candidate rule ', 0.5, BasicRules.lcRuleFn);
+            let rule = new SolverRule('last square free ', 0.5, BasicRules.lsfRuleFn);
             expect(rule).toEqual(jasmine.any(SolverRule));
         });
 
         it('should be able to add one rule', () => {
+            let rule = new SolverRule('last square free ', 0.5, BasicRules.lsfRuleFn);
             solver.addRules([rule]);
         });
 
@@ -38,15 +38,13 @@ describe('A newly created Solver', () => {
             expect(solver.solve()).toBe(false);
         });
 
-        it('should be able to add an array of rules', () => {
+        it( 'should be able to add an array of rules', () => {
             rules = [];
-            rule = new SolverRule('last square left rule ', 1, BasicRules.lslRuleFn);
-            rules.push(rule);
-            rule = new SolverRule('last square free rule ', 1, BasicRules.lsfRuleFn);
-            rules.push(rule);
+            rules.push(new SolverRule('last square left rule ', 1, BasicRules.lslRuleFn));
+            rules.push(new SolverRule('last candidate ', 1, BasicRules.lcRuleFn))
             solver.addRules(rules);
         });
-        
+
         it('should be able to solve the test game with this rules', () => {
             expect(solver.solve()).toBe(true);
         });

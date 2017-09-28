@@ -68,6 +68,6 @@ export class Solver {
                 allTried = true;
             }
         }
-        return undefined !== this.game.getSolvedState();
+        return this.game.isSolved();
     }
 }
