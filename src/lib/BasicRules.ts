@@ -10,6 +10,7 @@ export class BasicRules {
     constructor() {
         this.rules = [];
 
+        //TODO move out of constructor
         let lsfRule: SolverRule = new SolverRule('last square free rule ', 0.5, BasicRules.lsfRuleFn);
         this.rules.push(lsfRule);
 
