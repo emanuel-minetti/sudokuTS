@@ -115,6 +115,7 @@ export class Sudoku {
                 }
             }
         });
+        resultArray.push('\n');
         return resultArray.join('');
     }
 

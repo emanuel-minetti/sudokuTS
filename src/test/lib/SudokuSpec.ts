@@ -108,7 +108,11 @@ describe('A sudoku', () => {
         '*** *42 5** \n' +
         '*6* *** **7 \n';
     let sudoku = Sudoku.createSudokuByString(sudokuString);
-    let square1 = sudoku.getSquares()[0];
+    let squareOne = sudoku.getSquares()[0];
+
+    it('should give a nicely formatted string representation', () => {
+        expect(sudoku.toString()).toEqual(sudokuString);
+    });
 
     it('should not set an already set Value', () => {
         expect(() => sudoku.setValue(0, 1)).toThrowError('Square already filled!');
@@ -130,7 +134,4 @@ describe('A sudoku', () => {
         toEqual([null, null, 7, 1, null, 9, 4, null, null]);
     });
 
-    it('should give a nicely formatted strin representation', () => {
-        //TODO implement
-    });
 })
