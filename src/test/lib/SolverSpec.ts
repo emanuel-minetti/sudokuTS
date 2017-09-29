@@ -47,4 +47,10 @@ describe('A newly created Solver', () => {
         it('should be able to solve the test game with this rules', () => {
             expect(solver.solve()).toBe(true);
         });
+
+        it('should be able to a set of standard rules', () => {
+            solver = new Solver(game);
+            solver.addStandardRules();
+            expect(solver.solve()).toBe(true);
+        });
     });
