@@ -1,10 +1,17 @@
-///<reference path="BasicRules.ts"/>
-import {SudokuGame, SudokuStateChange} from "./SudokuGame";
+import {game, SudokuGame, SudokuStateChange} from './SudokuGame';
+
 import {Sudoku} from "./Sudoku";
 import {BasicRules} from "./BasicRules";
 import * as _ from "lodash";
 
+/**
+ * Type that a solver rule should be followed.
+ */
 export type TRuleFunction = (sudoku: Sudoku)=> SudokuStateChange[];
+
+/**
+ * A class to represent a rule to be applied to a sudoku game.
+ */
 export class SolverRule {
 
     constructor(private name: string,
@@ -25,6 +32,9 @@ export class SolverRule {
     }
 }
 
+/**
+ * This class represents a solver to a given game.
+ */
 export class Solver {
     private game: SudokuGame;
     private rules: SolverRule[];
