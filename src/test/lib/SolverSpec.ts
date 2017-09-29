@@ -17,7 +17,6 @@ describe('A newly created Solver', () => {
         '*6* *** **7 \n';
         let game = new SudokuGame(sudokuString);
         let solver: Solver;
-        let rules: SolverRule[];
 
         it('could be constructed with a sudoku game given', () => {
             solver = new Solver(game);
@@ -39,7 +38,7 @@ describe('A newly created Solver', () => {
         });
 
         it( 'should be able to add an array of rules', () => {
-            rules = [];
+            let rules: SolverRule[] = [];
             rules.push(new SolverRule('last square left rule ', 1, BasicRules.lslRuleFn));
             rules.push(new SolverRule('last candidate ', 1, BasicRules.lcRuleFn))
             solver.addRules(rules);

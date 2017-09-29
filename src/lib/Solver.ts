@@ -35,7 +35,7 @@ export class Solver {
     }
 
     addRules(rules: SolverRule[]) {
-        _.concat(this.rules, rules);
+        this.rules = _.concat(this.rules, rules);
     }
 
     addStandardRules() {
