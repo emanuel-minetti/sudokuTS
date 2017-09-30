@@ -25,7 +25,9 @@ export class SudokuStateChange {
  *
  * A sudoku game is a class which has
  * an original state, which can apply a move, which assures that
- * an applied move is valid and tests whether it's solved.
+ * an applied move is valid and tests whether it's solved. In
+ * addition it provides a history (i.e. an array of {@code SudokuStateChange}
+ * and if solved a solved state.
  */
 export class SudokuGame {
 
@@ -80,7 +82,7 @@ export class SudokuGame {
                 if (move.rating) {
                     this.rating = this.rating ? this.rating += move.rating : move.rating;
                 }
-                if (this.currentState.solved()) {
+                if (this.currentState.isSolved()) {
                     this.solvedState = this.currentState;
                 }
                 return true;

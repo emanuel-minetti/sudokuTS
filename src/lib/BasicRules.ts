@@ -20,6 +20,15 @@ export class BasicRules {
         this.rules.push(lcRule);
     }
 
+    /**
+     * The 'last square free rule' checks whether there is a unit in
+     * which there is only one square unfilled and fills it with the
+     * last remaining value.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could
+     * done according this rule
+     */
     static lsfRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
@@ -44,6 +53,14 @@ export class BasicRules {
         return moves;
     }
 
+    /**
+     * The 'last square left rule' checks for each unit whether there
+     * is a value that can only be filled in one square of the unit.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could
+     * done according this rule
+     */
     static lslRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
@@ -65,6 +82,14 @@ export class BasicRules {
         return moves;
     }
 
+    /**
+     * The 'last candidate rule' checks for each square whether there is only
+     * one last candidate left and sets it to this value.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could
+     * done according this rule
+     */
     static lcRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
         let squares = sudoku.getSquares()

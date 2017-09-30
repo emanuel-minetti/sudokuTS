@@ -51,13 +51,14 @@ export class Sudoku {
     }
 
     /**
-     * Creates a new {@code Sudoku] from a string representing a puzzle.
+     * Creates and returns a new {@code Sudoku] from a string representing a
+     * puzzle.
      *
      * It awaits a string containing 81 values of a sudoku puzzle
      * and arbitrary many other characters, A value may be one of
      * numbers from one to nine or one of the characters '*' or '0'
      * to represent a missing value. It returns a new valid instance of
-     * the Sudoku class or an error if the given string doesn't
+     * the Sudoku class or throws an error if the given string doesn't
      * represent a valid state of a sudoku.
      *
      * @param {string} sudokuString the representing string
@@ -76,8 +77,8 @@ export class Sudoku {
     /**
      * Creates and returns a copy of the given sudoku.
      *
-     * @param {Sudoku} original
-     * @returns {Sudoku}
+     * @param {Sudoku} the original sudoku
+     * @returns {Sudoku} the copy
      */
     static copy(original: Sudoku): Sudoku {
         let copy = new Sudoku();
@@ -93,7 +94,7 @@ export class Sudoku {
     /**
      * Returns a nicely formatted string representation of a sudoku
      *
-     * @returns {string}
+     * @returns {string} the string representation of the sudoku
      */
     toString():string {
         let resultArray: string[] = [];
@@ -125,8 +126,8 @@ export class Sudoku {
      * Sets the given value of the {@code Square} with the given
      * index.
      *
-     * @param {number} index
-     * @param {number} value
+     * @param {number} index of the square to set its value
+     * @param {number} value to set
      */
     setValue(index: number, value: number) {
         let square = this.squares[index];
@@ -199,7 +200,7 @@ export class Sudoku {
         return this.squares;
     }
 
-    solved(): boolean {
+    isSolved(): boolean {
         return this.numberOfSetSquares === 81;
     }
 

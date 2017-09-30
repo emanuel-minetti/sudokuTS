@@ -1,11 +1,11 @@
-import {game, SudokuGame, SudokuStateChange} from './SudokuGame';
+import {SudokuGame, SudokuStateChange} from './SudokuGame';
 
 import {Sudoku} from "./Sudoku";
 import {BasicRules} from "./BasicRules";
 import * as _ from "lodash";
 
 /**
- * Type that a solver rule should be followed.
+ * Type that a solver rule must follow.
  */
 export type TRuleFunction = (sudoku: Sudoku)=> SudokuStateChange[];
 
@@ -53,6 +53,21 @@ export class Solver {
         this.rules = _.concat(this.rules, basicRules.rules)
     }
 
+    /**
+     * This method actually solves the associated game.
+     *
+     * It applies every rule registered with this solver.
+     * In a loop it tries each rule from simplest to
+     * hardest. If it finds a rule that applies it sets a
+     * single move according this rule. It also sets the reason
+     * and rating of the move. The rating is calculated from
+     * the base rating of the rule divided by the number of
+     * possibilities for the rule. After a rule is applied
+     * the loop starts again. The loop ends when the game is
+     * solved or if no rule could be applied.
+     *
+     * @returns {boolean} whether the game was solved
+     */
     solve(): boolean {
         let allTried = false;
         let solved = false;

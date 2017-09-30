@@ -87,7 +87,7 @@ describe('A newly created SudokuGame', () => {
     });
 });
 
-describe('A Game should report when it\'s solved', () => {
+describe('A Game should report when it\'s isSolved', () => {
     let nearlySolvedSudokuString =
         '935 214 768 \n' +
         '672 893 154 \n' +
@@ -104,7 +104,7 @@ describe('A Game should report when it\'s solved', () => {
     let game = new SudokuGame(nearlySolvedSudokuString);
     let move = new SudokuStateChange(80, 8,'test', 0.1);
 
-   it('should report not to be solved when there is one missing square', () => {
+   it('should report not to be isSolved when there is one missing square', () => {
        expect(game.isSolved()).toBe(false);
    }); 
    
@@ -117,11 +117,11 @@ describe('A Game should report when it\'s solved', () => {
        expect(game.changeState(move)).toBe(true);
    });
 
-   it('should report to be solved', () => {
+   it('should report to be isSolved', () => {
        expect(game.isSolved()).toBe(true);
    });
 
-   it('should report a solved sudoku', () => {
+   it('should report a isSolved sudoku', () => {
        let solvedState = game.getSolvedState();
        expect(solvedState).not.toBeNull();
        if (solvedState !== null) {
