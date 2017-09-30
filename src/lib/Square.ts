@@ -19,9 +19,9 @@ export class Square {
     private readonly column: number;
     private readonly box: number;
     private readonly peerIndices: number[];
+    private readonly name: string;
     private value: number | null;
     private candidates: number[] | null;
-    private name: string;
 
     constructor(index: number) {
         this.index = index;

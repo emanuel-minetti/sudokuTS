@@ -27,7 +27,8 @@ export class SudokuStateChange {
  * an original state, which can apply a move, which assures that
  * an applied move is valid and tests whether it's solved. In
  * addition it provides a history (i.e. an array of {@code SudokuStateChange}
- * and if solved a solved state.
+ * and if solved a solved state. It also stores a summed up rating to
+ * the changes made so far.
  */
 export class SudokuGame {
 

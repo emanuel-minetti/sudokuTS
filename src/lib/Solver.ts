@@ -36,7 +36,7 @@ export class SolverRule {
  * This class represents a solver to a given game.
  */
 export class Solver {
-    private game: SudokuGame;
+    private readonly game: SudokuGame;
     private rules: SolverRule[];
 
     constructor(game: SudokuGame) {
