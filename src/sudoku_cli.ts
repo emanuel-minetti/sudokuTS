@@ -1,8 +1,9 @@
 import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
+import {SudokuCli, SudokuCliOptions} from "./lib/cli/SudokuCli";
 
-let sudokuStringArray = process.argv.slice(1);
-let sudokuString = sudokuStringArray.join('');
+let options = SudokuCli.parseArguments(process.argv);
+let sudokuString = options.sudokuString;
 
 let game = new SudokuGame(sudokuString);
 let solver = new Solver(game);
