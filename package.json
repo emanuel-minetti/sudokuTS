@@ -18,18 +18,19 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jasmine": "^2.6.0",
+    "@types/node": "^8.0.31",
     "jasmine": "^2.8.0",
     "jasmine-core": "^2.8.0",
     "jasmine-ts": "^0.2.1",
     "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.0",
-    "karma-typescript": "^3.0.6",
+    "karma-typescript": "^3.0.7",
     "tslint": "^5.7.0",
-    "typescript": "^2.5.2"
+    "typescript": "^2.5.3"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.74",
+    "@types/lodash": "^4.14.76",
     "lodash": "^4.17.4"
   }
 }
