@@ -1,6 +1,6 @@
-import {SudokuGame} from "../../lib/SudokuGame";
-import {Solver, SolverRule} from "../../lib/Solver";
-import {BasicRules} from "../../lib/BasicRules";
+import {SudokuGame} from "../../../lib/game/SudokuGame";
+import {Solver, SolverRule} from "../../../lib/solver/Solver";
+import {BasicRules} from "../../../lib/solver/BasicRules";
 
 describe('A newly created Solver', () => {
         let sudokuString =

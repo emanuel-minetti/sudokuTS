@@ -1,7 +1,7 @@
 import {SolverRule, TRuleFunction} from "./Solver";
-import {SudokuStateChange} from "./SudokuGame";
-import {Sudoku} from "./Sudoku";
-import {Square} from "./Square";
+import {SudokuStateChange} from "../game/SudokuGame";
+import {Sudoku} from "../game/Sudoku";
+import {Square} from "../game/Square";
 import * as _ from "lodash";
 
 export class BasicRules {

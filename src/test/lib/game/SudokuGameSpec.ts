@@ -1,6 +1,5 @@
-///<reference path="../../lib/SudokuGame.ts"/>
-import {SudokuGame, SudokuStateChange} from "../../lib/SudokuGame";
-import {Sudoku} from "../../lib/Sudoku";
+import {SudokuGame, SudokuStateChange} from "../../../lib/game/SudokuGame";
+import {Sudoku} from "../../../lib/game/Sudoku";
 
 describe('A newly created SudokuGame', () => {
     let sudokuGame: SudokuGame;

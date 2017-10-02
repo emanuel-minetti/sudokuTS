@@ -1,5 +1,5 @@
-import {Sudoku} from '../../lib/Sudoku';
-import {Square} from "../../lib/Square";
+import {Sudoku} from '../../../lib/game/Sudoku';
+import {Square} from "../../../lib/game/Square";
 import * as _ from 'lodash';
 
 describe('A Square of an empty Sudoku ', () => {

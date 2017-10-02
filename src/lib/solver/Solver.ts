@@ -1,6 +1,6 @@
-import {SudokuGame, SudokuStateChange} from './SudokuGame';
+import {SudokuGame, SudokuStateChange} from '../game/SudokuGame';
 
-import {Sudoku} from "./Sudoku";
+import {Sudoku} from "../game/Sudoku";
 import {BasicRules} from "./BasicRules";
 import * as _ from "lodash";
 

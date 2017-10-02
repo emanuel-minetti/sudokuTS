@@ -1,5 +1,5 @@
-import {SudokuGame} from "./lib/SudokuGame";
-import {Solver} from "./lib/Solver";
+import {SudokuGame} from "./lib/game/SudokuGame";
+import {Solver} from "./lib/solver/Solver";
 
 let sudokuStringArray = process.argv.slice(1);
 let sudokuString = sudokuStringArray.join('');
