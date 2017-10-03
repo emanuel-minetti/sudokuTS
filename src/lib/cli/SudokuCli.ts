@@ -1,4 +1,4 @@
-import {readFile, readFileSync} from 'fs';
+import {readFileSync} from 'fs';
 import minimist = require('minimist');
 import * as _ from 'lodash';
 
@@ -10,8 +10,6 @@ export interface SudokuCliOptions {
     help: boolean;
     solver: boolean;
     backtrack: boolean;
-    //TODO return file instead of string!
-    file: string;
     sudokuString: string;
 }
 
@@ -72,24 +70,44 @@ export class SudokuCli {
         let parsedArgs = minimist(cliArray, {
             string: ['string', 'file'],
             boolean: ['version', 's', 'b', 'h'],
-            // handle unknown options!
+            // handle unknown options
             unknown: (option) => {
                 throw new Error('Unknown option ' + option);
             }
         });
 
-        //TODO handle conflicting options!
+        //Handle conflicting options!
+        // one solver chosen
+        if (parsedArgs['s'] && parsedArgs['b']) {
+            throw new Error('Only one solver may be chosen!')
+        }
+        if (!(parsedArgs['s'] || parsedArgs['b'])) {
+            throw new Error('No solver chosen!')
+        }
+        // one initializer chosen
+        if(parsedArgs['string'] && parsedArgs['file']) {
+            throw new Error('Only one input may be given!')
+        }
+        if(!(parsedArgs['string'] || parsedArgs['file'])) {
+            throw new Error('No input given')
+        }
+
+        //Get string from file
+        let sudokuString: string;
+        if (parsedArgs['file']) {
+            sudokuString = readFileSync(parsedArgs['file'], {encoding: 'utf8'});
+        } else {
+            sudokuString = parsedArgs['string'];
+        }
 
         // return result
         let result = {
-            sudokuString: parsedArgs['string'],
-            file: parsedArgs['file'],
+            sudokuString: sudokuString,
             solver: parsedArgs['s'] ? true : false,
             backtrack: parsedArgs['b'] ? true : false,
             help: parsedArgs['h'] ? true : false,
             version: parsedArgs['version'] ? true : false
         }
-
         return result;
     }
 
@@ -101,11 +119,11 @@ export class SudokuCli {
      */
     static printHelp(): string {
         let message = `
-        USAGE: node sudoku_cli [-sbh] [--version[=true]] [--string=sudokuString | --file=sudokuFile]
+        USAGE: node sudoku_cli [-s | b] [-h] [--version[=true]] [--string=sudokuString | --file=sudokuFile]
         
         OPTIONS:
-            -s: solve with the solver
-            -b: solve with the backtracker
+            -s: solve with solver. Only solver can be chosen.
+            -b: solve with backtracker. Only one solver can be chosen.
             -h: print this help message
             --version[=true]: print a version message
             --string: The string to initialize the sudoku game. You may give either a string

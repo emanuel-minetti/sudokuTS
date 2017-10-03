@@ -9,7 +9,6 @@ try {
     let sudokuString = options.sudokuString;
 
     console.log('SudokuString: ' + sudokuString);
-    console.log('File: ' + options.file);
     console.log('Help: ' + options.help);
     console.log('Solver: ' + options.solver);
     console.log('Backtracker: ' + options.backtrack);
