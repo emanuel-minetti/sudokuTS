@@ -1,9 +1,12 @@
 import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli, SudokuCliOptions} from "./lib/cli/SudokuCli";
+import {log} from "util";
 
 let options = SudokuCli.parseArguments(process.argv);
 let sudokuString = options.sudokuString;
+
+console.log('SudokuString: ' + sudokuString);
 
 let game = new SudokuGame(sudokuString);
 let solver = new Solver(game);
