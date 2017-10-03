@@ -88,8 +88,20 @@ export class SudokuCli {
      * @returns {string} the help message
      */
     static printHelp(): string {
-        //TODO implement!
-        return '';
+        let message = `
+        USAGE: node sudoku_cli [-sbh] [--version[=true]] [--string=sudokuString | --file=sudokuFile]
+        
+        OPTIONS:
+            -s: solve with the solver
+            -b: solve with the backtracker
+            -h: print this help message
+            --version[=true]: print a version message
+            --string: The string to initialize the sudoku game. You may give either a string
+                or a file.
+            --file: The filename to initialize the sudoku game. You may give either a file
+                or a string.  
+        `;
+        return message;
     }
 
     /**
