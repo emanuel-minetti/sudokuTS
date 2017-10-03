@@ -34,7 +34,7 @@ export class SudokuCli {
         // remove first two arguments
         let cliArray = argv.slice(2);
         // transform to a string
-        let cliString = cliArray.join('|');
+        let cliString = cliArray.join(' ');
         // count single and double quotes
         let quoteIndices: number[] = [];
         let quotes = _.filter(cliString, (value, index) => {
@@ -66,15 +66,18 @@ export class SudokuCli {
             });
         }
         // transform back to string[]
-        cliArray = cliString.split('|');
+        cliArray = cliString.split(' ');
 
         //Use 'minimist' to parse the arguments
         let parsedArgs = minimist(cliArray, {
             string: ['string', 'file'],
-            boolean: 'version'
+            boolean: ['version', 's', 'b', 'h'],
+            // handle unknown options!
+            unknown: (option) => {
+                throw new Error('Unknown option ' + option);
+            }
         });
 
-        //TODO handle unknown options!
         //TODO handle conflicting options!
 
         // return result
