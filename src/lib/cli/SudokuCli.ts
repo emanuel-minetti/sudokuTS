@@ -1,6 +1,9 @@
 import minimist = require('minimist');
 import * as _ from 'lodash';
 
+/**
+ * An interface used to return the command line options.
+ */
 export interface SudokuCliOptions {
     version: boolean;
     help: boolean;
@@ -11,9 +14,20 @@ export interface SudokuCliOptions {
     sudokuString: string;
 }
 
-//TODO document!
+/**
+ * A class with some static methods to handle command line options.
+ */
 export class SudokuCli {
-    //TODO document and comment!
+    //TODO comment!
+    /**
+     * This method accepts a string[] with the command line options
+     * as node's process.argv reports it and returns a
+     * {@code SudokuCliOptions} Object. It throws errors if the
+     * given command line has errors.
+     *
+     * @param {string[]} argv the command line strings as {@code process.argv} retuns it.
+     * @returns {SudokuCliOptions} the options
+     */
     static parseArguments(argv: string[]): SudokuCliOptions {
         let cliArray = argv.slice(2);
         let cliString = cliArray.join(' ');
