@@ -81,13 +81,22 @@ export class SudokuCli {
         return result;
     }
 
-    //TODO document!
+    /**
+     * Returns a string with a message to show if
+     * help is advised.
+     *
+     * @returns {string} the help message
+     */
     static printHelp(): string {
         //TODO implement!
         return '';
     }
 
-    //TODO document!
+    /**
+     * Returns a message to show if the version was requested.
+     *
+     * @returns {string} the version message
+     */
     static printVersion(): string {
         //TODO implement!
         return '';
