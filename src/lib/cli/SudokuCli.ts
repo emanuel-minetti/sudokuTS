@@ -10,18 +10,10 @@ export interface SudokuCliOptions {
     sudokuString: string;
 }
 
+//TODO dokument!
 export class SudokuCli {
+    //TODO dokument and comment!
     static parseArguments(argv: string[]): SudokuCliOptions {
-        let result = {
-            version: false,
-            help: false,
-            solver: false,
-            backtrack: false,
-            file: '',
-            sudokuString: ''
-        }
-
-
         let cliArray = argv.slice(2);
         let cliString = cliArray.join(' ');
         // count single and double quotes
@@ -60,22 +52,27 @@ export class SudokuCli {
             string: ['string', 'file'],
             boolean: 'version'
         });
-        result.sudokuString = parsedArgs['string'];
-        result.file = parsedArgs['file'];
-        result.solver = parsedArgs['s'] ? true : false;
-        result.backtrack = parsedArgs['b'] ? true : false;
-        result.help = parsedArgs['h'] ? true : false;
-        result.version = parsedArgs['version'] ? true : false;
+
+        let result = {
+            sudokuString: parsedArgs['string'],
+            file: parsedArgs['file'],
+            solver: parsedArgs['s'] ? true : false,
+            backtrack: parsedArgs['b'] ? true : false,
+            help: parsedArgs['h'] ? true : false,
+            version: parsedArgs['version'] ? true : false
+        }
         //TODO handle unknown options!
         //TODO handle conflicting options!
         return result;
     }
 
+    //TODO dokument!
     static printHelp(): string {
         //TODO implement!
         return '';
     }
 
+    //TODO dokument!
     static printVersion(): string {
         //TODO implement!
         return '';
