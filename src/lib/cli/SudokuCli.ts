@@ -6,6 +6,7 @@ export interface SudokuCliOptions {
     help: boolean;
     solver: boolean;
     backtrack: boolean;
+    //TODO return file instead of string!
     file: string;
     sudokuString: string;
 }
