@@ -10,9 +10,9 @@ export interface SudokuCliOptions {
     sudokuString: string;
 }
 
-//TODO dokument!
+//TODO document!
 export class SudokuCli {
-    //TODO dokument and comment!
+    //TODO document and comment!
     static parseArguments(argv: string[]): SudokuCliOptions {
         let cliArray = argv.slice(2);
         let cliString = cliArray.join(' ');
@@ -66,13 +66,13 @@ export class SudokuCli {
         return result;
     }
 
-    //TODO dokument!
+    //TODO document!
     static printHelp(): string {
         //TODO implement!
         return '';
     }
 
-    //TODO dokument!
+    //TODO document!
     static printVersion(): string {
         //TODO implement!
         return '';
