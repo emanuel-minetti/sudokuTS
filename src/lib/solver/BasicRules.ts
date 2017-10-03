@@ -5,21 +5,6 @@ import {Square} from "../game/Square";
 import * as _ from "lodash";
 
 export class BasicRules {
-    rules: SolverRule[];
-
-    constructor() {
-        this.rules = [];
-
-        let lsfRule: SolverRule = new SolverRule('last square free rule ', 0.5, BasicRules.lsfRuleFn);
-        this.rules.push(lsfRule);
-
-        let lslRule = new SolverRule('last square left rule ', 1, BasicRules.lslRuleFn);
-        this.rules.push(lslRule);
-
-        let lcRule = new SolverRule('last candidate rule ', 2, BasicRules.lcRuleFn);
-        this.rules.push(lcRule);
-    }
-
     /**
      * The 'last square free rule' checks whether there is a unit in
      * which there is only one square unfilled and fills it with the
@@ -35,7 +20,7 @@ export class BasicRules {
         units.forEach((unit, unitIndex) => {
             let count = 0;
             Sudoku.unitIndices.forEach((index) => {
-                if(unit[index].getValue()) {
+                if (unit[index].getValue()) {
                     count++;
                 }
             })
@@ -52,7 +37,6 @@ export class BasicRules {
         });
         return moves;
     }
-
     /**
      * The 'last square left rule' checks for each unit whether there
      * is a value that can only be filled in one square of the unit.
@@ -81,7 +65,6 @@ export class BasicRules {
         });
         return moves;
     }
-
     /**
      * The 'last candidate rule' checks for each square whether there is only
      * one last candidate left and sets it to this value.
@@ -101,5 +84,19 @@ export class BasicRules {
             }
         });
         return moves;
+    }
+    rules: SolverRule[];
+
+    constructor() {
+        this.rules = [];
+
+        let lsfRule: SolverRule = new SolverRule('last square free rule ', 0.5, BasicRules.lsfRuleFn);
+        this.rules.push(lsfRule);
+
+        let lslRule = new SolverRule('last square left rule ', 1, BasicRules.lslRuleFn);
+        this.rules.push(lslRule);
+
+        let lcRule = new SolverRule('last candidate rule ', 2, BasicRules.lcRuleFn);
+        this.rules.push(lcRule);
     }
 }

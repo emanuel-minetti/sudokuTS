@@ -7,7 +7,7 @@ import * as _ from "lodash";
 /**
  * Type that a solver rule must follow.
  */
-export type TRuleFunction = (sudoku: Sudoku)=> SudokuStateChange[];
+export type TRuleFunction = (sudoku: Sudoku) => SudokuStateChange[];
 
 /**
  * A class to represent a rule to be applied to a sudoku game.

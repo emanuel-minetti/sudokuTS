@@ -9,10 +9,12 @@ import {Square} from "./Square";
  * of a sudoku game.
  */
 export class Sudoku {
+
     // useful ranges
     static squareIndices: number[] = _.range(81);
     static unitIndices: number[] = _.range(9);
-    static values = _.range(1, 10, 1);
+    static values: number[] = _.range(1, 10, 1);
+
     // indices of the units
     static rowIndicesArray: number[][] =
         Sudoku.unitIndices.map(unitIndex => _.range(unitIndex * 9, unitIndex * 9 + 9, 1));
@@ -28,13 +30,14 @@ export class Sudoku {
                 _.range(baseValue + 9, baseValue + 12, 1),
                 _.range(baseValue + 18, baseValue + 21, 1));
         });
+
     // unit names
     static rowNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
     static columnNames: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
     static boxNames: string[] = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
     static unitNames = _.concat(Sudoku.rowNames, Sudoku.columnNames, Sudoku.boxNames);
 
-
+    // properties
     private readonly squares: Square[];
     private readonly rows: Square[][];
     private readonly columns: Square[][];
@@ -100,7 +103,7 @@ export class Sudoku {
      *
      * @returns {string} the string representation of the sudoku
      */
-    toString():string {
+    toString(): string {
         let resultArray: string[] = [];
         let values: (number | null)[] = this.squares.map((square) => square.getValue());
         values.forEach((value, index) => {
@@ -180,6 +183,22 @@ export class Sudoku {
         }
     }
 
+    getSquares(): Square[] {
+        return this.squares;
+    }
+
+    isSolved(): boolean {
+        return this.numberOfSetSquares === 81;
+    }
+
+    getRows() {
+        return this.rows;
+    }
+
+    getUnits() {
+        return this.units;
+    }
+
     /**
      * Parses a string and sets the values of {@code this} or throws an error if
      * string doesn't represent a valid state of a sudoku.
@@ -198,21 +217,5 @@ export class Sudoku {
                 this.setValue(index, value);
             }
         });
-    }
-
-    getSquares(): Square[] {
-        return this.squares;
-    }
-
-    isSolved(): boolean {
-        return this.numberOfSetSquares === 81;
-    }
-
-    getRows() {
-    return this.rows;
-    }
-
-    getUnits() {
-        return this.units;
     }
 }

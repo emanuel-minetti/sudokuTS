@@ -1,5 +1,4 @@
 import minimist = require('minimist');
-import {ParsedArgs, Opts} from "minimist";
 import * as _ from 'lodash';
 
 export interface SudokuCliOptions {
@@ -38,22 +37,22 @@ export class SudokuCli {
             throw new Error('Unmatching quotes!')
         } else {
             //remove spaces and newlines between quotes
-          quoteIndices.forEach((value, index, array) => {
-             if (index % 2 === 0) {
-                 let beginIndex = value;
-                 let endIndex = array[index + 1];
-                 let cliCharArray = cliString.split('');
-                 _.remove(cliCharArray, (char, charIndex) => {
-                     if (charIndex >= beginIndex && charIndex <= endIndex) {
-                         if (char === ' ' || char === '\n') {
-                             return true;
-                         }
-                     }
-                     return false;
-                 });
-                 cliString = cliCharArray.join('');
-             }
-          });
+            quoteIndices.forEach((value, index, array) => {
+                if (index % 2 === 0) {
+                    let beginIndex = value;
+                    let endIndex = array[index + 1];
+                    let cliCharArray = cliString.split('');
+                    _.remove(cliCharArray, (char, charIndex) => {
+                        if (charIndex >= beginIndex && charIndex <= endIndex) {
+                            if (char === ' ' || char === '\n') {
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
+                    cliString = cliCharArray.join('');
+                }
+            });
         }
 
         cliArray = cliString.split(' ');

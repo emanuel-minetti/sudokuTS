@@ -1,5 +1,4 @@
 import {Sudoku} from "./Sudoku";
-import {StringRepresentable} from "lodash";
 
 /**
  * A class to represent a 'move' of a sudoku game.
@@ -12,7 +11,8 @@ export class SudokuStateChange {
     value: number;
     reason?: string;
     rating?: number;
-    constructor(index: number ,value: number, reason?: string, rating?: number) {
+
+    constructor(index: number, value: number, reason?: string, rating?: number) {
         this.index = index;
         this.value = value;
         this.reason = reason;
@@ -77,20 +77,20 @@ export class SudokuGame {
      * @returns {boolean} whether the move was legal
      */
     changeState(move: SudokuStateChange): boolean {
-            try {
-                this.currentState.setValue(move.index, move.value);
-                this.changes.push(new SudokuStateChange(move.index, move.value, move.reason, move.rating));
-                if (move.rating) {
-                    this.rating = this.rating ? this.rating += move.rating : move.rating;
-                }
-                if (this.currentState.isSolved()) {
-                    this.solvedState = this.currentState;
-                }
-                return true;
+        try {
+            this.currentState.setValue(move.index, move.value);
+            this.changes.push(new SudokuStateChange(move.index, move.value, move.reason, move.rating));
+            if (move.rating) {
+                this.rating = this.rating ? this.rating += move.rating : move.rating;
             }
-            catch (e) {
-                return false
+            if (this.currentState.isSolved()) {
+                this.solvedState = this.currentState;
             }
+            return true;
+        }
+        catch (e) {
+            return false
+        }
     };
 
     /**

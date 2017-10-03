@@ -2,7 +2,9 @@
   <dictionary name="emu">
     <words>
       <w>backtracker</w>
+      <w>minimist</w>
       <w>sudoku</w>
+      <w>unmatching</w>
     </words>
   </dictionary>
 </component>
