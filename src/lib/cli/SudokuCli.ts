@@ -111,19 +111,8 @@ export class SudokuCli {
      * @returns {string} the version message
      */
     static printVersion(): string {
-        //TODO implement!
         let fileData = readFileSync('../package.json', {encoding: 'utf8'});
         let packageJsonData = JSON.parse(fileData);
-        return packageJsonData['version'];
-        //, (err, data) => {
-        //     if(err) {
-        //         throw new Error(err.message);
-        //     }
-        //     else {
-        //         let packageJsonData = JSON.parse(data);
-        //         return packageJsonData['version'];
-        //     }
-        // });
-        //return '';
+        return packageJsonData['main'] + ' Version: ' +packageJsonData['version'];
     }
 }

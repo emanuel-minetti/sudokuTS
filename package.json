@@ -1,6 +1,6 @@
 {
   "name": "sudoku_ts",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A TypeScript implementation of the Sudoku game.",
   "main": "sudoku_cli.js",
   "scripts": {
