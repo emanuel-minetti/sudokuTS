@@ -1,3 +1,4 @@
+import {readFile, readFileSync} from 'fs';
 import minimist = require('minimist');
 import * as _ from 'lodash';
 
@@ -111,6 +112,18 @@ export class SudokuCli {
      */
     static printVersion(): string {
         //TODO implement!
-        return '';
+        let fileData = readFileSync('../package.json', {encoding: 'utf8'});
+        let packageJsonData = JSON.parse(fileData);
+        return packageJsonData['version'];
+        //, (err, data) => {
+        //     if(err) {
+        //         throw new Error(err.message);
+        //     }
+        //     else {
+        //         let packageJsonData = JSON.parse(data);
+        //         return packageJsonData['version'];
+        //     }
+        // });
+        //return '';
     }
 }
