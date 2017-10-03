@@ -19,19 +19,22 @@ export interface SudokuCliOptions {
  * A class with some static methods to handle command line options.
  */
 export class SudokuCli {
-    //TODO comment!
     /**
      * This method accepts a string[] with the command line options
      * as node's process.argv reports it and returns a
      * {@code SudokuCliOptions} Object. It throws errors if the
      * given command line has errors.
      *
-     * @param {string[]} argv the command line strings as {@code process.argv} retuns it.
+     * @param {string[]} argv the command line strings as {@code process.argv} returns it.
      * @returns {SudokuCliOptions} the options
      */
     static parseArguments(argv: string[]): SudokuCliOptions {
+        // Preprocess the given string[]: remove not wanted arguments and remove
+        // spaces and newlines between quotes.
+        // remove first two arguments
         let cliArray = argv.slice(2);
-        let cliString = cliArray.join(' ');
+        // transform to a string
+        let cliString = cliArray.join('|');
         // count single and double quotes
         let quoteIndices: number[] = [];
         let quotes = _.filter(cliString, (value, index) => {
@@ -62,13 +65,19 @@ export class SudokuCli {
                 }
             });
         }
+        // transform back to string[]
+        cliArray = cliString.split('|');
 
-        cliArray = cliString.split(' ');
+        //Use 'minimist' to parse the arguments
         let parsedArgs = minimist(cliArray, {
             string: ['string', 'file'],
             boolean: 'version'
         });
 
+        //TODO handle unknown options!
+        //TODO handle conflicting options!
+
+        // return result
         let result = {
             sudokuString: parsedArgs['string'],
             file: parsedArgs['file'],
@@ -77,8 +86,7 @@ export class SudokuCli {
             help: parsedArgs['h'] ? true : false,
             version: parsedArgs['version'] ? true : false
         }
-        //TODO handle unknown options!
-        //TODO handle conflicting options!
+
         return result;
     }
 
