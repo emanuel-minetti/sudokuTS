@@ -67,6 +67,18 @@ export class SudokuCli {
         result.backtrack = parsedArgs['b'] ? true : false;
         result.help = parsedArgs['h'] ? true : false;
         result.version = parsedArgs['version'] ? true : false;
+        //TODO handle unknown options!
+        //TODO handle conflicting options!
         return result;
+    }
+
+    static printHelp(): string {
+        //TODO implement!
+        return '';
+    }
+
+    static printVersion(): string {
+        //TODO implement!
+        return '';
     }
 }

@@ -7,6 +7,19 @@ let options = SudokuCli.parseArguments(process.argv);
 let sudokuString = options.sudokuString;
 
 console.log('SudokuString: ' + sudokuString);
+console.log('File: ' + options.file);
+console.log('Help: ' + options.help);
+console.log('Solver: ' + options.solver);
+console.log('Backtracker: ' + options.backtrack);
+console.log('Version: ' + options.version);
+
+if (options.help) {
+  console.log(SudokuCli.printHelp());
+};
+
+if (options.version) {
+    console.log(SudokuCli.printVersion());
+};
 
 let game = new SudokuGame(sudokuString);
 let solver = new Solver(game);
