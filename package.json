@@ -20,7 +20,7 @@
     "@types/jasmine": "^2.6.0",
     "@types/lodash": "^4.14.76",
     "@types/minimist": "^1.2.0",
-    "@types/node": "^8.0.31",
+    "@types/node": "^8.0.32",
     "jasmine": "^2.8.0",
     "jasmine-core": "^2.8.0",
     "jasmine-ts": "^0.2.1",
