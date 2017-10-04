@@ -7,16 +7,40 @@ import {Sudoku} from "./Sudoku";
  * optional reason and rating.
  */
 export class SudokuStateChange {
-    index: number;
-    value: number;
-    reason?: string;
-    rating?: number;
+    private index: number;
+    private value: number;
+    private reason?: string;
+    private rating?: number;
 
     constructor(index: number, value: number, reason?: string, rating?: number) {
         this.index = index;
         this.value = value;
         this.reason = reason;
         this.rating = rating;
+    }
+
+    getIndex() {
+        return this.index;
+    }
+
+    getValue() {
+        return this.value;
+    }
+
+    getReason() {
+        return this.reason;
+    }
+
+    getRating() {
+        return this.rating;
+    }
+
+    setRating(rating: number) {
+        this.rating = rating;
+    }
+
+    setReason(reason: string) {
+        this.reason = reason;
     }
 }
 
@@ -78,10 +102,12 @@ export class SudokuGame {
      */
     changeState(move: SudokuStateChange): boolean {
         try {
-            this.currentState.setValue(move.index, move.value);
-            this.changes.push(new SudokuStateChange(move.index, move.value, move.reason, move.rating));
-            if (move.rating) {
-                this.rating = this.rating ? this.rating += move.rating : move.rating;
+            this.currentState.setValue(move.getIndex(), move.getValue());
+            this.changes.push(new SudokuStateChange(move.getIndex(),
+                move.getValue(), move.getReason(), move.getRating()));
+            let rating = move.getRating();
+            if (rating) {
+                this.rating = this.rating ? this.rating += rating : rating;
             }
             if (this.currentState.isSolved()) {
                 this.solvedState = this.currentState;
@@ -102,10 +128,10 @@ export class SudokuGame {
         let stringArray: string[] = [];
         this.changes.forEach((change) => {
             let changeString: string;
-            changeString = 'Changed Square ' + this.currentState.getSquares()[change.index].getName();
-            changeString += ' to value ' + change.value;
-            changeString += change.reason ? ' because ' + change.reason + '\n' : '\n';
-            changeString += '\tRating: ' + change.rating + '\n';
+            changeString = 'Changed Square ' + this.currentState.getSquares()[change.getIndex()].getName();
+            changeString += ' to value ' + change.getValue();
+            changeString += change.getReason() ? ' because ' + change.getReason() + '\n' : '\n';
+            changeString += '\tRating: ' + change.getRating() + '\n';
             stringArray.push(changeString)
         });
         return stringArray.join('');

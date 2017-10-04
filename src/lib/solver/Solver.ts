@@ -81,8 +81,8 @@ export class Solver {
                     if (numberOfMoves !== 0) {
                         let rating = rule.getRating() / numberOfMoves;
                         let move = moves[0];
-                        move.rating = rating;
-                        move.reason = rule.getName() + move.reason;
+                        move.setRating(rating);
+                        move.setReason(rule.getName() + move.getReason());
                         this.game.changeState(move);
                         solved = this.game.isSolved();
                         ruleApplied = true;

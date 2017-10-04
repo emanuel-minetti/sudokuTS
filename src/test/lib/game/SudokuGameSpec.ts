@@ -112,7 +112,7 @@ describe('A Game should report when it\'s isSolved', () => {
    });
 
    it('should report true to a legal last move', () => {
-       move.value = 7;
+       move = new SudokuStateChange(80, 7,'test', 0.1);
        expect(game.changeState(move)).toBe(true);
    });
 

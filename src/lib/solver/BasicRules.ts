@@ -92,6 +92,43 @@ export class BasicRules {
         });
         return moves;
     }
+
+    static npRule: TRuleFunction = (sudoku => {
+       let moves: SudokuStateChange[] = [];
+       let units = sudoku.getUnits();
+       units.forEach((unit) => {
+           // get all squares with two candidates remaining
+           let twinCandidates: Square[] = [];
+          unit.forEach((square) => {
+              let squareCandidates = square.getCandidates();
+              if (squareCandidates !== null && squareCandidates.length === 2) {
+                  twinCandidates.push(square);
+              }
+          });
+          twinCandidates.forEach((firstTwinCandidate, firstIndex) => {
+              twinCandidates.forEach((secondTwinCandidate, secondIndex) => {
+                  if (secondIndex > firstIndex) {
+                      if (_.isEqual(firstTwinCandidate.getCandidates(),
+                              secondTwinCandidate.getCandidates())) {
+                          // naked pair found!
+                          let candidates = firstTwinCandidate.getCandidates();
+                          //TODO remove candidates from all units in which both candidates are present
+                          let commonUnitIndices = _.intersection([
+                              firstTwinCandidate.getUnitIndices(),
+                              secondTwinCandidate.getUnitIndices()
+                          ]);
+                          commonUnitIndices.forEach((unitIndex) => {
+
+                          })
+
+                      }
+                  }
+              })
+          });
+       });
+       return moves;
+    });
+
     rules: SolverRule[];
 
     constructor() {

@@ -83,4 +83,8 @@ export class Square {
     getIndex() {
         return this.index;
     }
+
+    getUnitIndices() {
+        return [this.column, this.row, this.box];
+    }
 }
