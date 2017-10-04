@@ -4,6 +4,13 @@ import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
 import * as _ from "lodash";
 
+/**
+ * A class grouping the simple sudoku rules.
+ *
+ * The rules are taken from the website 'http://www.sudokuwiki.org/sudoku.htm'
+ * run by Andrew Stuart. The naming of the rule mostly follows the naming
+ * on that site.
+ */
 export class BasicRules {
     /**
      * The 'last square free rule' checks whether there is a unit in
