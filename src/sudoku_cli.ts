@@ -8,12 +8,6 @@ try {
     options = SudokuCli.parseArguments(process.argv);
     let sudokuString = options.sudokuString;
 
-    console.log('SudokuString: ' + sudokuString);
-    console.log('Help: ' + options.help);
-    console.log('Solver: ' + options.solver);
-    console.log('Backtracker: ' + options.backtrack);
-    console.log('Version: ' + options.version);
-
     if (options.help) {
         console.log(SudokuCli.printHelp());
     };
@@ -26,11 +20,7 @@ try {
     let solver = new Solver(game);
     solver.addStandardRules();
     solver.solve();
-
-    console.log('Moves:\n' + game.getChangesString());
-    console.log('\nRating: ' + game.getRating());
-    console.log('\nSolved: ' + game.isSolved());
-    console.log('\nCurrent state: ' + game.getCurrentState().toString());
+    console.log('Game:\n' + game.toString());
 }
 catch (e) {
     console.log(e.message);

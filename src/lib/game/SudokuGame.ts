@@ -119,4 +119,19 @@ export class SudokuGame {
     isSolved(): boolean {
         return this.solvedState !== null;
     }
+
+    /**
+     * Returns a nice representation of the current state of a game
+     * and some statistics.
+     *
+     * @returns {string} the representation of the current state
+     */
+    toString(): string {
+        let result = 'Moves:\n' + this.getChangesString() +
+            '\n Number of Moves: ' + this.getChanges().length +
+            '\nRating: ' + this.getRating() +
+            '\nSolved: ' + this.isSolved() +
+            '\nCurrent state: ' + this.getCurrentState().toString();
+        return result;
+    }
 }
