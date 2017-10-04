@@ -3,16 +3,19 @@ import {Sudoku} from "./Sudoku";
 /**
  * A class to represent a 'move' of a sudoku game.
  *
- * It provides an index and a value to set as well as a
- * optional reason and rating.
+ * A 'move' may be to set a square to a value or to remove
+ * an array of numbers from the candidates of a square.
+ * It provides an index and a value (which may be an array
+ * of numbers in case these are the values to remove from candidates)
+ * to set as well as an optional reason and rating.
  */
 export class SudokuStateChange {
     private index: number;
-    private value: number;
+    private value: number | number[];
     private reason?: string;
     private rating?: number;
 
-    constructor(index: number, value: number, reason?: string, rating?: number) {
+    constructor(index: number, value: number | number[], reason?: string, rating?: number) {
         this.index = index;
         this.value = value;
         this.reason = reason;
@@ -92,6 +95,10 @@ export class SudokuGame {
     /**
      * Applies a move to a sudoku game.
      *
+     * A 'move' may be to set a square to a value or to remove a set of
+     * values from the candidates of a square ({@see SudokuStateChange}).
+     * To set a value is legal if the square isn't already set and the value
+     * is a candidate of that square. To remove candidates is always legal.
      * Returns whether this move was legal. If the move was legal,
      * the move is executed the optional reason and rating are set.
      * If the game was solved with this move the appropriate fields
@@ -101,21 +108,29 @@ export class SudokuGame {
      * @returns {boolean} whether the move was legal
      */
     changeState(move: SudokuStateChange): boolean {
-        try {
-            this.currentState.setValue(move.getIndex(), move.getValue());
-            this.changes.push(new SudokuStateChange(move.getIndex(),
-                move.getValue(), move.getReason(), move.getRating()));
-            let rating = move.getRating();
-            if (rating) {
-                this.rating = this.rating ? this.rating += rating : rating;
+        let value = move.getValue();
+        if (typeof value === "number") {
+            // set a value
+            try {
+                this.currentState.setValue(move.getIndex(), value);
+                this.changes.push(new SudokuStateChange(move.getIndex(),
+                    move.getValue(), move.getReason(), move.getRating()));
+                let rating = move.getRating();
+                if (rating) {
+                    this.rating = this.rating ? this.rating += rating : rating;
+                }
+                if (this.currentState.isSolved()) {
+                    this.solvedState = this.currentState;
+                }
+                return true;
             }
-            if (this.currentState.isSolved()) {
-                this.solvedState = this.currentState;
+            catch (e) {
+                return false
             }
+        } else {
+            // remove candidates
+            this.currentState.removeCandidates(move.getIndex(), value);
             return true;
-        }
-        catch (e) {
-            return false
         }
     };
 

@@ -183,6 +183,10 @@ export class Sudoku {
         }
     }
 
+    removeCandidates(index: number, values: number[]) {
+        this.squares[index].removeCandidates(values);
+    }
+
     getSquares(): Square[] {
         return this.squares;
     }

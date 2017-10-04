@@ -87,4 +87,11 @@ export class Square {
     getUnitIndices() {
         return [this.column, this.row, this.box];
     }
+
+    removeCandidates(values: number[]) {
+        let candidates = this.candidates
+        if (candidates) {
+            _.pullAll(candidates, values);
+        }
+    }
 }
