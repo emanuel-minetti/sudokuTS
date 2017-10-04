@@ -3,9 +3,8 @@ import {Solver} from "./lib/solver/Solver";
 import {SudokuCli, SudokuCliOptions} from "./lib/cli/SudokuCli";
 import {log} from "util";
 
-let options: SudokuCliOptions;
 try {
-    options = SudokuCli.parseArguments(process.argv);
+    let options = SudokuCli.parseArguments(process.argv);
     let sudokuString = options.sudokuString;
 
     if (options.help) {

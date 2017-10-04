@@ -128,10 +128,10 @@ export class SudokuGame {
      */
     toString(): string {
         let result = 'Moves:\n' + this.getChangesString() +
-            '\n Number of Moves: ' + this.getChanges().length +
+            '\nNumber of Moves: ' + this.getChanges().length +
             '\nRating: ' + this.getRating() +
             '\nSolved: ' + this.isSolved() +
-            '\nCurrent state: ' + this.getCurrentState().toString();
+            '\nCurrent state:\n\n' + this.getCurrentState().toString();
         return result;
     }
 }
