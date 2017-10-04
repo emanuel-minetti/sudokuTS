@@ -85,7 +85,8 @@ export class Square {
     }
 
     getUnitIndices() {
-        return [this.column, this.row, this.box];
+        //TODO comment or improve!
+        return [this.row, this.column + 9, this.box + 18];
     }
 
     removeCandidates(values: number[]) {

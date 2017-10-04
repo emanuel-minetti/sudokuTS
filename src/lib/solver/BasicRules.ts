@@ -21,6 +21,7 @@ export class BasicRules {
      * @returns {SudokuStateChange[]} an array of moves that could
      * done according this rule
      */
+    //TODO Review! Not efficient and returned moves with value == null with (not working) 'naked pair rule'
     static lsfRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
@@ -93,7 +94,8 @@ export class BasicRules {
         return moves;
     }
 
-    static npRule: TRuleFunction = (sudoku => {
+    //TODO document and comment!
+    static npRuleFn: TRuleFunction = (sudoku) => {
        let moves: SudokuStateChange[] = [];
        let units = sudoku.getUnits();
        units.forEach((unit) => {
@@ -111,23 +113,27 @@ export class BasicRules {
                       if (_.isEqual(firstTwinCandidate.getCandidates(),
                               secondTwinCandidate.getCandidates())) {
                           // naked pair found!
-                          let candidates = firstTwinCandidate.getCandidates();
-                          //TODO remove candidates from all units in which both candidates are present
-                          let commonUnitIndices = _.intersection([
+                          let valuesToRemove = firstTwinCandidate.getCandidates();
+                          let commonUnitIndices = _.intersection(
                               firstTwinCandidate.getUnitIndices(),
                               secondTwinCandidate.getUnitIndices()
-                          ]);
+                          );
                           commonUnitIndices.forEach((unitIndex) => {
-
+                              let unit = sudoku.getUnits()[unitIndex];
+                              unit.forEach((square) => {
+                                  let move = new SudokuStateChange(
+                                      square.getIndex(), valuesToRemove!,
+                                      '');
+                                  moves.push(move);
+                              })
                           })
-
                       }
                   }
               })
           });
        });
        return moves;
-    });
+    };
 
     rules: SolverRule[];
 
@@ -142,5 +148,9 @@ export class BasicRules {
 
         let lcRule = new SolverRule('last candidate rule ', 2, BasicRules.lcRuleFn);
         this.rules.push(lcRule);
+
+        //TODO  reintroduce
+        // let npRule = new SolverRule('naked pair rule ', 4, BasicRules.npRuleFn);
+        // this.rules.push(npRule);
     }
 }
