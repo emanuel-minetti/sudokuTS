@@ -92,6 +92,7 @@ export class SudokuGame {
         return this.rating;
     }
 
+    //TODO This is the bug!!! Here *must* be returned whether a 'remove' had done anything!
     /**
      * Applies a move to a sudoku game.
      *
