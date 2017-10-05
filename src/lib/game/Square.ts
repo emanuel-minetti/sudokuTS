@@ -89,10 +89,15 @@ export class Square {
         return [this.row, this.column + 9, this.box + 18];
     }
 
-    removeCandidates(values: number[]) {
+    //TODO document!
+    removeCandidates(values: number[]): boolean {
         let candidates = this.candidates
         if (candidates) {
-            _.pullAll(candidates, values);
+            if (_.intersection(candidates, values) !== []) {
+                _.pullAll(candidates, values);
+                return true;
+            }
         }
+        return false;
     }
 }

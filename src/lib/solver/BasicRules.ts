@@ -156,6 +156,6 @@ export class BasicRules {
 
         //TODO  reintroduce
         // let npRule = new SolverRule('naked pair rule ', 4, BasicRules.npRuleFn);
-        // this.rules.push(npRule);
+        // bthis.rules.push(npRule);
     }
 }

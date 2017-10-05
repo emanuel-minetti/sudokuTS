@@ -131,7 +131,7 @@ export class SudokuGame {
         } else {
             // remove candidates
             this.currentState.removeCandidates(move.getIndex(), value);
-            //TODO set rating and push move to changes
+            //TODO set rating and push move to changes and consider to return value
             return true;
         }
     };

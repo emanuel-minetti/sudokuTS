@@ -183,8 +183,9 @@ export class Sudoku {
         }
     }
 
-    removeCandidates(index: number, values: number[]) {
-        this.squares[index].removeCandidates(values);
+    //TODO document
+    removeCandidates(index: number, values: number[]): boolean {
+        return this.squares[index].removeCandidates(values);
     }
 
     getSquares(): Square[] {
