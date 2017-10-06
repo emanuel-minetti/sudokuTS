@@ -124,7 +124,6 @@ export class BasicRules {
                                     let squareIndex = square.getIndex();
                                     if (firstTwinCandidate.getIndex() !== squareIndex &&
                                         secondTwinCandidate.getIndex() !== squareIndex) {
-
                                         let move = new SudokuStateChange(
                                             squareIndex, valuesToRemove!,
                                             'removed one of ' +

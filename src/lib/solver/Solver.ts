@@ -80,6 +80,7 @@ export class Solver {
                     let numberOfMoves = moves.length;
                     if (numberOfMoves !== 0) {
                         let rating = rule.getRating() / numberOfMoves;
+                        //TODO This is the other bug!!! The solver *must* go through all moves!
                         let move = moves[0];
                         move.setRating(rating);
                         move.setReason(rule.getName() + move.getReason());
