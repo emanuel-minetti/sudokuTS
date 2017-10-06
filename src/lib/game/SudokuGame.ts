@@ -130,8 +130,24 @@ export class SudokuGame {
             }
         } else {
             // remove candidates
-            //TODO set rating and push move to changes
-            return this.currentState.removeCandidates(move.getIndex(), value);
+            try {
+                if (this.currentState.removeCandidates(move.getIndex(), value)) {
+                    this.changes.push(new SudokuStateChange(move.getIndex(),
+                        move.getValue(), move.getReason(), move.getRating()));
+                    let rating = move.getRating();
+                    if (rating) {
+                        this.rating = this.rating ? this.rating += rating : rating;
+                    }
+                    if (this.currentState.isSolved()) {
+                        this.solvedState = this.currentState;
+                    }
+                    return true;
+                }
+                return false;
+            }
+            catch (e) {
+                return false
+            }
         }
     };
 

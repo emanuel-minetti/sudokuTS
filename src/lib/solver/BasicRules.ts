@@ -127,7 +127,9 @@ export class BasicRules {
 
                                         let move = new SudokuStateChange(
                                             squareIndex, valuesToRemove!,
-                                            '');
+                                            'removed one of ' +
+                                            valuesToRemove + 'candidates of ' +
+                                            square.getName());
                                         moves.push(move);
                                     }
                                 })
@@ -154,7 +156,6 @@ export class BasicRules {
         let lcRule = new SolverRule('last candidate rule ', 2, BasicRules.lcRuleFn);
         this.rules.push(lcRule);
 
-        //TODO  reintroduce
         let npRule = new SolverRule('naked pair rule ', 4, BasicRules.npRuleFn);
         this.rules.push(npRule);
     }
