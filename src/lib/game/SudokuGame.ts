@@ -92,21 +92,21 @@ export class SudokuGame {
         return this.rating;
     }
 
-    //TODO Update documentation
     /**
-     * Applies a move to a sudoku game.
+     * Tries to apply a move to a sudoku game. Returns whether it did a move.
      *
      * A 'move' may be to set a square to a value or to remove a set of
      * values from the candidates of a square ({@see SudokuStateChange}).
-     * To set a value is legal if the square isn't already set and the value
-     * is a candidate of that square. To remove candidates is always legal.
-     * Returns whether this move was legal. If the move was legal,
+     * To set a value is successful if the square isn't already set and the value
+     * is a candidate of that square. To remove candidates is successful if the
+     * square wasn't already set and there was a candidate to remove.
+     * Returns whether this move was successful. If the move was successful,
      * the move is executed the optional reason and rating are set.
      * If the game was solved with this move the appropriate fields
      * are set.
      *
      * @param {SudokuStateChange} move the move to do
-     * @returns {boolean} whether the move was legal
+     * @returns {boolean} whether the move was successful
      */
     changeState(move: SudokuStateChange): boolean {
         let value = move.getValue();
