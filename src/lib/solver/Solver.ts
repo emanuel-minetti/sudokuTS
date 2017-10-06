@@ -83,9 +83,10 @@ export class Solver {
                         let move = moves[0];
                         move.setRating(rating);
                         move.setReason(rule.getName() + move.getReason());
-                        this.game.changeState(move);
-                        solved = this.game.isSolved();
-                        ruleApplied = true;
+                        if (this.game.changeState(move)) {
+                            solved = this.game.isSolved();
+                            ruleApplied = true;
+                        }
                     }
                 }
             })

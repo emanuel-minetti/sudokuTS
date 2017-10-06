@@ -85,16 +85,24 @@ export class Square {
     }
 
     getUnitIndices() {
-        //TODO comment or improve!
+        //TODO comment and improve!
         return [this.row, this.column + 9, this.box + 18];
     }
 
-    //TODO document!
+    /**
+     * Removes an array of given values from the candidates of this
+     * square. Returns false if a value was already set or no values were
+     * removed. If values were removed it returns true.
+     *
+     * @param {number[]} values the values to remove
+     * @returns {boolean} whether candidates were removed
+     */
     removeCandidates(values: number[]): boolean {
         let candidates = this.candidates
         if (candidates) {
-            if (_.intersection(candidates, values) !== []) {
-                _.pullAll(candidates, values);
+            let difference = _.difference(this.candidates, values);
+            if (difference !== this.candidates) {
+                this.candidates = difference;
                 return true;
             }
         }

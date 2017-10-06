@@ -92,7 +92,7 @@ export class SudokuGame {
         return this.rating;
     }
 
-    //TODO This is the bug!!! Here *must* be returned whether a 'remove' had done anything!
+    //TODO Update documentation
     /**
      * Applies a move to a sudoku game.
      *
@@ -130,9 +130,8 @@ export class SudokuGame {
             }
         } else {
             // remove candidates
-            this.currentState.removeCandidates(move.getIndex(), value);
-            //TODO set rating and push move to changes and consider to return value
-            return true;
+            //TODO set rating and push move to changes
+            return this.currentState.removeCandidates(move.getIndex(), value);
         }
     };
 

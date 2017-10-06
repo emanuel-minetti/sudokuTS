@@ -183,7 +183,15 @@ export class Sudoku {
         }
     }
 
-    //TODO document
+    /**
+     * Removes an array of given values from the candidates of a
+     * square. Returns false if a value was already set or no values were
+     * removed. If values were removed it returns true.
+     *
+     * @param {number} index the index of square to remove candidates from
+     * @param {number[]} values the values to remove
+     * @returns {boolean} whether candidates were removed
+     */
     removeCandidates(index: number, values: number[]): boolean {
         return this.squares[index].removeCandidates(values);
     }
