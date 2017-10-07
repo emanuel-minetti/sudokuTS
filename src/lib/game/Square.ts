@@ -101,7 +101,7 @@ export class Square {
         let candidates = this.candidates
         if (candidates) {
             let difference = _.difference(this.candidates, values);
-            if (difference !== this.candidates) {
+            if (!_.isEqual(difference, this.candidates)) {
                 this.candidates = difference;
                 return true;
             }
