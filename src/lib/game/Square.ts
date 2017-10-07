@@ -32,7 +32,7 @@ export class Square {
             Sudoku.columnIndicesArray[this.column], Sudoku.boxIndicesArray[this.box]), index);
         this.value = null;
         this.candidates = Sudoku.values.slice();
-        this.name = Sudoku.columnNames[this.column] + Sudoku.rowNames[this.row];
+        this.name = Sudoku.rowNames[this.row] + Sudoku.columnNames[this.column];
     }
 
     getValue(): number | null {
@@ -85,7 +85,7 @@ export class Square {
     }
 
     getUnitIndices() {
-        //TODO comment and improve!
+        //see Sudoku::constructor()
         return [this.row, this.column + 9, this.box + 18];
     }
 

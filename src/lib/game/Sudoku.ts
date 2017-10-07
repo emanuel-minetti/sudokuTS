@@ -32,8 +32,8 @@ export class Sudoku {
         });
 
     // unit names
-    static rowNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    static columnNames: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+    static columnNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    static rowNames: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'];
     static boxNames: string[] = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
     static unitNames = _.concat(Sudoku.rowNames, Sudoku.columnNames, Sudoku.boxNames);
 

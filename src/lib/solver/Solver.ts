@@ -1,8 +1,9 @@
-import {SudokuGame, SudokuStateChange} from '../game/SudokuGame';
+import {SudokuGame} from '../game/SudokuGame';
 
 import {Sudoku} from "../game/Sudoku";
 import {BasicRules} from "./BasicRules";
 import * as _ from "lodash";
+import {SudokuStateChange} from "../game/SudokuStateChange";
 
 /**
  * Type that a solver rule must follow.

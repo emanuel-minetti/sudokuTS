@@ -1,5 +1,6 @@
-import {SudokuGame, SudokuStateChange} from "../../../lib/game/SudokuGame";
+import {SudokuGame} from "../../../lib/game/SudokuGame";
 import {Sudoku} from "../../../lib/game/Sudoku";
+import {SudokuStateChange} from "../../../lib/game/SudokuStateChange";
 
 describe('A newly created SudokuGame', () => {
     let sudokuGame: SudokuGame;
@@ -78,7 +79,7 @@ describe('A newly created SudokuGame', () => {
     it('should report a string containing the made changes', () => {
         expect(sudokuGame.getChangesString()).toEqual(
             'Changed Square G7 to value 6 because last possibility rule in Unit IX\n\tRating: 0.1\n' +
-            'Changed Square D8 to value 6 because last possibility rule in Unit H\n\tRating: 0.1\n');
+            'Changed Square H4 to value 6 because last possibility rule in Unit H\n\tRating: 0.1\n');
     });
 
     it('should report its rating', () => {

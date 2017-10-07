@@ -12,7 +12,7 @@ describe('A Square of an empty Sudoku ', () => {
     });
 
     it('should report its name', () => {
-        expect(square.getName()).toBe('I3');
+        expect(square.getName()).toBe('C9');
     });
 
     it ('should report its index', () => {
@@ -43,9 +43,9 @@ describe('A Square of an empty Sudoku ', () => {
     });
 
     it('should report correct unit names and indices', () => {
-        expect(square.getRowName()).toEqual('3');
+        expect(square.getRowName()).toEqual('C');
         expect(square.getRowIndex()).toEqual(2);
-        expect(square.getColumnName()).toEqual('I');
+        expect(square.getColumnName()).toEqual('9');
         expect(square.getColumnIndex()).toEqual(8);
         expect(square.getBoxIndex()).toEqual(2);
     });

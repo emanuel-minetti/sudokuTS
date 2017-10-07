@@ -1,5 +1,5 @@
 import {SolverRule, TRuleFunction} from "./Solver";
-import {SudokuStateChange} from "../game/SudokuGame";
+import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
 import * as _ from "lodash";
@@ -18,10 +18,9 @@ export class BasicRules {
      * last remaining value.
      *
      * @param {Sudoku} sudoku the state of the game
-     * @returns {SudokuStateChange[]} an array of moves that could
+     * @returns {SudokuStateChange[]} an array of moves that could be
      * done according this rule
      */
-    //TODO Review! Not efficient and returned moves with value == null with (not working) 'naked pair rule'
     static lsfRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
@@ -50,7 +49,7 @@ export class BasicRules {
      * is a value that can only be filled in one square of the unit.
      *
      * @param {Sudoku} sudoku the state of the game
-     * @returns {SudokuStateChange[]} an array of moves that could
+     * @returns {SudokuStateChange[]} an array of moves that could be
      * done according this rule
      */
     static lslRuleFn: TRuleFunction = (sudoku) => {
@@ -78,7 +77,7 @@ export class BasicRules {
      * one last candidate left and sets it to this value.
      *
      * @param {Sudoku} sudoku the state of the game
-     * @returns {SudokuStateChange[]} an array of moves that could
+     * @returns {SudokuStateChange[]} an array of moves that could be
      * done according this rule
      */
     static lcRuleFn: TRuleFunction = (sudoku) => {
@@ -94,10 +93,20 @@ export class BasicRules {
         return moves;
     }
 
-    //TODO document and comment!
+    /**
+     * The 'naked pair rule' checks each unit whether there are two squares
+     * that have only the same two candidates. If it finds such a pair, it
+     * removes their candidate from all other squares that are in units shared
+     * by this pair.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be
+     * done according this rule
+     */
     static npRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
+        //for each unit
         units.forEach((unit) => {
             // get all squares with two candidates remaining
             let twinCandidates: Square[] = [];
@@ -107,6 +116,7 @@ export class BasicRules {
                     twinCandidates.push(square);
                 }
             });
+            // for these candidates find a naked pair
             twinCandidates.forEach((firstTwinCandidate, firstIndex) => {
                 twinCandidates.forEach((secondTwinCandidate, secondIndex) => {
                     if (secondIndex > firstIndex) {
@@ -114,16 +124,20 @@ export class BasicRules {
                                 secondTwinCandidate.getCandidates())) {
                             // naked pair found!
                             let valuesToRemove = firstTwinCandidate.getCandidates();
+                            // find common units
                             let commonUnitIndices = _.intersection(
                                 firstTwinCandidate.getUnitIndices(),
                                 secondTwinCandidate.getUnitIndices()
                             );
+                            // for each common unit
                             commonUnitIndices.forEach((unitIndex) => {
                                 let unit = sudoku.getUnits()[unitIndex];
+                                // for each square in these common units
                                 unit.forEach((square) => {
                                     let squareIndex = square.getIndex();
                                     if (firstTwinCandidate.getIndex() !== squareIndex &&
                                         secondTwinCandidate.getIndex() !== squareIndex) {
+                                        // add a move
                                         let move = new SudokuStateChange(
                                             squareIndex, valuesToRemove!,
                                             'removed one of ' +
