@@ -36,8 +36,8 @@ export class BasicRules {
                     let square = unit[index];
                     let candidates = square.getCandidates();
                     if (candidates) {
-                        let reason = 'Set ' + square.getName() + 'to' +
-                            candidates[0] +  'in unit ' +
+                        let reason = 'Set ' + square.getName() + ' to ' +
+                            candidates[0] +  ' in unit ' +
                             Sudoku.unitNames[unitIndex];
                         moves.push(new SudokuStateChange(square.getIndex(),
                             candidates[0], reason
@@ -93,9 +93,10 @@ export class BasicRules {
         squares.forEach((square) => {
             let candidates = square.getCandidates();
             if (candidates !== null && candidates.length === 1) {
-                //TODO refactor
-                moves.push(new SudokuStateChange(square.getIndex(), candidates[0],
-                    'in square ' + square.getName()));
+                let candidate = candidates[0];
+                let reason = 'Set ' + square.getName() + ' to ' + candidate;
+                moves.push(new SudokuStateChange(square.getIndex(), candidate,
+                    reason));
             }
         });
         return moves;
@@ -152,11 +153,10 @@ export class BasicRules {
                                                 valuesToRemove);
                                         // if there is an intersection add a move
                                         if (!_.isEqual(intersection, [])) {
-                                            //TODO refactor
                                             let move = new SudokuStateChange(
                                                 square.getIndex(), intersection,
                                                 'removed  ' +
-                                                intersection + 'candidates of ' +
+                                                intersection + ' from candidates of ' +
                                                 square.getName());
                                             moves.push(move);
                                         }
