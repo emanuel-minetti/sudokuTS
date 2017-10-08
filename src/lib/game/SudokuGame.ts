@@ -68,44 +68,36 @@ export class SudokuGame {
             // set a value
             try {
                 this.currentState.setValue(move.getIndex(), value);
-                this.changes.push(new SudokuStateChange(move.getIndex(),
-                    move.getValue(), move.getReason(), move.getRating()));
-                let rating = move.getRating();
-                if (rating) {
-                    this.rating = this.rating ? this.rating += rating : rating;
-                }
-                if (this.currentState.isSolved()) {
-                    this.solvedState = this.currentState;
-                }
-                return true;
+                return this.recordChange(move);
             }
             catch (e) {
-                return false
+                return false;
             }
         } else {
             // remove candidates
             try {
-                if (this.currentState.removeCandidates(move.getIndex(), value)) {
-                    this.changes.push(new SudokuStateChange(move.getIndex(),
-                        move.getValue(), move.getReason(), move.getRating()));
-                    let rating = move.getRating();
-                    if (rating) {
-                        this.rating = this.rating ? this.rating += rating : rating;
-                    }
-                    if (this.currentState.isSolved()) {
-                        this.solvedState = this.currentState;
-                    }
-                    return true;
-                }
-                return false;
+                this.currentState.removeCandidates(move.getIndex(), value);
+                return this.recordChange(move);
             }
             catch (e) {
-                return false
+                return false;
             }
         }
     };
 
-    //TODO Refactor
+    private recordChange(move: SudokuStateChange) {
+        this.changes.push(new SudokuStateChange(move.getIndex(),
+            move.getValue(), move.getReason(), move.getRating()));
+        let rating = move.getRating();
+        if (rating) {
+            this.rating = this.rating ? this.rating += rating : rating;
+        }
+        if (this.currentState.isSolved()) {
+            this.solvedState = this.currentState;
+        }
+        return true;
+    }
+
     /**
      * Returns a string summoning all changes made to this game.
      *
@@ -118,10 +110,6 @@ export class SudokuGame {
             changeString = '';
             changeString += change.getReason() + '\n';
             changeString += '\tRating: ' + change.getRating() + '\n';
-            // changeString = 'Changed Square ' + this.currentState.getSquares()[change.getIndex()].getName();
-            // changeString += ' to value ' + change.getValue();
-            // changeString += change.getReason() ? ' because ' + change.getReason() + '\n' : '\n';
-            // changeString += '\tRating: ' + change.getRating() + '\n';
             stringArray.push(changeString)
         });
         return stringArray.join('');

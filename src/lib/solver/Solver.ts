@@ -1,10 +1,7 @@
 import {SudokuGame} from '../game/SudokuGame';
-
-import {Sudoku} from "../game/Sudoku";
+import {SolverRule} from "./SolverRule";
 import {BasicRules} from "./BasicRules";
 import * as _ from "lodash";
-import {SudokuStateChange} from "../game/SudokuStateChange";
-import {SolverRule} from "./SolverRule";
 
 
 /**

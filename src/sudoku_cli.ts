@@ -1,7 +1,6 @@
 import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
-import {SudokuCli, SudokuCliOptions} from "./lib/cli/SudokuCli";
-import {log} from "util";
+import {SudokuCli} from "./lib/cli/SudokuCli";
 
 try {
     let options = SudokuCli.parseArguments(process.argv);

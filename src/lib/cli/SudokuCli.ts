@@ -1,6 +1,6 @@
 import {readFileSync} from 'fs';
-import minimist = require('minimist');
 import * as _ from 'lodash';
+import minimist = require('minimist');
 
 /**
  * An interface used to return the command line options.

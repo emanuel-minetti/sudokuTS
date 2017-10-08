@@ -155,7 +155,7 @@ export class BasicRules {
                                         if (!_.isEqual(intersection, [])) {
                                             let move = new SudokuStateChange(
                                                 square.getIndex(), intersection,
-                                                'removed  ' +
+                                                'removed ' +
                                                 intersection + ' from candidates of ' +
                                                 square.getName());
                                             moves.push(move);
