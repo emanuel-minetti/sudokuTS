@@ -72,6 +72,7 @@ export class BasicRules {
         });
         return moves;
     }
+
     /**
      * The 'last candidate rule' checks for each square whether there is only
      * one last candidate left and sets it to this value.
@@ -167,13 +168,16 @@ export class BasicRules {
     constructor() {
         this.rules = [];
 
-        let lsfRule: SolverRule = new SolverRule('last square free rule ', 0.5, BasicRules.lsfRuleFn);
+        let lsfRule: SolverRule = new SolverRule('last square free rule ', 0.5,
+            BasicRules.lsfRuleFn);
         this.rules.push(lsfRule);
 
-        let lslRule = new SolverRule('last square left rule ', 1, BasicRules.lslRuleFn);
+        let lslRule = new SolverRule('last square left rule ', 1,
+            BasicRules.lslRuleFn);
         this.rules.push(lslRule);
 
-        let lcRule = new SolverRule('last candidate rule ', 2, BasicRules.lcRuleFn);
+        let lcRule = new SolverRule('last candidate rule ', 2,
+            BasicRules.lcRuleFn);
         this.rules.push(lcRule);
 
         let npRule = new SolverRule('naked pair rule ', 4, BasicRules.npRuleFn);
