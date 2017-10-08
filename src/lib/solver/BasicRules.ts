@@ -7,7 +7,7 @@ import * as _ from "lodash";
 /**
  * A class grouping the simple sudoku rules.
  *
- * The rules are taken from the website 'http://www.sudokuwiki.org/sudoku.htm'
+ * The rules were taken from the website 'http://www.sudokuwiki.org/sudoku.htm'
  * run by Andrew Stuart. The naming of the rule mostly follows the naming
  * on that site.
  */
@@ -36,8 +36,12 @@ export class BasicRules {
                     let square = unit[index];
                     let candidates = square.getCandidates();
                     if (candidates) {
+                        let reason = 'Set ' + square.getName() + 'to' +
+                            candidates[0] +  'in unit ' +
+                            Sudoku.unitNames[unitIndex];
                         moves.push(new SudokuStateChange(square.getIndex(),
-                            candidates[0], 'in unit ' + Sudoku.unitNames[unitIndex]));
+                            candidates[0], reason
+                            ));
                     }
                 })
             }
@@ -65,8 +69,10 @@ export class BasicRules {
                 });
                 if (squares.length === 1) {
                     let square = squares[0];
+                    let reason = 'Set ' + square.getName() + ' to ' + value +
+                        ' in unit ' + Sudoku.unitNames[index];
                     moves.push(new SudokuStateChange(square.getIndex(), value,
-                        'for value ' + value + ' in unit ' + Sudoku.unitNames[index]));
+                        reason));
                 }
             })
         });
@@ -87,6 +93,7 @@ export class BasicRules {
         squares.forEach((square) => {
             let candidates = square.getCandidates();
             if (candidates !== null && candidates.length === 1) {
+                //TODO refactor
                 moves.push(new SudokuStateChange(square.getIndex(), candidates[0],
                     'in square ' + square.getName()));
             }
@@ -145,6 +152,7 @@ export class BasicRules {
                                                 valuesToRemove);
                                         // if there is an intersection add a move
                                         if (!_.isEqual(intersection, [])) {
+                                            //TODO refactor
                                             let move = new SudokuStateChange(
                                                 square.getIndex(), intersection,
                                                 'removed  ' +
