@@ -115,10 +115,13 @@ export class SudokuGame {
         let stringArray: string[] = [];
         this.changes.forEach((change) => {
             let changeString: string;
-            changeString = 'Changed Square ' + this.currentState.getSquares()[change.getIndex()].getName();
-            changeString += ' to value ' + change.getValue();
-            changeString += change.getReason() ? ' because ' + change.getReason() + '\n' : '\n';
+            changeString = '';
+            changeString += change.getReason() + '\n';
             changeString += '\tRating: ' + change.getRating() + '\n';
+            // changeString = 'Changed Square ' + this.currentState.getSquares()[change.getIndex()].getName();
+            // changeString += ' to value ' + change.getValue();
+            // changeString += change.getReason() ? ' because ' + change.getReason() + '\n' : '\n';
+            // changeString += '\tRating: ' + change.getRating() + '\n';
             stringArray.push(changeString)
         });
         return stringArray.join('');
