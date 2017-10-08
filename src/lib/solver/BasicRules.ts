@@ -134,16 +134,23 @@ export class BasicRules {
                                 let unit = sudoku.getUnits()[unitIndex];
                                 // for each square in these common units
                                 unit.forEach((square) => {
-                                    let squareIndex = square.getIndex();
-                                    if (firstTwinCandidate.getIndex() !== squareIndex &&
-                                        secondTwinCandidate.getIndex() !== squareIndex) {
-                                        // add a move
-                                        let move = new SudokuStateChange(
-                                            squareIndex, valuesToRemove!,
-                                            'removed one of ' +
-                                            valuesToRemove + 'candidates of ' +
-                                            square.getName());
-                                        moves.push(move);
+                                    if (firstTwinCandidate !== square &&
+                                        secondTwinCandidate !== square) {
+                                        // find intersection from square's
+                                        // candidates and values to remove
+                                        let intersection =
+                                            _.intersection(
+                                                square.getCandidates(),
+                                                valuesToRemove);
+                                        // if there is an intersection add a move
+                                        if (!_.isEqual(intersection, [])) {
+                                            let move = new SudokuStateChange(
+                                                square.getIndex(), intersection,
+                                                'removed  ' +
+                                                intersection + 'candidates of ' +
+                                                square.getName());
+                                            moves.push(move);
+                                        }
                                     }
                                 })
                             })
