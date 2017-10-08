@@ -168,19 +168,19 @@ export class BasicRules {
     constructor() {
         this.rules = [];
 
-        let lsfRule: SolverRule = new SolverRule('last square free rule ', 0.5,
+        let lsfRule: SolverRule = new SolverRule('Last Square Free Rule: ', 0.5,
             BasicRules.lsfRuleFn);
         this.rules.push(lsfRule);
 
-        let lslRule = new SolverRule('last square left rule ', 1,
+        let lslRule = new SolverRule('Last Square Left Rule: ', 1,
             BasicRules.lslRuleFn);
         this.rules.push(lslRule);
 
-        let lcRule = new SolverRule('last candidate rule ', 2,
+        let lcRule = new SolverRule('Last Candidate Rule: ', 2,
             BasicRules.lcRuleFn);
         this.rules.push(lcRule);
 
-        let npRule = new SolverRule('naked pair rule ', 4, BasicRules.npRuleFn);
+        let npRule = new SolverRule('Naked Pair Rule: ', 4, BasicRules.npRuleFn);
         this.rules.push(npRule);
     }
 }

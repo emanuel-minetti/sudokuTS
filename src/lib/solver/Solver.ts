@@ -29,7 +29,7 @@ export class Solver {
     }
 
     /**
-     * This method actually solves the associated game.
+     * This method tries to solve the associated game.
      *
      * It applies every rule registered with this solver.
      * In a loop it tries each rule from simplest to
