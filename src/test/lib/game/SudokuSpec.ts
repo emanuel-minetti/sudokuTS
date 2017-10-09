@@ -41,6 +41,19 @@ describe('A Square of an empty Sudoku ', () => {
         expect(sudoku.getSquares()[square.getPeerIndices()[10]].getCandidates()).not.toContain(3);
         expect(sudoku.getSquares()[square.getPeerIndices()[10]].getCandidates()).toContain(2);
     });
+    
+    it('should not remove a candidate from an already set value', () => {
+        expect(square.removeCandidates([2, 3])).toBe(false);
+    });
+
+    it('should not remove a value from its candidates that is not contained', () => {
+        expect(sudoku.getSquares()[square.getPeerIndices()[10]].removeCandidates([3])).toBe(false);
+    });
+
+    it('should remove a value from its candidates that is contained', () => {
+        expect(sudoku.getSquares()[square.getPeerIndices()[10]].removeCandidates([2])).toBe(true);
+        expect(sudoku.getSquares()[square.getPeerIndices()[10]].getCandidates()).not.toContain(2);
+    });
 
     it('should report correct unit names and indices', () => {
         expect(square.getRowName()).toEqual('C');
@@ -48,6 +61,11 @@ describe('A Square of an empty Sudoku ', () => {
         expect(square.getColumnName()).toEqual('9');
         expect(square.getColumnIndex()).toEqual(8);
         expect(square.getBoxIndex()).toEqual(2);
+    });
+
+    it('should report all its units', () => {
+        expect(square.getUnitIndices().map((unitIndex) =>
+            Sudoku.unitNames[unitIndex])).toEqual(['C', '9', 'III']);
     });
 });
 
@@ -132,6 +150,10 @@ describe('A sudoku', () => {
         //unit[22] is unit V
         expect(sudoku.getUnits()[22].map((square) => square.getValue())).
         toEqual([null, null, 7, 1, null, 9, 4, null, null]);
+    });
+
+    it('should not remove values from the candidates of a square that aren\'t candidates', () => {
+        expect(sudoku.removeCandidates(9, [2, 1])).toBe(false);
     });
 
 })

@@ -131,7 +131,8 @@ export class Sudoku {
      * Sets a value of a square or throws an error.
      *
      * Sets the given value of the {@code Square} with the given
-     * index.
+     * index. If this value can't be set an error is thrown. The
+     * message of that error explains why the value can't be set.
      *
      * @param {number} index of the square to set its value
      * @param {number} value to set
