@@ -85,6 +85,18 @@ describe('A newly created SudokuGame', () => {
     it('should report its rating', () => {
         expect(sudokuGame.getRating()).toEqual(0.2);
     });
+
+    it('should not be able to change  the state of a game with removing' +
+        ' candidates illegally', () => {
+        let move = new SudokuStateChange(79, [2, 7], 'removing test', 0.1);
+        expect(sudokuGame.changeState(move)).toBe(false);
+    });
+
+    it('should be able to change  the state of a game with removing' +
+        ' candidates legally', () => {
+        let move = new SudokuStateChange(79, [3, 8], 'removing test', 0.1);
+        expect(sudokuGame.changeState(move)).toBe(true);
+    });
 });
 
 describe('A Game should report when it\'s isSolved', () => {
@@ -139,5 +151,11 @@ describe('A Game should report when it\'s isSolved', () => {
                '264 351 987 \n'
            );
        }
+   });
+   
+   it('should return a string from a toString method', () => {
+       let gameString = game.toString();
+       expect(gameString).toMatch(/^Moves:\n/);
+       expect(gameString).toMatch(/\d|\*\n$/);
    });
 });
