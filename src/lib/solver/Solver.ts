@@ -1,7 +1,8 @@
 import {SudokuGame} from '../game/SudokuGame';
 import {SolverRule} from "./SolverRule";
-import {BasicRules} from "./BasicRules";
+import {MostBasicRules} from "./MostBasicRules";
 import * as _ from "lodash";
+import {BasicRules} from "./BasicRules";
 
 
 /**
@@ -21,8 +22,10 @@ export class Solver {
     }
 
     addStandardRules() {
+        let mostBasicRules = new MostBasicRules();
         let basicRules = new BasicRules();
-        this.rules = _.concat(this.rules, basicRules.rules)
+        this.rules = _.concat(this.rules, mostBasicRules.rules);
+        this.rules = _.concat(this.rules, basicRules.rules);
     }
 
     /**

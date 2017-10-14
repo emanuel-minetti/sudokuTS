@@ -1,6 +1,6 @@
 import {SudokuGame} from "../../../lib/game/SudokuGame";
 import {Solver} from "../../../lib/solver/Solver";
-import {BasicRules} from "../../../lib/solver/BasicRules";
+import {MostBasicRules} from "../../../lib/solver/MostBasicRules";
 import {SolverRule} from "../../../lib/solver/SolverRule";
 
 describe('A newly created Solver', () => {
@@ -25,12 +25,12 @@ describe('A newly created Solver', () => {
         });
 
         it('should be possible to create a new rule', () => {
-            let rule = new SolverRule('last square free ', 0.5, BasicRules.lsfRuleFn);
+            let rule = new SolverRule('last square free ', 0.5, MostBasicRules.lsfRuleFn);
             expect(rule).toEqual(jasmine.any(SolverRule));
         });
 
         it('should be able to add one rule', () => {
-            let rule = new SolverRule('last square free ', 0.5, BasicRules.lsfRuleFn);
+            let rule = new SolverRule('last square free ', 0.5, MostBasicRules.lsfRuleFn);
             solver.addRules([rule]);
         });
 
@@ -40,8 +40,8 @@ describe('A newly created Solver', () => {
 
         it( 'should be able to add an array of rules', () => {
             let rules: SolverRule[] = [];
-            rules.push(new SolverRule('last square left rule ', 1, BasicRules.lslRuleFn));
-            rules.push(new SolverRule('last candidate ', 1, BasicRules.lcRuleFn))
+            rules.push(new SolverRule('last square left rule ', 1, MostBasicRules.lslRuleFn));
+            rules.push(new SolverRule('last candidate ', 1, MostBasicRules.lcRuleFn))
             solver.addRules(rules);
         });
 
