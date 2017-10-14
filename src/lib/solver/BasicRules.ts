@@ -2,6 +2,7 @@ import {SolverRule, TRuleFunction} from "./SolverRule";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Square} from "../game/Square";
 import * as _ from "lodash";
+import {Sudoku} from "../game/Sudoku";
 
 /**
  * A class grouping the simple sudoku rules.
@@ -88,6 +89,48 @@ export class BasicRules {
         return moves;
     };
 
+    private static _hpRuleFn: TRuleFunction = (sudoku) => {
+        let moves: SudokuStateChange[] = [];
+        let units = sudoku.getUnits();
+        let allPairs: number[][] = [];
+        Sudoku.values.forEach((firstValue) => {
+           Sudoku.values.forEach((secondValue) => {
+                if (firstValue <= secondValue) {
+                    allPairs.push([firstValue, secondValue]);
+                }
+           });
+        });
+        //for each unit
+        units.forEach((unit) => {
+            //for each pair of values
+            allPairs.forEach((pair) => {
+               //find all squares that have one of the pair in their candidates
+               let containingSquares: Square[] = [];
+               unit.forEach((square) => {
+                   let candidates = square.getCandidates();
+                  if (candidates &&
+                      _.intersection(candidates, pair).length != 0) {
+                      containingSquares.push(square);
+                  }
+               });
+               if (containingSquares.length === 2) {
+                   //hidden pair found
+                   //so remove the difference from each square
+                   containingSquares.forEach((square) => {
+                      let difference = _.difference(square.getCandidates(), pair);
+                      if (difference.length !== 0) {
+                          let move = new SudokuStateChange(square.getIndex(),
+                              difference, 'removed ' +
+                              difference + ' from candidates of ' +
+                              square.getName());
+                      }
+                   });
+               }
+            });
+        });
+        return moves;
+    }
+
     rules: SolverRule[];
 
     constructor() {
@@ -95,6 +138,8 @@ export class BasicRules {
 
         let npRule = new SolverRule('Naked Pair Rule: ', 4, BasicRules._npRuleFn);
         this.rules.push(npRule);
-    }
 
-}
+        let hpRule = new SolverRule('Hidden Pair Rule: ', 4, BasicRules._hpRuleFn);
+        this.rules.push(hpRule);
+    }
+};
