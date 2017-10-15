@@ -86,6 +86,87 @@ export class BasicRules {
         return moves;
     };
 
+    /**
+     * The 'naked triple rule' checks each unit whether there are three squares
+     * that have only the same three candidates. If it finds such a triple, it
+     * removes their candidates from all other squares that are in units shared
+     * by this pair.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be
+     * done according this rule
+     */
+    private static _ntRuleFn: TRuleFunction = (sudoku) => {
+        let moves: SudokuStateChange[] = [];
+        let units = sudoku.getUnits();
+        //for each unit
+        units.forEach((unit) => {
+            // get all squares with three candidates remaining
+            let tripleCandidates: Square[] = [];
+            unit.forEach((square) => {
+                let squareCandidates = square.getCandidates();
+                if (squareCandidates !== null) {
+                    tripleCandidates.push(square);
+                }
+            });
+            // for these candidates find a naked triple
+            tripleCandidates.forEach((firstTripleCandidate, firstIndex) => {
+                tripleCandidates.forEach(
+                    (secondTripleCandidate, secondIndex) => {
+                    if (secondIndex > firstIndex) {
+                        tripleCandidates.forEach(
+                            (thirdTripleCandidate, thirdIndex) => {
+                            if (thirdIndex > secondIndex) {
+                                let union = _.union(
+                                    firstTripleCandidate.getCandidates(),
+                                    secondTripleCandidate.getCandidates(),
+                                    thirdTripleCandidate.getCandidates());
+                                if (union.length === 3) {
+                                    // naked triple found
+                                    // find common units
+                                    let commonUnitIndices = _.intersection(
+                                        firstTripleCandidate.getUnitIndices(),
+                                        secondTripleCandidate.getUnitIndices(),
+                                        thirdTripleCandidate.getUnitIndices()
+                                    );
+                                    // for each common unit
+                                    commonUnitIndices.forEach((unitIndex) => {
+                                        let unit = sudoku.getUnits()[unitIndex];
+                                        // for each square in this common unit
+                                        unit.forEach((square) => {
+                                            if (firstTripleCandidate !== square &&
+                                            secondTripleCandidate !== square &&
+                                            thirdTripleCandidate !== square) {
+                                                // find intersection from square's
+                                                // candidates and values to remove
+                                                let intersection = _.intersection(
+                                                    square.getCandidates(), union
+                                                );
+                                                // if there is an intersection
+                                                // add a move
+                                                if (intersection.length !== 0) {
+                                                    let move = new SudokuStateChange(
+                                                        square.getIndex(),
+                                                        intersection,
+                                                        'removed ' +
+                                                        intersection +
+                                                        ' from candidates of ' +
+                                                        square.getName());
+                                                    moves.push(move);
+                                                }
+                                            }
+                                        })
+                                    });
+                                }
+                            }
+                        })
+                    }
+                })
+            });
+        });
+        return moves;
+    };
+
     private static _hpRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
@@ -146,5 +227,8 @@ export class BasicRules {
 
         let hpRule = new SolverRule('Hidden Pair Rule: ', 4, BasicRules._hpRuleFn);
         this.rules.push(hpRule);
+
+        let ntRule = new SolverRule('Naked Triple Rule: ', 4, BasicRules._ntRuleFn);
+        this.rules.push(ntRule);
     }
 };
