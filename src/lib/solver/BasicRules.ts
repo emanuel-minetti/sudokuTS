@@ -11,15 +11,8 @@ import {Sudoku} from "../game/Sudoku";
  * run by Andrew Stuart. The naming of the rule mostly follows the naming
  * on that site.
  */
-
 export class BasicRules {
-    static get npRuleFn(): TRuleFunction {
-        return this._npRuleFn;
-    }
 
-    static set npRuleFn(value: TRuleFunction) {
-        this._npRuleFn = value;
-    }
     /**
      * The 'naked pair rule' checks each unit whether there are two squares
      * that have only the same two candidates. If it finds such a pair, it
@@ -39,7 +32,8 @@ export class BasicRules {
             let twinCandidates: Square[] = [];
             unit.forEach((square) => {
                 let squareCandidates = square.getCandidates();
-                if (squareCandidates !== null && squareCandidates.length === 2) {
+                if (squareCandidates !== null &&
+                    squareCandidates.length === 2) {
                     twinCandidates.push(square);
                 }
             });
@@ -50,7 +44,8 @@ export class BasicRules {
                         if (_.isEqual(firstTwinCandidate.getCandidates(),
                                 secondTwinCandidate.getCandidates())) {
                             // naked pair found!
-                            let valuesToRemove = firstTwinCandidate.getCandidates();
+                            let valuesToRemove =
+                                firstTwinCandidate.getCandidates();
                             // find common units
                             let commonUnitIndices = _.intersection(
                                 firstTwinCandidate.getUnitIndices(),
@@ -72,9 +67,11 @@ export class BasicRules {
                                         // if there is an intersection add a move
                                         if (!_.isEqual(intersection, [])) {
                                             let move = new SudokuStateChange(
-                                                square.getIndex(), intersection,
+                                                square.getIndex(),
+                                                intersection,
                                                 'removed ' +
-                                                intersection + ' from candidates of ' +
+                                                intersection +
+                                                ' from candidates of ' +
                                                 square.getName());
                                             moves.push(move);
                                         }
@@ -94,38 +91,46 @@ export class BasicRules {
         let units = sudoku.getUnits();
         let allPairs: number[][] = [];
         Sudoku.values.forEach((firstValue) => {
-           Sudoku.values.forEach((secondValue) => {
+            Sudoku.values.forEach((secondValue) => {
                 if (firstValue <= secondValue) {
                     allPairs.push([firstValue, secondValue]);
                 }
-           });
+            });
         });
         //for each unit
         units.forEach((unit) => {
             //for each pair of values
             allPairs.forEach((pair) => {
-               //find all squares that have one of the pair in their candidates
-               let containingSquares: Square[] = [];
-               unit.forEach((square) => {
-                   let candidates = square.getCandidates();
-                  if (candidates &&
-                      _.intersection(candidates, pair).length != 0) {
-                      containingSquares.push(square);
-                  }
-               });
-               if (containingSquares.length === 2) {
-                   //hidden pair found
-                   //so remove the difference from each square
-                   containingSquares.forEach((square) => {
-                      let difference = _.difference(square.getCandidates(), pair);
-                      if (difference.length !== 0) {
-                          let move = new SudokuStateChange(square.getIndex(),
-                              difference, 'removed ' +
-                              difference + ' from candidates of ' +
-                              square.getName());
-                      }
-                   });
-               }
+                //find all squares that have one of the pair in their candidates
+                let containingSquares: Square[] = [];
+                unit.forEach((square) => {
+                    let candidates = square.getCandidates();
+                    let intersection = _.intersection(candidates, pair);
+                    if (candidates && intersection.length != 0) {
+                        containingSquares.push(square);
+                    }
+                });
+                if (containingSquares.length === 2) {
+                    let intersection = _.intersection(
+                        containingSquares[0].getCandidates(),
+                        containingSquares[1].getCandidates(),
+                        pair);
+                    if (intersection.length === 2) {
+                        //hidden pair found
+                        //so remove the difference from each square
+                        containingSquares.forEach((square) => {
+                            let difference = _.difference(
+                                square.getCandidates(), pair);
+                            if (difference.length !== 0) {
+                                let move = new SudokuStateChange(square.getIndex(),
+                                    difference, 'removed ' +
+                                    difference + ' from candidates of ' +
+                                    square.getName());
+                                moves.push(move);
+                            }
+                        });
+                    }
+                }
             });
         });
         return moves;
