@@ -23,7 +23,7 @@ export class RulesHelper {
                     tupels.push([square]);
                 });
             } else {
-                let newTupels = tupels.slice();
+                let newTupels:Square[][] = [];
                 tupels.forEach((tupel) => {
                     squares.forEach((square) => {
                         if(tupel[tupel.length - 1].getIndex() < square.getIndex()) {
@@ -34,6 +34,14 @@ export class RulesHelper {
                 tupels = newTupels;
             }
         })
+        // tupels.forEach((tupel) => {
+        //     console.log('Tupel: ')
+        //     tupel.forEach((square) => {
+        //         console.log(square.getIndex() + ' ');
+        //     })
+        //     console.log('\n')
+        // })
+
         return tupels;
     }
 }
