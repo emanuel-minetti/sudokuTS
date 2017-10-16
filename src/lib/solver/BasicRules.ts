@@ -101,14 +101,7 @@ export class BasicRules {
         let units = sudoku.getUnits();
         //for each unit
         units.forEach((unit) => {
-            // get all squares with three candidates remaining
-            let tripleCandidates: Square[] = [];
-            unit.forEach((square) => {
-                let squareCandidates = square.getCandidates();
-                if (squareCandidates !== null) {
-                    tripleCandidates.push(square);
-                }
-            });
+            let tripleCandidates: Square[] = BasicRules._getUnsetSquares(unit);
             // for these candidates find a naked triple
             tripleCandidates.forEach((firstTripleCandidate, firstIndex) => {
                 tripleCandidates.forEach(
@@ -215,6 +208,27 @@ export class BasicRules {
             });
         });
         return moves;
+    }
+
+    //TODO document!
+    private static _getUnsetSquares(unit: Square[]): Square[] {
+        let unsetSquares: Square[] = [];
+        unit.forEach((square) => {
+           if (square.getCandidates() !== null)  {
+               unsetSquares.push(square);
+           }
+        });
+        return unsetSquares;
+    }
+
+    //TODO implement and document!
+    private static _getTupelsOfSquares(squares: Square[], length: number): Square[][] {
+        let tupels: Square[][] = [];
+        let tupel: Square[];
+        for (let tupelIndex = 0; tupelIndex < length; tupelIndex++) {
+
+        }
+        return tupels;
     }
 
     rules: SolverRule[];
