@@ -8,7 +8,7 @@ import {Sudoku} from "../game/Sudoku";
  * A class grouping the simple sudoku rules.
  *
  * The rules were taken from the website 'http://www.sudokuwiki.org/sudoku.htm'
- * run by Andrew Stuart. The naming of the rule mostly follows the naming
+ * run by Andrew Stuart. The naming of the rules mostly follows the naming
  * on that site.
  */
 export class BasicRules {
