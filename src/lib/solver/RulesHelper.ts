@@ -34,14 +34,6 @@ export class RulesHelper {
                 tupels = newTupels;
             }
         })
-        // tupels.forEach((tupel) => {
-        //     console.log('Tupel: ')
-        //     tupel.forEach((square) => {
-        //         console.log(square.getIndex() + ' ');
-        //     })
-        //     console.log('\n')
-        // })
-
         return tupels;
     }
 }
