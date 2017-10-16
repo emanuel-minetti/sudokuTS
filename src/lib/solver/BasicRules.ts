@@ -3,6 +3,7 @@ import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Square} from "../game/Square";
 import * as _ from "lodash";
 import {Sudoku} from "../game/Sudoku";
+import {RulesHelper} from "./RulesHelper";
 
 /**
  * A class grouping the simple sudoku rules.
@@ -101,7 +102,7 @@ export class BasicRules {
         let units = sudoku.getUnits();
         //for each unit
         units.forEach((unit) => {
-            let tripleCandidates: Square[] = BasicRules._getUnsetSquares(unit);
+            let tripleCandidates: Square[] = RulesHelper.getUnsetSquares(unit);
             // for these candidates find a naked triple
             tripleCandidates.forEach((firstTripleCandidate, firstIndex) => {
                 tripleCandidates.forEach(
@@ -210,26 +211,6 @@ export class BasicRules {
         return moves;
     }
 
-    //TODO document!
-    private static _getUnsetSquares(unit: Square[]): Square[] {
-        let unsetSquares: Square[] = [];
-        unit.forEach((square) => {
-           if (square.getCandidates() !== null)  {
-               unsetSquares.push(square);
-           }
-        });
-        return unsetSquares;
-    }
-
-    //TODO implement and document!
-    private static _getTupelsOfSquares(squares: Square[], length: number): Square[][] {
-        let tupels: Square[][] = [];
-        let tupel: Square[];
-        for (let tupelIndex = 0; tupelIndex < length; tupelIndex++) {
-
-        }
-        return tupels;
-    }
 
     rules: SolverRule[];
 
