@@ -66,7 +66,6 @@ export class SudokuGame {
         let value = move.getValue();
         if (typeof value === "number") {
             // set a value
-            //TODO review: is it justified to different interfaces?
             try {
                 this.currentState.setValue(move.getIndex(), value);
                 return this.recordChange(move);

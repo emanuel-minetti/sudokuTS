@@ -3,8 +3,18 @@ import * as _ from "lodash";
 import {Sudoku} from "../game/Sudoku";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 
+/**
+ * A class with some static functions to help building solver rules.
+ */
 export class RulesHelper {
-    //TODO document!
+
+    /**
+     * Takes an array of squares, i.e. a unit, and filters out the already
+     * set ones.
+     *
+     * @param {Square[]} unit the squares to filter
+     * @returns {Square[]} the filtered squares
+     */
     static getUnsetSquares(unit: Square[]): Square[] {
         let unsetSquares: Square[] = [];
         unit.forEach((square) => {
@@ -15,31 +25,53 @@ export class RulesHelper {
         return unsetSquares;
     }
 
-    //TODO validate input and document!
+    //TODO validate input!
+    /**
+     * Takes an array of squares and returns all tupeles of a given length.
+     *
+     * Returns all sorted tupels with unique squares of a given length and
+     * array of squares.
+     *
+     * @param {Square[]} squares
+     * @param {number} length
+     * @returns {Square[][]}
+     */
     static getTupelsOfSquares(squares: Square[], length: number): Square[][] {
         let tupels: Square[][] = [];
         let tupleIndices = _.range(length);
         tupleIndices.forEach((tupleIndex) => {
             if (tupleIndex === 0) {
+                //if length is one return all squares
                 squares.forEach((square) => {
                     tupels.push([square]);
                 });
             } else {
+                //build tupels incrementally
                 let newTupels: Square[][] = [];
+                //take the tupels of length minus one
                 tupels.forEach((tupel) => {
                     squares.forEach((square) => {
                         if (tupel[tupel.length - 1].getIndex() < square.getIndex()) {
+                            //and create all possible continuations
                             newTupels.push(_.concat(tupel, square));
                         }
                     });
                 })
+                //and repeat
                 tupels = newTupels;
             }
         })
         return tupels;
     }
 
-    //TODO test, validate input and document!
+    //TODO test and validate input!
+    /**
+     * Returns all units that contain the given squares.
+     *
+     * @param {Sudoku} sudoku the sudoku
+     * @param {Square[]} squares the squares to find containing units
+     * @returns {Square[][]} the common units
+     */
     static findCommonUnits(sudoku: Sudoku, squares: Square[]): Square[][] {
         //find intersection of all unit indices of all squares
         let allUnits = sudoku.getUnits();
@@ -50,7 +82,22 @@ export class RulesHelper {
         return intersection.map((unitIndex) => allUnits[unitIndex]);
     }
 
-    //TODO document
+    /**
+     * A helper function to build a `SolverRule` or more specifically
+     * a `TRuleFunction`. It is an abstraction of the naked pair, triple
+     * and quadruple rule.
+     *
+     * For each unit it takes all tupels of the given length of the not yet
+     * set squares. For each tupel it takes all naked tupels, that is a
+     * tupel whose union of its candidates has the given length. For each
+     * such naked tuple it takes all units that contain this tuple. For each of
+     * these common units it removes the union of candidates from the condidates
+     * of its squares.
+     *
+     * @param {Sudoku} sudoku the sudoku to solve
+     * @param {number} length the length of tupel and union of candidates
+     * @returns {SudokuStateChange[]} an array of moves suggested by this rule
+     */
     static nakedTupleRule(sudoku: Sudoku, length: number): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
