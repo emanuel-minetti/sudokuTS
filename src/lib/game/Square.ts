@@ -100,7 +100,7 @@ export class Square {
     removeCandidates(values: number[]): boolean {
         let candidates = this.candidates
         let intersection = _.intersection(candidates, values);
-        if (candidates  && !_.isEqual(intersection, [])) {
+        if (candidates && !_.isEqual(intersection, [])) {
             let difference = _.difference(candidates, intersection);
             this.candidates = difference;
             return true;

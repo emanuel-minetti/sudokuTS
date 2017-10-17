@@ -85,10 +85,10 @@ export class SudokuCli {
             throw new Error('No solver chosen!')
         }
         // one initializer chosen
-        if(parsedArgs['string'] && parsedArgs['file']) {
+        if (parsedArgs['string'] && parsedArgs['file']) {
             throw new Error('Only one input may be given!')
         }
-        if(!(parsedArgs['string'] || parsedArgs['file'])) {
+        if (!(parsedArgs['string'] || parsedArgs['file'])) {
             throw new Error('No input given')
         }
 
@@ -142,6 +142,6 @@ export class SudokuCli {
     static printVersion(): string {
         let fileData = readFileSync('../package.json', {encoding: 'utf8'});
         let packageJsonData = JSON.parse(fileData);
-        return packageJsonData['main'] + ' Version: ' +packageJsonData['version'];
+        return packageJsonData['main'] + ' Version: ' + packageJsonData['version'];
     }
 }

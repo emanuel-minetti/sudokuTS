@@ -8,7 +8,7 @@ export class RulesHelper {
     static getUnsetSquares(unit: Square[]): Square[] {
         let unsetSquares: Square[] = [];
         unit.forEach((square) => {
-            if (square.getCandidates() !== null)  {
+            if (square.getCandidates() !== null) {
                 unsetSquares.push(square);
             }
         });
@@ -25,10 +25,10 @@ export class RulesHelper {
                     tupels.push([square]);
                 });
             } else {
-                let newTupels:Square[][] = [];
+                let newTupels: Square[][] = [];
                 tupels.forEach((tupel) => {
                     squares.forEach((square) => {
-                        if(tupel[tupel.length - 1].getIndex() < square.getIndex()) {
+                        if (tupel[tupel.length - 1].getIndex() < square.getIndex()) {
                             newTupels.push(_.concat(tupel, square));
                         }
                     });
@@ -45,7 +45,7 @@ export class RulesHelper {
         let allUnits = sudoku.getUnits();
         let intersection = _.range(27);
         squares.forEach((square) => {
-           intersection = _.intersection(intersection, square.getUnitIndices());
+            intersection = _.intersection(intersection, square.getUnitIndices());
         });
         return intersection.map((unitIndex) => allUnits[unitIndex]);
     }

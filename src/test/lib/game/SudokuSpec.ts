@@ -15,13 +15,13 @@ describe('A Square of an empty Sudoku ', () => {
         expect(square.getName()).toBe('C9');
     });
 
-    it ('should report its index', () => {
+    it('should report its index', () => {
         expect(square.getIndex()).toBe(26);
     });
 
     it('should report a full list of candidates', () => {
         expect(square.getCandidates()).not.toBeNull();
-        expect(square.getCandidates()).toEqual(_.range(1,10,1));
+        expect(square.getCandidates()).toEqual(_.range(1, 10, 1));
     });
 
     it('should have no value set', () => {
@@ -34,14 +34,14 @@ describe('A Square of an empty Sudoku ', () => {
 
     it('should be able to set its value', () => {
         sudoku.setValue(26, 3);
-       expect(square.getValue()).toBe(3);
+        expect(square.getValue()).toBe(3);
     });
 
     it('should update the candidates of its peers', () => {
         expect(sudoku.getSquares()[square.getPeerIndices()[10]].getCandidates()).not.toContain(3);
         expect(sudoku.getSquares()[square.getPeerIndices()[10]].getCandidates()).toContain(2);
     });
-    
+
     it('should not remove a candidate from an already set value', () => {
         expect(square.removeCandidates([2, 3])).toBe(false);
     });
@@ -107,7 +107,7 @@ describe('The sudoku class', () => {
     });
 
     it('should throw an error if a incorrect string is given', () => {
-       expect(() => Sudoku.createSudokuByString(falseSudokuString)).toThrowError('Wrong length of input!');
+        expect(() => Sudoku.createSudokuByString(falseSudokuString)).toThrowError('Wrong length of input!');
     });
 
 });
@@ -141,15 +141,13 @@ describe('A sudoku', () => {
         expect(() => sudoku.setValue(2, 2)).toThrowError();
     })
 
-    it ('should report a correct row', () => {
-        expect(sudoku.getRows()[1].map((square) => square.getValue())).
-        toEqual([null, null, 2, 8, 9, null, null, null, null]);
+    it('should report a correct row', () => {
+        expect(sudoku.getRows()[1].map((square) => square.getValue())).toEqual([null, null, 2, 8, 9, null, null, null, null]);
     });
 
-    it ('should report a correct unit', () => {
+    it('should report a correct unit', () => {
         //unit[22] is unit V
-        expect(sudoku.getUnits()[22].map((square) => square.getValue())).
-        toEqual([null, null, 7, 1, null, 9, 4, null, null]);
+        expect(sudoku.getUnits()[22].map((square) => square.getValue())).toEqual([null, null, 7, 1, null, 9, 4, null, null]);
     });
 
     it('should not remove values from the candidates of a square that aren\'t candidates', () => {

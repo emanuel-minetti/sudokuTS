@@ -25,7 +25,7 @@ describe('A newly created SudokuGame', () => {
     it('should report its original state', () => {
         expect(sudokuGame.getOriginalState()).toEqual(Sudoku.createSudokuByString(sudokuString));
     });
-    
+
     it('report a list of changes', () => {
         expect(sudokuGame.getChanges()).toEqual([]);
     });
@@ -114,48 +114,48 @@ describe('A Game should report when it\'s isSolved', () => {
         '264 351 98* \n';
 
     let game = new SudokuGame(nearlySolvedSudokuString);
-    let move = new SudokuStateChange(80, 8,'test', 0.1);
+    let move = new SudokuStateChange(80, 8, 'test', 0.1);
 
-   it('should report not to be isSolved when there is one missing square', () => {
-       expect(game.isSolved()).toBe(false);
-   }); 
-   
-   it('should report false to an illegal move', () => {
-       expect(game.changeState(move)).toBe(false);
-   });
+    it('should report not to be isSolved when there is one missing square', () => {
+        expect(game.isSolved()).toBe(false);
+    });
 
-   it('should report true to a legal last move', () => {
-       move = new SudokuStateChange(80, 7,'test', 0.1);
-       expect(game.changeState(move)).toBe(true);
-   });
+    it('should report false to an illegal move', () => {
+        expect(game.changeState(move)).toBe(false);
+    });
 
-   it('should report to be isSolved', () => {
-       expect(game.isSolved()).toBe(true);
-   });
+    it('should report true to a legal last move', () => {
+        move = new SudokuStateChange(80, 7, 'test', 0.1);
+        expect(game.changeState(move)).toBe(true);
+    });
 
-   it('should report a isSolved sudoku', () => {
-       let solvedState = game.getSolvedState();
-       expect(solvedState).not.toBeNull();
-       if (solvedState !== null) {
-           expect(solvedState.toString()).toEqual(
-               '935 214 768 \n' +
-               '672 893 154 \n' +
-               '148 765 239 \n' +
-               '            \n' +
-               '421 587 396 \n' +
-               '786 139 425 \n' +
-               '359 426 871 \n' +
-               '            \n' +
-               '513 978 642 \n' +
-               '897 642 513 \n' +
-               '264 351 987 \n'
-           );
-       }
-   });
-   
-   it('should return a string from a toString method', () => {
-       let gameString = game.toString();
-       expect(gameString).toMatch(/^Moves:\n/);
-       expect(gameString).toMatch(/\d|\*\n$/);
-   });
+    it('should report to be isSolved', () => {
+        expect(game.isSolved()).toBe(true);
+    });
+
+    it('should report a isSolved sudoku', () => {
+        let solvedState = game.getSolvedState();
+        expect(solvedState).not.toBeNull();
+        if (solvedState !== null) {
+            expect(solvedState.toString()).toEqual(
+                '935 214 768 \n' +
+                '672 893 154 \n' +
+                '148 765 239 \n' +
+                '            \n' +
+                '421 587 396 \n' +
+                '786 139 425 \n' +
+                '359 426 871 \n' +
+                '            \n' +
+                '513 978 642 \n' +
+                '897 642 513 \n' +
+                '264 351 987 \n'
+            );
+        }
+    });
+
+    it('should return a string from a toString method', () => {
+        let gameString = game.toString();
+        expect(gameString).toMatch(/^Moves:\n/);
+        expect(gameString).toMatch(/\d|\*\n$/);
+    });
 });

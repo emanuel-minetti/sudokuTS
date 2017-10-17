@@ -8,11 +8,13 @@ try {
 
     if (options.help) {
         console.log(SudokuCli.printHelp());
-    };
+    }
+    ;
 
     if (options.version) {
         console.log(SudokuCli.printVersion());
-    };
+    }
+    ;
 
     let game = new SudokuGame(sudokuString);
     let solver = new Solver(game);

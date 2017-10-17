@@ -37,11 +37,11 @@ export class MostBasicRules {
                     let candidates = square.getCandidates();
                     if (candidates) {
                         let reason = 'Set ' + square.getName() + ' to ' +
-                            candidates[0] +  ' in unit ' +
+                            candidates[0] + ' in unit ' +
                             Sudoku.unitNames[unitIndex];
                         moves.push(new SudokuStateChange(square.getIndex(),
                             candidates[0], reason
-                            ));
+                        ));
                     }
                 })
             }
