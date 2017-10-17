@@ -1,5 +1,6 @@
 import {Square} from "../game/Square";
 import * as _ from "lodash";
+import {Sudoku} from "../game/Sudoku";
 
 export class RulesHelper {
     //TODO document!
@@ -13,7 +14,7 @@ export class RulesHelper {
         return unsetSquares;
     }
 
-    //TODO test and document!
+    //TODO validate input and document!
     static getTupelsOfSquares(squares: Square[], length: number): Square[][] {
         let tupels: Square[][] = [];
         let tupleIndices = _.range(length);
@@ -35,5 +36,16 @@ export class RulesHelper {
             }
         })
         return tupels;
+    }
+
+    //TODO test, validate input and document!
+    static findCommonUnits(sudoku: Sudoku, squares: Square[]): Square[][] {
+        //find intersection of all unit indices of all squares
+        let allUnits = sudoku.getUnits();
+        let intersection = _.range(27);
+        squares.forEach((square) => {
+           intersection = _.intersection(intersection, square.getUnitIndices());
+        });
+        return intersection.map((unitIndex) => allUnits[unitIndex]);
     }
 }
