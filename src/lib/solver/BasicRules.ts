@@ -49,7 +49,7 @@ export class BasicRules {
         let allPairs: number[][] = [];
         Sudoku.values.forEach((firstValue) => {
             Sudoku.values.forEach((secondValue) => {
-                if (firstValue <= secondValue) {
+                if (firstValue < secondValue) {
                     allPairs.push([firstValue, secondValue]);
                 }
             });
@@ -93,6 +93,62 @@ export class BasicRules {
         return moves;
     }
 
+    //TODO document!
+    private static _htRuleFn: TRuleFunction = (sudoku) => {
+        let moves: SudokuStateChange[] = [];
+        let units = sudoku.getUnits();
+        let allTriples: number[][];
+        let remainingValues: number[];
+        let value: number | null;
+        units.forEach((unit) => {
+            allTriples = [];
+            remainingValues = Sudoku.values.slice();
+            unit.forEach((square) => {
+               value = square.getValue();
+               if (value) {
+                   _.pull(remainingValues, value);
+               }
+            });
+            remainingValues.forEach((firstValue) => {
+                remainingValues.forEach((secondValue) => {
+                    if (firstValue < secondValue) {
+                        remainingValues.forEach((thirdValue) => {
+                            if (secondValue < thirdValue) {
+                                allTriples.push([firstValue, secondValue, thirdValue]);
+                            }
+                        })
+                    }
+                })
+            });
+            allTriples.forEach((triple) => {
+               let squares = RulesHelper.getUnsetSquares(unit);
+               let containingSquares: Square[] = [];
+               squares.forEach((square) => {
+                   if (_.intersection(square.getCandidates(), triple).length !== 0) {
+                        containingSquares.push(square);
+                }
+               })
+               if (containingSquares.length === 3) {
+                     //hidden triple found
+                     //so remove the difference from each square
+                     containingSquares.forEach((square) => {
+                         let difference = _.difference(
+                             square.getCandidates(), triple);
+                         if (difference.length !== 0) {
+                             let move = new SudokuStateChange(square.getIndex(),
+                                 difference, 'removed ' +
+                                 difference + ' from candidates of ' +
+                                 square.getName());
+                             moves.push(move);
+                         }
+                     });
+               }
+            })
+        })
+
+        return moves;
+    }
+
     rules: SolverRule[];
 
     constructor() {
@@ -101,10 +157,13 @@ export class BasicRules {
         let npRule = new SolverRule('Naked Pair Rule: ', 4, BasicRules._npRuleFn);
         this.rules.push(npRule);
 
-        let hpRule = new SolverRule('Hidden Pair Rule: ', 4, BasicRules._hpRuleFn);
+        let hpRule = new SolverRule('Hidden Pair Rule: ', 5, BasicRules._hpRuleFn);
         this.rules.push(hpRule);
 
-        let ntRule = new SolverRule('Naked Triple Rule: ', 4, BasicRules._ntRuleFn);
+        let ntRule = new SolverRule('Naked Triple Rule: ', 6, BasicRules._ntRuleFn);
         this.rules.push(ntRule);
+
+        let htRule = new SolverRule('Hidden Triple Rule: ', 7, BasicRules._htRuleFn);
+        this.rules.push(htRule);
     }
 };
