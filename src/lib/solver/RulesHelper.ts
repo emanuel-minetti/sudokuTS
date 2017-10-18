@@ -47,7 +47,6 @@ export class RulesHelper {
                 });
             } else {
                 //build tupels incrementally
-                //TODO use reduce?!
                 let newTupels: Square[][] = [];
                 //take the tupels of length minus one
                 tupels.forEach((tupel) => {
