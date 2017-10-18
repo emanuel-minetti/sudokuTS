@@ -47,6 +47,7 @@ export class RulesHelper {
                 });
             } else {
                 //build tupels incrementally
+                //TODO use reduce?!
                 let newTupels: Square[][] = [];
                 //take the tupels of length minus one
                 tupels.forEach((tupel) => {
@@ -75,6 +76,7 @@ export class RulesHelper {
     static findCommonUnits(sudoku: Sudoku, squares: Square[]): Square[][] {
         //find intersection of all unit indices of all squares
         let allUnits = sudoku.getUnits();
+        //TODO use reduce!
         let intersection = _.range(27);
         squares.forEach((square) => {
             intersection = _.intersection(intersection, square.getUnitIndices());
@@ -109,6 +111,7 @@ export class RulesHelper {
             let tuples = RulesHelper.getTupelsOfSquares(tupleCandidates, length);
             //for these tuples find all naked tuples
             tuples.forEach((tuple) => {
+                //TODO use reduce!
                 let union: number[] = [];
                 tuple.forEach((tupleSquare) => {
                     union = _.union(union, tupleSquare.getCandidates());

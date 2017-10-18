@@ -103,12 +103,14 @@ export class BasicRules {
         units.forEach((unit) => {
             allTriples = [];
             remainingValues = Sudoku.values.slice();
+            //TODO move to a function!
             unit.forEach((square) => {
                value = square.getValue();
                if (value) {
                    _.pull(remainingValues, value);
                }
             });
+            //TODO move to a function!
             remainingValues.forEach((firstValue) => {
                 remainingValues.forEach((secondValue) => {
                     if (firstValue < secondValue) {
@@ -120,6 +122,7 @@ export class BasicRules {
                     }
                 })
             });
+            //TODO move to a function!
             allTriples.forEach((triple) => {
                let squares = RulesHelper.getUnsetSquares(unit);
                let containingSquares: Square[] = [];
