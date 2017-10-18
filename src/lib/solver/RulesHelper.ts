@@ -109,11 +109,7 @@ export class RulesHelper {
             let tuples = RulesHelper.getTupelsOfSquares(tupleCandidates, length);
             //for these tuples find all naked tuples
             tuples.forEach((tuple) => {
-                //TODO use reduce!
-                let union: number[] = [];
-                tuple.forEach((tupleSquare) => {
-                    union = _.union(union, tupleSquare.getCandidates());
-                });
+                let union = tuple.reduce((prev, curr) => _.union(prev, curr.getCandidates()), []);
                 if (union.length === length) {
                     //naked tuple found
                     //for this naked tuple find all common units
