@@ -76,11 +76,9 @@ export class RulesHelper {
     static findCommonUnits(sudoku: Sudoku, squares: Square[]): Square[][] {
         //find intersection of all unit indices of all squares
         let allUnits = sudoku.getUnits();
-        //TODO use reduce!
-        let intersection = _.range(27);
-        squares.forEach((square) => {
-            intersection = _.intersection(intersection, square.getUnitIndices());
-        });
+        let intersection = squares.reduce(
+            (prev, curr) => _.intersection(prev, curr.getUnitIndices()),
+            _.range(27));
         return intersection.map((unitIndex) => allUnits[unitIndex]);
     }
 
