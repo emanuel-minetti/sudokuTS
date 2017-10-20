@@ -178,4 +178,12 @@ export class RulesHelper {
         });
         return moves;
     }
+
+    //TODO implement and use!
+    static hiddenTupleRule(sudoku: Sudoku, length: number): SudokuStateChange[] {
+        let moves: SudokuStateChange[] = [];
+        let units = sudoku.getUnits();
+
+        return moves;
+    }
 }
