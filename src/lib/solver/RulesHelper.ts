@@ -30,38 +30,67 @@ export class RulesHelper {
      * Takes an array of squares and returns all tupeles of a given length.
      *
      * Returns all sorted tupels with unique squares of a given length and
-     * array of squares.
+     * a given array of squares.
      *
-     * @param {Square[]} squares
-     * @param {number} length
-     * @returns {Square[][]}
+     * @param {Square[]} squares the squares to get tuples from
+     * @param {number} length the length of the tuples
+     * @returns {Square[][]} the tupeles
      */
-    static getTupelsOfSquares(squares: Square[], length: number): Square[][] {
-        let tupels: Square[][] = [];
-        let tupleIndices = _.range(length);
+    static getTupelesOfSquares(squares: Square[], length: number): Square[][] {
+        let indexTuples = RulesHelper.getTuples(squares.length, length);
+        let squareTuples: Square[][] = [];
+        let squareTuple: Square[];
+        indexTuples.forEach((tuple) => {
+           squareTuple = tuple.map((index) => squares[index]);
+           squareTuples.push(squareTuple)
+        });
+        return squareTuples;
+    }
+
+
+    /**
+     * Returns all tuples of a given length of an index set of a given length.
+     *
+     * @param {number} setLength the length of the index set
+     * @param {number} tupleLength the length of the tuples
+     * @returns {number[][]} the tuples
+     */
+    static getTuples(setLength: number, tupleLength: number): number[][] {
+        if (setLength < tupleLength) {
+            throw new Error('Can\'t find tuples with unique entries of a length longer than the set!');
+        }
+        if (setLength === 0) {
+            throw new Error('Can\'t find tuples from an empty set!');
+        }
+        if (tupleLength === 0) {
+            throw new Error('Can\'t find tuples of length zero!');
+        }
+        let tuples: number[][] = [];
+        let set = _.range(setLength);
+        let tupleIndices = _.range(tupleLength);
         tupleIndices.forEach((tupleIndex) => {
             if (tupleIndex === 0) {
-                //if length is one return all squares
-                squares.forEach((square) => {
-                    tupels.push([square]);
+                //if length is one return all members
+                set.forEach((member) => {
+                    tuples.push([member]);
                 });
             } else {
-                //build tupels incrementally
-                let newTupels: Square[][] = [];
-                //take the tupels of length minus one
-                tupels.forEach((tupel) => {
-                    squares.forEach((square) => {
-                        if (tupel[tupel.length - 1].getIndex() < square.getIndex()) {
+                //build tuples incrementally
+                let newTuples: number[][] = [];
+                //take the tuples of length minus one
+                tuples.forEach((tuple) => {
+                    set.forEach((member) => {
+                        if (tuple[tuple.length - 1] < member) {
                             //and create all possible continuations
-                            newTupels.push(_.concat(tupel, square));
+                            newTuples.push(_.concat(tuple, member));
                         }
                     });
                 })
                 //and repeat
-                tupels = newTupels;
+                tuples = newTuples;
             }
         })
-        return tupels;
+        return tuples;
     }
 
     //TODO test and validate input!
@@ -90,7 +119,7 @@ export class RulesHelper {
      * set squares. For each tupel it takes all naked tupels, that is a
      * tupel whose union of its candidates has the given length. For each
      * such naked tuple it takes all units that contain this tuple. For each of
-     * these common units it removes the union of candidates from the condidates
+     * these common units it removes the union of candidates from the candidates
      * of its squares.
      *
      * @param {Sudoku} sudoku the sudoku to solve
@@ -105,7 +134,7 @@ export class RulesHelper {
             //find candidates for tuple
             let tupleCandidates: Square[] = RulesHelper.getUnsetSquares(unit);
             // for these candidates find all tuples
-            let tuples = RulesHelper.getTupelsOfSquares(tupleCandidates, length);
+            let tuples = RulesHelper.getTupelesOfSquares(tupleCandidates, length);
             //for these tuples find all naked tuples
             tuples.forEach((tuple) => {
                 let union = tuple.reduce((prev, curr) => _.union(prev, curr.getCandidates()), []);
