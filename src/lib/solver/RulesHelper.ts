@@ -179,11 +179,41 @@ export class RulesHelper {
         return moves;
     }
 
-    //TODO implement and use!
+    //TODO document and comment!
     static hiddenTupleRule(sudoku: Sudoku, length: number): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
-
+        let allTuples: number[][];
+        let remainingValues: number[];
+        let value: number | null;
+        units.forEach((unit) => {
+            remainingValues = RulesHelper.getRemainingValues(unit);
+            allTuples = RulesHelper.getTuplesOfValues(remainingValues, length);
+            allTuples.forEach((tuple) => {
+                let squares = RulesHelper.getUnsetSquares(unit);
+                let containingSquares: Square[] = [];
+                squares.forEach((square) => {
+                    if (_.intersection(square.getCandidates(), tuple).length !== 0) {
+                        containingSquares.push(square);
+                    }
+                })
+                if (containingSquares.length === length) {
+                    //hidden tuple found
+                    //so remove the difference from each square
+                    containingSquares.forEach((square) => {
+                        let difference = _.difference(
+                            square.getCandidates(), tuple);
+                        if (difference.length !== 0) {
+                            let move = new SudokuStateChange(square.getIndex(),
+                                difference, 'removed ' +
+                                difference + ' from candidates of ' +
+                                square.getName());
+                            moves.push(move);
+                        }
+                    });
+                }
+            })
+        })
         return moves;
     }
 }

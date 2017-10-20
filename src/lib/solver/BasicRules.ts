@@ -44,93 +44,12 @@ export class BasicRules {
 
     //TODO document!
     private static _hpRuleFn: TRuleFunction = (sudoku) => {
-        let moves: SudokuStateChange[] = [];
-        let units = sudoku.getUnits();
-        let allPairs: number[][] = [];
-        Sudoku.values.forEach((firstValue) => {
-            Sudoku.values.forEach((secondValue) => {
-                if (firstValue < secondValue) {
-                    allPairs.push([firstValue, secondValue]);
-                }
-            });
-        });
-        //for each unit
-        units.forEach((unit) => {
-            //for each pair of values
-            allPairs.forEach((pair) => {
-                //find all squares that have one of the pair in their candidates
-                let containingSquares: Square[] = [];
-                unit.forEach((square) => {
-                    let candidates = square.getCandidates();
-                    let intersection = _.intersection(candidates, pair);
-                    if (candidates && intersection.length != 0) {
-                        containingSquares.push(square);
-                    }
-                });
-                if (containingSquares.length === 2) {
-                    let intersection = _.intersection(
-                        containingSquares[0].getCandidates(),
-                        containingSquares[1].getCandidates(),
-                        pair);
-                    if (intersection.length === 2) {
-                        //hidden pair found
-                        //so remove the difference from each square
-                        containingSquares.forEach((square) => {
-                            let difference = _.difference(
-                                square.getCandidates(), pair);
-                            if (difference.length !== 0) {
-                                let move = new SudokuStateChange(square.getIndex(),
-                                    difference, 'removed ' +
-                                    difference + ' from candidates of ' +
-                                    square.getName());
-                                moves.push(move);
-                            }
-                        });
-                    }
-                }
-            });
-        });
-        return moves;
+        return RulesHelper.hiddenTupleRule(sudoku, 2);
     }
 
     //TODO document!
     private static _htRuleFn: TRuleFunction = (sudoku) => {
-        let moves: SudokuStateChange[] = [];
-        let units = sudoku.getUnits();
-        let allTriples: number[][];
-        let remainingValues: number[];
-        let value: number | null;
-        units.forEach((unit) => {
-            remainingValues = RulesHelper.getRemainingValues(unit);
-            allTriples = RulesHelper.getTuplesOfValues(remainingValues, 3);
-            //TODO move to a function!
-            allTriples.forEach((triple) => {
-               let squares = RulesHelper.getUnsetSquares(unit);
-               let containingSquares: Square[] = [];
-               squares.forEach((square) => {
-                   if (_.intersection(square.getCandidates(), triple).length !== 0) {
-                        containingSquares.push(square);
-                }
-               })
-               if (containingSquares.length === 3) {
-                     //hidden triple found
-                     //so remove the difference from each square
-                     containingSquares.forEach((square) => {
-                         let difference = _.difference(
-                             square.getCandidates(), triple);
-                         if (difference.length !== 0) {
-                             let move = new SudokuStateChange(square.getIndex(),
-                                 difference, 'removed ' +
-                                 difference + ' from candidates of ' +
-                                 square.getName());
-                             moves.push(move);
-                         }
-                     });
-               }
-            })
-        })
-
-        return moves;
+        return RulesHelper.hiddenTupleRule(sudoku, 3);
     }
 
     rules: SolverRule[];
