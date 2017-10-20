@@ -34,7 +34,7 @@ export class RulesHelper {
      *
      * @param {Square[]} squares the squares to get tuples from
      * @param {number} length the length of the tuples
-     * @returns {Square[][]} the tupeles
+     * @returns {Square[][]} the tuples
      */
     static getTupelesOfSquares(squares: Square[], length: number): Square[][] {
         let indexTuples = RulesHelper.getTuples(squares.length, length);
