@@ -25,7 +25,19 @@ export class RulesHelper {
         return unsetSquares;
     }
 
-    //TODO validate input!
+    //TODO document!
+    static getRemainingValues(unit: Square[]): number[] {
+        let remainingValues = Sudoku.values.slice();
+        let value: number | null;
+        unit.forEach((square) => {
+            value = square.getValue();
+            if (value) {
+                _.pull(remainingValues, value);
+            }
+        });
+        return remainingValues;
+    }
+
     /**
      * Takes an array of squares and returns all tupeles of a given length.
      *
@@ -56,15 +68,6 @@ export class RulesHelper {
      * @returns {number[][]} the tuples
      */
     static getTuples(setLength: number, tupleLength: number): number[][] {
-        if (setLength < tupleLength) {
-            throw new Error('Can\'t find tuples with unique entries of a length longer than the set!');
-        }
-        if (setLength === 0) {
-            throw new Error('Can\'t find tuples from an empty set!');
-        }
-        if (tupleLength === 0) {
-            throw new Error('Can\'t find tuples of length zero!');
-        }
         let tuples: number[][] = [];
         let set = _.range(setLength);
         let tupleIndices = _.range(tupleLength);

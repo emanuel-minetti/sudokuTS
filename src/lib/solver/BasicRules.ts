@@ -102,14 +102,7 @@ export class BasicRules {
         let value: number | null;
         units.forEach((unit) => {
             allTriples = [];
-            remainingValues = Sudoku.values.slice();
-            //TODO move to a function!
-            unit.forEach((square) => {
-               value = square.getValue();
-               if (value) {
-                   _.pull(remainingValues, value);
-               }
-            });
+            remainingValues = RulesHelper.getRemainingValues(unit);
             //TODO move to a function!
             remainingValues.forEach((firstValue) => {
                 remainingValues.forEach((secondValue) => {
