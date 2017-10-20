@@ -59,6 +59,18 @@ export class RulesHelper {
         return squareTuples;
     }
 
+    //TODO document!
+    static getTuplesOfValues (values: number[], length: number): number[][] {
+        let indexTuples = RulesHelper.getTuples(values.length, length);
+        let valueTuples: number[][] = [];
+        let valueTuple: number[];
+        indexTuples.forEach((tuple) => {
+            valueTuple = tuple.map((index) => values[index]);
+            valueTuples.push(valueTuple)
+        });
+        return valueTuples;
+    }
+
 
     /**
      * Returns all tuples of a given length of an index set of a given length.

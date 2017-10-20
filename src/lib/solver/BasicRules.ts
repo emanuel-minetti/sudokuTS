@@ -101,20 +101,8 @@ export class BasicRules {
         let remainingValues: number[];
         let value: number | null;
         units.forEach((unit) => {
-            allTriples = [];
             remainingValues = RulesHelper.getRemainingValues(unit);
-            //TODO move to a function!
-            remainingValues.forEach((firstValue) => {
-                remainingValues.forEach((secondValue) => {
-                    if (firstValue < secondValue) {
-                        remainingValues.forEach((thirdValue) => {
-                            if (secondValue < thirdValue) {
-                                allTriples.push([firstValue, secondValue, thirdValue]);
-                            }
-                        })
-                    }
-                })
-            });
+            allTriples = RulesHelper.getTuplesOfValues(remainingValues, 3);
             //TODO move to a function!
             allTriples.forEach((triple) => {
                let squares = RulesHelper.getUnsetSquares(unit);
