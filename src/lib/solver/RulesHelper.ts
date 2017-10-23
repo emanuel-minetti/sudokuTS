@@ -25,7 +25,7 @@ export class RulesHelper {
         return unsetSquares;
     }
 
-    //TODO document!
+    //TODO move to Sudoku (as a method) and document!
     static getRemainingValues(unit: Square[]): number[] {
         let remainingValues = Sudoku.values.slice();
         let value: number | null;
@@ -108,7 +108,7 @@ export class RulesHelper {
         return tuples;
     }
 
-    //TODO test and validate input!
+    //TODO move to Sudoku (as a static function) test and validate input!
     /**
      * Returns all units that contain the given squares.
      *
@@ -116,7 +116,8 @@ export class RulesHelper {
      * @param {Square[]} squares the squares to find containing units
      * @returns {Square[][]} the common units
      */
-    static findCommonUnits(sudoku: Sudoku, squares: Square[]): Square[][] {
+    static findCommonUnits(squares: Square[]): Square[][] {
+        let sudoku = new Sudoku();
         //find intersection of all unit indices of all squares
         let allUnits = sudoku.getUnits();
         let intersection = squares.reduce(
@@ -156,7 +157,7 @@ export class RulesHelper {
                 if (union.length === length) {
                     //naked tuple found
                     //for this naked tuple find all common units
-                    let commonUnits = RulesHelper.findCommonUnits(sudoku, tuple);
+                    let commonUnits = RulesHelper.findCommonUnits(tuple);
                     //for each common unit
                     commonUnits.forEach((commonUnit) => {
                         //for each square in this unit
