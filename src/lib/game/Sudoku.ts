@@ -17,9 +17,11 @@ export class Sudoku {
 
     // indices of the units
     static rowIndicesArray: number[][] =
-        Sudoku.unitIndices.map(unitIndex => _.range(unitIndex * 9, unitIndex * 9 + 9, 1));
+        Sudoku.unitIndices.map(
+            unitIndex => _.range(unitIndex * 9, unitIndex * 9 + 9, 1));
     static columnIndicesArray: number[][] =
-        Sudoku.unitIndices.map(unitIndex => _.range(unitIndex, unitIndex + 73, 9));
+        Sudoku.unitIndices.map(
+            unitIndex => _.range(unitIndex, unitIndex + 73, 9));
     static boxIndicesArray: number[][] =
         Sudoku.unitIndices.map(unitIndex => {
             let intQuotient = Math.floor(unitIndex / 3);
@@ -32,10 +34,14 @@ export class Sudoku {
         });
 
     // unit names
-    static columnNames: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-    static rowNames: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'];
-    static boxNames: string[] = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
-    static unitNames = _.concat(Sudoku.rowNames, Sudoku.columnNames, Sudoku.boxNames);
+    static columnNames: string[] = [
+        '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    static rowNames: string[] = [
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J'];
+    static boxNames: string[] = [
+        'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+    static unitNames = _.concat(
+        Sudoku.rowNames, Sudoku.columnNames, Sudoku.boxNames);
 
     // properties
     private readonly squares: Square[];
@@ -46,13 +52,17 @@ export class Sudoku {
     private numberOfSetSquares: number;
 
     constructor() {
-        this.squares = Sudoku.squareIndices.map(squareIndex => new Square(squareIndex));
-        this.rows = Sudoku.unitIndices.map(unitIndex => Sudoku.rowIndicesArray[unitIndex].map(
-            squareIndex => this.squares[squareIndex]));
-        this.columns = Sudoku.unitIndices.map(unitIndex => Sudoku.columnIndicesArray[unitIndex].map(
-            squareIndex => this.squares[squareIndex]));
-        this.boxes = Sudoku.unitIndices.map(unitIndex => Sudoku.boxIndicesArray[unitIndex].map(
-            squareIndex => this.squares[squareIndex]));
+        this.squares = Sudoku.squareIndices.map(
+            squareIndex => new Square(squareIndex));
+        this.rows = Sudoku.unitIndices.map(
+            unitIndex => Sudoku.rowIndicesArray[unitIndex].map(
+                squareIndex => this.squares[squareIndex]));
+        this.columns = Sudoku.unitIndices.map(
+            unitIndex => Sudoku.columnIndicesArray[unitIndex].map(
+                squareIndex => this.squares[squareIndex]));
+        this.boxes = Sudoku.unitIndices.map(
+            unitIndex => Sudoku.boxIndicesArray[unitIndex].map(
+                squareIndex => this.squares[squareIndex]));
         this.units = _.concat(this.rows, this.columns, this.boxes);
         this.numberOfSetSquares = 0;
     }
@@ -105,7 +115,8 @@ export class Sudoku {
      */
     toString(): string {
         let resultArray: string[] = [];
-        let values: (number | null)[] = this.squares.map((square) => square.getValue());
+        let values: (number | null)[] = this.squares.map(
+            square => square.getValue());
         values.forEach((value, index) => {
             resultArray.push(value ? value.toString() : '*');
             let pos = index + 1;
@@ -160,25 +171,37 @@ export class Sudoku {
             // 'value' isn't candidate, so find offending peers
             let errorMessage = '';
             // check rows
-            let rowValues = this.rows[square.getRowIndex()].map(squareInRow => squareInRow.getValue());
+            let rowValues = this.rows[square.getRowIndex()].map(
+                squareInRow => squareInRow.getValue());
             let rowValuesIndex = _.indexOf(rowValues, value);
             if (rowValuesIndex !== -1) {
-                errorMessage += 'Value: ' + value + ' is already set in row: ' + square.getRowName() +
-                    ' by square: ' + this.rows[square.getRowIndex()][rowValuesIndex].getName() + '!\n';
+                errorMessage += 'Value: ' + value +
+                    ' is already set in row: ' + square.getRowName() +
+                    ' by square: ' +
+                    this.rows[square.getRowIndex()][rowValuesIndex].getName() +
+                    '!\n';
             }
             // check columns
-            let columnValues = this.columns[square.getColumnIndex()].map(squareInColumn => squareInColumn.getValue());
+            let columnValues = this.columns[square.getColumnIndex()].map(
+                squareInColumn => squareInColumn.getValue());
             let columnValuesIndex = _.indexOf(columnValues, value);
             if (columnValuesIndex !== -1) {
-                errorMessage += 'Value: ' + value + ' is already set in column: ' + square.getColumnName() +
-                    ' by square: ' + this.columns[square.getColumnIndex()][columnValuesIndex].getName() + '!\n';
+                errorMessage += 'Value: ' + value +
+                    ' is already set in column: ' + square.getColumnName() +
+                    ' by square: ' +
+                    this.columns[square.getColumnIndex()]
+                        [columnValuesIndex].getName() + '!\n';
             }
             // check boxes
-            let boxValues = this.boxes[square.getBoxIndex()].map(squareInBox => squareInBox.getValue());
+            let boxValues = this.boxes[square.getBoxIndex()].map(
+                squareInBox => squareInBox.getValue());
             let boxValuesIndex = _.indexOf(boxValues, value);
             if (boxValuesIndex !== -1) {
-                errorMessage += 'Value: ' + value + ' is already set in box: ' + square.getBoxName() +
-                    ' by square: ' + this.boxes[square.getBoxIndex()][boxValuesIndex].getName() + '!\n';
+                errorMessage += 'Value: ' + value +
+                    ' is already set in box: ' + square.getBoxName() +
+                    ' by square: ' +
+                    this.boxes[square.getBoxIndex()]
+                        [boxValuesIndex].getName() + '!\n';
             }
             throw new Error(errorMessage);
         }
@@ -213,7 +236,6 @@ export class Sudoku {
         return this.units;
     }
 
-    //TODO test and validate input!
     /**
      * Returns all units that contain the given squares.
      *
@@ -238,7 +260,9 @@ export class Sudoku {
      */
     private parseString(sudokuString: string) {
         let charArray = sudokuString.split('');
-        _.remove(charArray, char => _.indexOf(['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0'], char) === -1);
+        _.remove(charArray, char => _.indexOf([
+            '1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0'],
+            char) === -1);
         if (charArray.length !== 81) {
             throw new Error('Wrong length of input!');
         }

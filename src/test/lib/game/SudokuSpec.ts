@@ -154,4 +154,26 @@ describe('A sudoku', () => {
         expect(sudoku.removeCandidates(9, [2, 1])).toBe(false);
     });
 
+    it('should find three common units for a single squares', () => {
+        expect(sudoku.findCommonUnits([sudoku.getSquares()[0]]).length).toBe(3);
+    });
+
+    it('should find two common units for two squares in a row and a box', () => {
+        expect(sudoku.findCommonUnits([sudoku.getSquares()[0], sudoku.getSquares()[1]]).length).toBe(2);
+    });
+
+    it('should find two common units for three squares in a row and a box', () => {
+        expect(sudoku.findCommonUnits([
+            sudoku.getSquares()[0],
+            sudoku.getSquares()[1],
+            sudoku.getSquares()[2]]).length).toBe(2);
+    });
+
+    it('should find one common unit for three squares in a box and not in row or column', () => {
+        expect(sudoku.findCommonUnits([
+            sudoku.getSquares()[0],
+            sudoku.getSquares()[1],
+            sudoku.getSquares()[9]]).length).toBe(1);
+    });
+
 })
