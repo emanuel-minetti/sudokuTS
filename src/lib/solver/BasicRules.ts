@@ -1,7 +1,5 @@
 import {SolverRule, TRuleFunction} from "./SolverRule";
 import {SudokuStateChange} from "../game/SudokuStateChange";
-import {Square} from "../game/Square";
-import * as _ from "lodash";
 import {Sudoku} from "../game/Sudoku";
 import {RulesHelper} from "./RulesHelper";
 

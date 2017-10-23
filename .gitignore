@@ -6,3 +6,7 @@ package-lock.json
 .directory
 !/karma.conf.js
 /coverage/
+.idea/jsLibraryMappings.xml
+.idea/misc.xml
+.idea/workspace.xml
+examples/moderate.txt~
