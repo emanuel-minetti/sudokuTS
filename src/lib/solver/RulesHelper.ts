@@ -179,17 +179,35 @@ export class RulesHelper {
         return moves;
     }
 
-    //TODO document and comment!
+    /**
+     * A helper function to build a `SolverRule` or more specifically
+     * a `TRuleFunction`. It is an abstraction of the hidden pair, triple
+     * and quadruple rule.
+     *
+     * For each unit it takes all tupels of the given length of the not yet
+     * set values. For each tupel it takes all hidden tupels, that is a
+     * tupel whose number containing squares is the given length. For each
+     * such hidden it removes all values of this tuple from the remaining
+     * squares of this unit.
+     *
+     * @param {Sudoku} sudoku the sudoku to solve
+     * @param {number} length the length of the tuple
+     * @returns {SudokuStateChange[]} an array of moves according this rule
+     */
     static hiddenTupleRule(sudoku: Sudoku, length: number): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
         let units = sudoku.getUnits();
         let allTuples: number[][];
         let remainingValues: number[];
         let value: number | null;
+        //for each unit
         units.forEach((unit) => {
+            //find all tuples of all remaining values in this unit
             remainingValues = RulesHelper.getRemainingValues(unit);
             allTuples = RulesHelper.getTuplesOfValues(remainingValues, length);
+            //for each tuple
             allTuples.forEach((tuple) => {
+                //find all squares containing values from the tuple
                 let squares = RulesHelper.getUnsetSquares(unit);
                 let containingSquares: Square[] = [];
                 squares.forEach((square) => {
