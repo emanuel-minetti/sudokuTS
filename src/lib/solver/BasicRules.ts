@@ -42,12 +42,28 @@ export class BasicRules {
         return RulesHelper.nakedTupleRule(sudoku, 3);
     }
 
-    //TODO document!
+    /**
+     * The 'hidden pair rule' checks each unit whether there are two candidates
+     * that have just two squares in common. If it finds such a pair, it
+     * removes the common candidates from all other squares in this unit.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be
+     * done according this rule
+     */
     private static _hpRuleFn: TRuleFunction = (sudoku) => {
         return RulesHelper.hiddenTupleRule(sudoku, 2);
     }
 
-    //TODO document!
+    /**
+     * The 'hidden triple rule' checks each unit whether there are three candidates
+     * that have just three squares in common. If it finds such a triple, it
+     * removes the common candidates from all other squares in this unit.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be
+     * done according this rule
+     */
     private static _htRuleFn: TRuleFunction = (sudoku) => {
         return RulesHelper.hiddenTupleRule(sudoku, 3);
     }
