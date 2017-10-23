@@ -213,6 +213,23 @@ export class Sudoku {
         return this.units;
     }
 
+    //TODO test and validate input!
+    /**
+     * Returns all units that contain the given squares.
+     *
+     * @param {Sudoku} sudoku the sudoku
+     * @param {Square[]} squares the squares to find containing units
+     * @returns {Square[][]} the common units
+     */
+    findCommonUnits(squares: Square[]): Square[][] {
+        //find intersection of all unit indices of all squares
+        let allUnits = this.getUnits();
+        let intersection = squares.reduce(
+            (prev, curr) => _.intersection(prev, curr.getUnitIndices()),
+            _.range(27));
+        return intersection.map((unitIndex) => allUnits[unitIndex]);
+    }
+
     /**
      * Parses a string and sets the values of {@code this} or throws an error if
      * string doesn't represent a valid state of a sudoku.

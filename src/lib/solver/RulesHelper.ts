@@ -25,7 +25,12 @@ export class RulesHelper {
         return unsetSquares;
     }
 
-    //TODO move to Sudoku (as a method) and document!
+    /**
+     * Returns the remaining possible values for an given array os squares.
+     *
+     * @param {Square[]} unit the array of squares
+     * @returns {number[]} the remaining values
+     */
     static getRemainingValues(unit: Square[]): number[] {
         let remainingValues = Sudoku.values.slice();
         let value: number | null;
@@ -59,7 +64,16 @@ export class RulesHelper {
         return squareTuples;
     }
 
-    //TODO document!
+    /**
+     * Takes an array of values and returns all tupeles of a given length.
+     *
+     * Returns all sorted tupels with unique values of a given length and
+     * a given array of values.
+     *
+     * @param {Square[]} squares the squares to get tuples from
+     * @param {number} length the length of the tuples
+     * @returns {Square[][]} the tuples
+     */
     static getTuplesOfValues (values: number[], length: number): number[][] {
         let indexTuples = RulesHelper.getTuples(values.length, length);
         let valueTuples: number[][] = [];
@@ -108,24 +122,6 @@ export class RulesHelper {
         return tuples;
     }
 
-    //TODO move to Sudoku (as a static function) test and validate input!
-    /**
-     * Returns all units that contain the given squares.
-     *
-     * @param {Sudoku} sudoku the sudoku
-     * @param {Square[]} squares the squares to find containing units
-     * @returns {Square[][]} the common units
-     */
-    static findCommonUnits(squares: Square[]): Square[][] {
-        let sudoku = new Sudoku();
-        //find intersection of all unit indices of all squares
-        let allUnits = sudoku.getUnits();
-        let intersection = squares.reduce(
-            (prev, curr) => _.intersection(prev, curr.getUnitIndices()),
-            _.range(27));
-        return intersection.map((unitIndex) => allUnits[unitIndex]);
-    }
-
     /**
      * A helper function to build a `SolverRule` or more specifically
      * a `TRuleFunction`. It is an abstraction of the naked pair, triple
@@ -157,7 +153,7 @@ export class RulesHelper {
                 if (union.length === length) {
                     //naked tuple found
                     //for this naked tuple find all common units
-                    let commonUnits = RulesHelper.findCommonUnits(tuple);
+                    let commonUnits = sudoku.findCommonUnits(tuple);
                     //for each common unit
                     commonUnits.forEach((commonUnit) => {
                         //for each square in this unit
