@@ -41,6 +41,20 @@ export class BasicRules {
     }
 
     /**
+     * The 'naked quadruple rule' checks each unit whether there are four squares
+     * that have just four candidates in common. If it finds such a quadruple, it
+     * removes the common candidates from all other squares that are in units shared
+     * by this triple.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be
+     * done according this rule
+     */
+    private static _nqRuleFn: TRuleFunction = (sudoku) => {
+        return RulesHelper.nakedTupleRule(sudoku, 4);
+    }
+
+    /**
      * The 'hidden pair rule' checks each unit whether there are two candidates
      * that have just two squares in common. If it finds such a pair, it
      * removes the common candidates from all other squares in this unit.
@@ -66,6 +80,19 @@ export class BasicRules {
         return RulesHelper.hiddenTupleRule(sudoku, 3);
     }
 
+    /**
+     * The 'hidden quadruple rule' checks each unit whether there are four candidates
+     * that have just four squares in common. If it finds such a quadruple, it
+     * removes the common candidates from all other squares in this unit.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be
+     * done according this rule
+     */
+    private static _hqRuleFn: TRuleFunction = (sudoku) => {
+        return RulesHelper.hiddenTupleRule(sudoku, 4);
+    }
+
     rules: SolverRule[];
 
     constructor() {
@@ -82,5 +109,11 @@ export class BasicRules {
 
         let htRule = new SolverRule('Hidden Triple Rule: ', 7, BasicRules._htRuleFn);
         this.rules.push(htRule);
+
+        let nqRule = new SolverRule('Naked Quadruple Rule: ', 8, BasicRules._nqRuleFn);
+        this.rules.push(nqRule);
+
+        let hqRule = new SolverRule('Hidden Quadruple Rule: ', 9, BasicRules._hqRuleFn);
+        this.rules.push(hqRule);
     }
 };
