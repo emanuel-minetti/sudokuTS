@@ -113,14 +113,20 @@ export class BasicRules {
               if (csLength === 2 ||  csLength === 3) {
                   let commonUnits = sudoku.findCommonUnits(containingSquares);
                   if (commonUnits.length === 2) {
-                      let otherUnit = _.isEqual(commonUnits[0], box) ? commonUnits[1] : commonUnits[0];
+                      let otherUnit =
+                          !_.isEqual(commonUnits[0], box) ?
+                              commonUnits[0] : commonUnits[1];
                       otherUnit.forEach(square => {
                           if (containingSquares.indexOf(square) === -1) {
                               let candidates = square.getCandidates();
-                              if (candidates && candidates.indexOf(remainingValue) !== -1) {
+                              if (candidates &&
+                                  candidates.indexOf(remainingValue) !== -1) {
                                   //add move
-                                  let move = new SudokuStateChange(square.getIndex(), [remainingValue],
-                                       'removed ' + remainingValue + ' from candidates of ' + square.getName());
+                                  let move = new SudokuStateChange(
+                                      square.getIndex(), [remainingValue],
+                                       'removed ' + remainingValue +
+                                      ' from candidates of ' +
+                                      square.getName());
                                   moves.push(move);
                               }
                           }
