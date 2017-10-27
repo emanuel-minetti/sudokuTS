@@ -273,4 +273,8 @@ export class Sudoku {
             }
         });
     }
+
+    getBoxes() {
+        return this.boxes;
+    }
 }

@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import {SolverRule, TRuleFunction} from "./SolverRule";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Sudoku} from "../game/Sudoku";
@@ -93,6 +94,49 @@ export class BasicRules {
         return RulesHelper.hiddenTupleRule(sudoku, 4);
     }
 
+    //TODO comment and document!
+    private static _ppRuleFn: TRuleFunction = (sudoku) => {
+        let moves: SudokuStateChange[] = [];
+        let boxes = sudoku.getBoxes();
+        //check boxes
+        boxes.forEach(box => {
+            let remainingValues = RulesHelper.getRemainingValues(box);
+            remainingValues.forEach(remainingValue => {
+                let containingSquares = box.filter(square => {
+                    let candidates = square.getCandidates();
+                    if (candidates) {
+                        return candidates.indexOf(remainingValue) !== -1
+                    }
+                    return false;
+                });
+                let csLength = containingSquares.length;
+                if (csLength === 2 || csLength === 3) {
+                    let commonUnits = sudoku.findCommonUnits(containingSquares);
+                    if (commonUnits.length === 2) {
+                        let otherUnit = commonUnits[0] !== box ? commonUnits[0] : commonUnits[1];
+                        otherUnit.forEach(square => {
+                            if (containingSquares.indexOf(square) === -1) {
+                                let candidates = square.getCandidates();
+                                if (candidates && candidates.indexOf(remainingValue) !== -1) {
+                                    //add move
+                                    let move = new SudokuStateChange(
+                                        square.getIndex(), [remainingValue],
+                                        'removed ' + remainingValue +
+                                        ' from candidates of ' +
+                                        square.getName());
+                                    moves.push(move);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        //check rows and columns
+        //TODO implement!
+        return moves;
+    }
+
     rules: SolverRule[];
 
     constructor() {
@@ -115,5 +159,8 @@ export class BasicRules {
 
         let hqRule = new SolverRule('Hidden Quadruple Rule: ', 9, BasicRules._hqRuleFn);
         this.rules.push(hqRule);
+
+        let ppRule = new SolverRule('Pointing Pairs Rule: ', 10, BasicRules._ppRuleFn);
+        this.rules.push(ppRule);
     }
 };

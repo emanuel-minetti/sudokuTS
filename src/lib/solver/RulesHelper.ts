@@ -123,6 +123,8 @@ export class RulesHelper {
     }
 
     /**
+     * An abstraction of the naked tuple rule.
+     *
      * A helper function to build a `SolverRule` or more specifically
      * a `TRuleFunction`. It is an abstraction of the naked pair, triple
      * and quadruple rule.
@@ -177,6 +179,8 @@ export class RulesHelper {
     }
 
     /**
+     * An abstraction of the hidden tuple rule.
+     *
      * A helper function to build a `SolverRule` or more specifically
      * a `TRuleFunction`. It is an abstraction of the hidden pair, triple
      * and quadruple rule.
