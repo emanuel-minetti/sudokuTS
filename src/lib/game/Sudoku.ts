@@ -49,6 +49,7 @@ export class Sudoku {
     private readonly columns: Square[][];
     private readonly boxes: Square[][];
     private readonly units: Square[][];
+    private readonly lines: Square[][];
     private numberOfSetSquares: number;
 
     constructor() {
@@ -63,7 +64,9 @@ export class Sudoku {
         this.boxes = Sudoku.unitIndices.map(
             unitIndex => Sudoku.boxIndicesArray[unitIndex].map(
                 squareIndex => this.squares[squareIndex]));
+        //TODO lazy load!!
         this.units = _.concat(this.rows, this.columns, this.boxes);
+        this.lines = _.concat(this.rows, this.columns);
         this.numberOfSetSquares = 0;
     }
 
@@ -276,5 +279,9 @@ export class Sudoku {
 
     getBoxes() {
         return this.boxes;
+    }
+
+    getLines() {
+        return this.lines;
     }
 }

@@ -96,45 +96,14 @@ export class BasicRules {
 
     //TODO comment and document!
     private static _ppRuleFn: TRuleFunction = (sudoku) => {
-        let moves: SudokuStateChange[] = [];
         let boxes = sudoku.getBoxes();
-        //check boxes
-        boxes.forEach(box => {
-            let remainingValues = RulesHelper.getRemainingValues(box);
-            remainingValues.forEach(remainingValue => {
-                let containingSquares = box.filter(square => {
-                    let candidates = square.getCandidates();
-                    if (candidates) {
-                        return candidates.indexOf(remainingValue) !== -1
-                    }
-                    return false;
-                });
-                let csLength = containingSquares.length;
-                if (csLength === 2 || csLength === 3) {
-                    let commonUnits = sudoku.findCommonUnits(containingSquares);
-                    if (commonUnits.length === 2) {
-                        let otherUnit = commonUnits[0] !== box ? commonUnits[0] : commonUnits[1];
-                        otherUnit.forEach(square => {
-                            if (containingSquares.indexOf(square) === -1) {
-                                let candidates = square.getCandidates();
-                                if (candidates && candidates.indexOf(remainingValue) !== -1) {
-                                    //add move
-                                    let move = new SudokuStateChange(
-                                        square.getIndex(), [remainingValue],
-                                        'removed ' + remainingValue +
-                                        ' from candidates of ' +
-                                        square.getName());
-                                    moves.push(move);
-                                }
-                            }
-                        });
-                    }
-                }
-            });
-        });
-        //check rows and columns
-        //TODO implement!
-        return moves;
+        return RulesHelper.boxLineIntersection(sudoku, boxes);
+    }
+
+    //TODO comment and document!
+    private static _blrRuleFn: TRuleFunction = (sudoku) => {
+        let lines = sudoku.getLines();
+        return RulesHelper.boxLineIntersection(sudoku, lines);
     }
 
     rules: SolverRule[];
@@ -162,5 +131,8 @@ export class BasicRules {
 
         let ppRule = new SolverRule('Pointing Pairs Rule: ', 10, BasicRules._ppRuleFn);
         this.rules.push(ppRule);
+
+        let blrRule = new SolverRule('Box/Line Reduction Rule: ', 11, BasicRules._blrRuleFn);
+        this.rules.push(blrRule);
     }
 };

@@ -235,4 +235,43 @@ export class RulesHelper {
         })
         return moves;
     }
+
+    //TODO comment and document!
+    static boxLineIntersection(sudoku: Sudoku, units: Square[][]) {
+        let moves: SudokuStateChange[] = [];
+        units.forEach(unit => {
+            let remainingValues = RulesHelper.getRemainingValues(unit);
+            remainingValues.forEach(remainingValue => {
+                let containingSquares = unit.filter(square => {
+                    let candidates = square.getCandidates();
+                    if (candidates) {
+                        return candidates.indexOf(remainingValue) !== -1
+                    }
+                    return false;
+                });
+                let csLength = containingSquares.length;
+                if (csLength === 2 || csLength === 3) {
+                    let commonUnits = sudoku.findCommonUnits(containingSquares);
+                    if (commonUnits.length === 2) {
+                        let otherUnit = commonUnits[0] !== unit ? commonUnits[0] : commonUnits[1];
+                        otherUnit.forEach(square => {
+                            if (containingSquares.indexOf(square) === -1) {
+                                let candidates = square.getCandidates();
+                                if (candidates && candidates.indexOf(remainingValue) !== -1) {
+                                    //add move
+                                    let move = new SudokuStateChange(
+                                        square.getIndex(), [remainingValue],
+                                        'removed ' + remainingValue +
+                                        ' from candidates of ' +
+                                        square.getName());
+                                    moves.push(move);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        });
+        return moves;
+    }
 }
