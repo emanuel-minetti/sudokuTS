@@ -45,4 +45,50 @@ describe('A Solver with BasicRules', () => {
         solver.solve();
         expect(game.isSolved()).toBe(true);
     });
+
+    it('should be able to solve a game with the pointing pairs rule',
+        () => {
+        let pointingPairsString = `
+9** *5* ***
+2** 63* **5
+**6 **2 ***
+
+**3 1** *7*
+*** *2* 9**
+*8* **5 ***
+
+*** 8** 1**
+5** *1* **4
+*** *6* **8
+`;
+
+        let game = new SudokuGame(pointingPairsString);
+        let solver = new Solver(game);
+        solver.addStandardRules();
+        solver.solve();
+        expect(game.isSolved()).toBe(true);
+    });
+
+    it('should be able to get 43 moves on a game with the box/line rule',
+        () => {
+            let blrPlusSting = `
+*16 **7 8*3
+*** 8** ***
+*7* **1 *6*
+
+*48 *** 3**
+6** *** **2
+**9 *** 65*
+
+*6* 9** *2*
+*** **2 ***
+9*4 6** 51*
+`;
+
+            let game = new SudokuGame(blrPlusSting);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.getChanges().length).toBe(43);
+        });
 })
