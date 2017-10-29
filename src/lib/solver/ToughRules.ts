@@ -13,22 +13,28 @@ import {RulesHelper} from "./RulesHelper";
  */
 export class ToughRules {
 
-    //TODO document and comment
+    //TODO document
     private static _ywRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
+        //find all squares with two candidates, the candidate squares
         let candidateSquares = sudoku.getSquares().filter(square => {
             let candidates = square.getCandidates();
             return (candidates && candidates.length === 2);
         });
+        //collect all values in these squares
         let candidateValues = candidateSquares.reduce((prev, curr) => _.union(prev, curr.getCandidates()), []);
+        //get all triplets of these values
         let valueTriplets = RulesHelper.getTuplesOfValues(candidateValues, 3);
         if (candidateSquares.length >= 3) {
+            //for each triplet and candidate square
             valueTriplets.forEach(valueTriplet => {
                 candidateSquares.forEach(candidateSquare => {
                     let candidates = candidateSquare.getCandidates();
                     let firstIntersection = _.intersection(candidates, valueTriplet);
+                    //if this candidate square has two values from the triplet
                     if (firstIntersection.length === 2) {
                         let peers = sudoku.getPeers(candidateSquare);
+                        //find the wings for this candidate square
                         let wings = peers.filter(peer => {
                             let peerCandidates = peer.getCandidates();
                             return (peerCandidates && peerCandidates.length === 2 &&
@@ -36,16 +42,23 @@ export class ToughRules {
                                 _.intersection(peerCandidates, firstIntersection).length === 1);
                         });
                         if (wings.length >= 2) {
+                            //TODO review whether it is OK to check only the first two wings!
                             let secondIntersection = _.intersection(wings[0].getCandidates(), wings[1].getCandidates());
+                            //if the wings have one common candidate
                             if (secondIntersection.length === 1) {
-                                //Y-Wing found!
+                                //an Y-Wing is found!
+                                //So get all common peers
                                 let commonPeers = _.intersection(sudoku.getPeers(wings[0]), sudoku.getPeers(wings[1]));
+                                //filter out the candidate square, the already set squares and the squares that
+                                //haven't the one common candidate as own candidate
                                 commonPeers = commonPeers.filter(commonPeer => {
                                     let candidates = commonPeer.getCandidates();
                                     return (commonPeer !== candidateSquare && candidates &&
                                         candidates.indexOf(secondIntersection[0]) !== -1);
                                 });
+                                //for each such common peer
                                 commonPeers.forEach(commonPeer => {
+                                    //remove the common value
                                     let move = new SudokuStateChange(commonPeer.getIndex(), secondIntersection,
                                         candidateSquare.getName() + ' points to wings ' + wings[0].getName() + '/' +
                                         wings[1].getName() + ', so removed ' + secondIntersection[0] +
