@@ -236,7 +236,7 @@ export class RulesHelper {
         return moves;
     }
 
-    //TODO comment and document!
+    //TODO document!
     static boxLineIntersection(sudoku: Sudoku, units: Square[][]) {
         let moves: SudokuStateChange[] = [];
         units.forEach(unit => {
@@ -249,10 +249,13 @@ export class RulesHelper {
                     }
                     return false;
                 });
+                //catch number of containing squares
                 let csLength = containingSquares.length;
                 if (csLength === 2 || csLength === 3) {
+                    //box/line intersection candidate found
                     let commonUnits = sudoku.findCommonUnits(containingSquares);
                     if (commonUnits.length === 2) {
+                        //box/line intersection found
                         let otherUnit = commonUnits[0] !== unit ? commonUnits[0] : commonUnits[1];
                         otherUnit.forEach(square => {
                             if (containingSquares.indexOf(square) === -1) {

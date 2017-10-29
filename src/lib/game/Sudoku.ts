@@ -1,4 +1,6 @@
 import * as _ from "lodash";
+import {isUndefined} from "util";
+
 import {Square} from "./Square";
 
 /**
@@ -48,8 +50,8 @@ export class Sudoku {
     private readonly rows: Square[][];
     private readonly columns: Square[][];
     private readonly boxes: Square[][];
-    private readonly units: Square[][];
-    private readonly lines: Square[][];
+    private units: Square[][];
+    private lines: Square[][];
     private numberOfSetSquares: number;
 
     constructor() {
@@ -64,9 +66,6 @@ export class Sudoku {
         this.boxes = Sudoku.unitIndices.map(
             unitIndex => Sudoku.boxIndicesArray[unitIndex].map(
                 squareIndex => this.squares[squareIndex]));
-        //TODO lazy load!!
-        this.units = _.concat(this.rows, this.columns, this.boxes);
-        this.lines = _.concat(this.rows, this.columns);
         this.numberOfSetSquares = 0;
     }
 
@@ -223,22 +222,6 @@ export class Sudoku {
         return this.squares[index].removeCandidates(values);
     }
 
-    getSquares(): Square[] {
-        return this.squares;
-    }
-
-    isSolved(): boolean {
-        return this.numberOfSetSquares === 81;
-    }
-
-    getRows() {
-        return this.rows;
-    }
-
-    getUnits() {
-        return this.units;
-    }
-
     /**
      * Returns all units that contain the given squares.
      *
@@ -277,11 +260,33 @@ export class Sudoku {
         });
     }
 
+    getSquares(): Square[] {
+        return this.squares;
+    }
+
+    isSolved(): boolean {
+        return this.numberOfSetSquares === 81;
+    }
+
+    getRows() {
+        return this.rows;
+    }
+
     getBoxes() {
         return this.boxes;
     }
 
+    getUnits() {
+        if (isUndefined(this.units)) {
+            this.units = _.concat(this.rows, this.columns, this.boxes);
+        }
+        return this.units;
+    }
+
     getLines() {
+        if (isUndefined(this.lines)) {
+            this.lines = _.concat(this.rows, this.columns);
+        }
         return this.lines;
     }
 }

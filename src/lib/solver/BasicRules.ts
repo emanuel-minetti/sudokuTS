@@ -94,13 +94,13 @@ export class BasicRules {
         return RulesHelper.hiddenTupleRule(sudoku, 4);
     }
 
-    //TODO comment and document!
+    //TODO document!
     private static _ppRuleFn: TRuleFunction = (sudoku) => {
         let boxes = sudoku.getBoxes();
         return RulesHelper.boxLineIntersection(sudoku, boxes);
     }
 
-    //TODO comment and document!
+    //TODO document!
     private static _blrRuleFn: TRuleFunction = (sudoku) => {
         let lines = sudoku.getLines();
         return RulesHelper.boxLineIntersection(sudoku, lines);
