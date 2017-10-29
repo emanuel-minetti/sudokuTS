@@ -47,4 +47,27 @@ describe('A Solver with ToughRules', () => {
             solver.solve();
             expect(game.isSolved()).toBe(true);
         });
+
+    it('should be able to solve a Y-Wing game with the Y-Wing Rule',
+        () => {
+            let moderateString = `
+9** *4* ***
+*** 6** *31
+*2* *** *9*
+
+*** 7** *2*
+**2 935 6**
+*7* **2 ***
+
+*6* *** *73
+51* **9 ***
+*** *8* **9
+`;
+
+            let game = new SudokuGame(moderateString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
 });
