@@ -161,8 +161,8 @@ export class Sudoku {
             // 'value' is 'candidate', so set it, remove it
             // from 'candidates' of all peers and increment numberOfSetSquares
             square.setValue(value);
-            square.getPeerIndices().forEach(peerIndex => {
-                let candidates = this.squares[peerIndex].getCandidates();
+            this.getPeers(square).forEach(peer => {
+               let candidates = peer.getCandidates();
                 if (candidates !== null) {
                     _.pull(candidates, value);
                 }
