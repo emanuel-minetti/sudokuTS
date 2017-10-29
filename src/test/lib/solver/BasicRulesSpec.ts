@@ -73,7 +73,7 @@ describe('A Solver with BasicRules', () => {
 
     it('should be able to get 43 moves on a game with the box/line rule',
         () => {
-            let blrPlusSting = `
+            let blrPlusString = `
 *16 **7 8*3
 *** 8** ***
 *7* **1 *6*
@@ -87,7 +87,7 @@ describe('A Solver with BasicRules', () => {
 9*4 6** 51*
 `;
 
-            let game = new SudokuGame(blrPlusSting);
+            let game = new SudokuGame(blrPlusString);
             let solver = new Solver(game);
             let mostBasicRules = new MostBasicRules();
             let basicRules = new BasicRules();
@@ -96,4 +96,4 @@ describe('A Solver with BasicRules', () => {
             solver.solve();
             expect(game.getChanges().length).toBe(43);
         });
-})  
+})

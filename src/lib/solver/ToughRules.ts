@@ -39,6 +39,8 @@ export class ToughRules {
                             if (secondIntersection.length === 1) {
                                 //Y-Wing found!
                                 let commonPeers = _.intersection(sudoku.getPeers(wings[0]), sudoku.getPeers(wings[1]));
+                                // commonPeers = commonPeers.filter(commonPeer =>
+                                //     commonPeer !== wings[0] && commonPeer !== wings[1]);
                                 commonPeers.forEach(commonPeer => {
                                     let candidates = commonPeer.getCandidates();
                                     if (candidates && candidates.indexOf(secondIntersection[0]) !== -1) {
