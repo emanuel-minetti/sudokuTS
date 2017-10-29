@@ -16,11 +16,12 @@ export class ToughRules {
     //TODO document and comment
     private static _ywRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
-        let valueTriplets = RulesHelper.getTuples(9, 3);
         let candidateSquares = sudoku.getSquares().filter(square => {
             let candidates = square.getCandidates();
             return (candidates && candidates.length === 2);
         });
+        let candidateValues = candidateSquares.reduce((prev, curr) => _.union(prev, curr.getCandidates()), []);
+        let valueTriplets = RulesHelper.getTuplesOfValues(candidateValues, 3);
         if (candidateSquares.length >= 3) {
             valueTriplets.forEach(valueTriplet => {
                 candidateSquares.forEach(candidateSquare => {
@@ -30,7 +31,7 @@ export class ToughRules {
                         let peers = sudoku.getPeers(candidateSquare);
                         let wings = peers.filter(peer => {
                             let peerCandidates = peer.getCandidates();
-                            return (peerCandidates &&
+                            return (peerCandidates && peerCandidates.length === 2 &&
                                 _.intersection(peerCandidates, valueTriplet).length === 2 &&
                                 _.intersection(peerCandidates, firstIntersection).length === 1);
                         });
@@ -39,16 +40,17 @@ export class ToughRules {
                             if (secondIntersection.length === 1) {
                                 //Y-Wing found!
                                 let commonPeers = _.intersection(sudoku.getPeers(wings[0]), sudoku.getPeers(wings[1]));
-                                // commonPeers = commonPeers.filter(commonPeer =>
-                                //     commonPeer !== wings[0] && commonPeer !== wings[1]);
-                                commonPeers.forEach(commonPeer => {
+                                commonPeers = commonPeers.filter(commonPeer => {
                                     let candidates = commonPeer.getCandidates();
-                                    if (candidates && candidates.indexOf(secondIntersection[0]) !== -1) {
-                                        let move = new SudokuStateChange(commonPeer.getIndex(), secondIntersection,
-                                            'removed ' + secondIntersection[0] +
-                                            ' from candidates of ' + commonPeer.getName());
-                                        moves.push(move);
-                                    }
+                                    return (commonPeer !== candidateSquare && candidates &&
+                                        candidates.indexOf(secondIntersection[0]) !== -1);
+                                });
+                                commonPeers.forEach(commonPeer => {
+                                    let move = new SudokuStateChange(commonPeer.getIndex(), secondIntersection,
+                                        candidateSquare.getName() + ' points to wings ' + wings[0].getName() + '/' +
+                                        wings[1].getName() + ', so removed ' + secondIntersection[0] +
+                                        ' from candidates of ' + commonPeer.getName());
+                                    moves.push(move);
                                 });
                             };
                         };
