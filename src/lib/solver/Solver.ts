@@ -3,6 +3,7 @@ import {SolverRule} from "./SolverRule";
 import {MostBasicRules} from "./MostBasicRules";
 import * as _ from "lodash";
 import {BasicRules} from "./BasicRules";
+import {ToughRules} from "./ToughRules";
 
 
 /**
@@ -24,8 +25,10 @@ export class Solver {
     addStandardRules() {
         let mostBasicRules = new MostBasicRules();
         let basicRules = new BasicRules();
+        let toughRules = new ToughRules();
         this.rules = _.concat(this.rules, mostBasicRules.rules);
         this.rules = _.concat(this.rules, basicRules.rules);
+        this.rules = _.concat(this.rules, toughRules.rules);
     }
 
     /**

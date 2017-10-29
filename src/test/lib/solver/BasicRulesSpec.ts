@@ -1,5 +1,7 @@
 import {SudokuGame} from "../../../lib/game/SudokuGame";
 import {Solver} from "../../../lib/solver/Solver";
+import {MostBasicRules} from "../../../lib/solver/MostBasicRules";
+import {BasicRules} from "../../../lib/solver/BasicRules";
 
 describe('A Solver with BasicRules', () => {
 
@@ -87,8 +89,11 @@ describe('A Solver with BasicRules', () => {
 
             let game = new SudokuGame(blrPlusSting);
             let solver = new Solver(game);
-            solver.addStandardRules();
+            let mostBasicRules = new MostBasicRules();
+            let basicRules = new BasicRules();
+            solver.addRules(mostBasicRules.rules);
+            solver.addRules(basicRules.rules);
             solver.solve();
             expect(game.getChanges().length).toBe(43);
         });
-})
+})  

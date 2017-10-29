@@ -289,4 +289,9 @@ export class Sudoku {
         }
         return this.lines;
     }
+
+    getPeers(square: Square): Square[] {
+        let peerIndices = square.getPeerIndices();
+        return peerIndices.map(index => this.squares[index]);
+    }
 }
