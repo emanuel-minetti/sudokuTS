@@ -236,7 +236,20 @@ export class RulesHelper {
         return moves;
     }
 
-    //TODO document!
+    /**
+     * An abstraction of the pointing pairs and the box/line reduction rule.
+     *
+     * It checks each unit it's been given (boxes or lines) whether there is a
+     * pointing pair or triple, that is in line. If there is a pointing pair or
+     * triple it checks whether there is another unit that contains the
+     * pointing pair or triplet. If it finds this other unit it removes the
+     * values of the pointing pair or triplet from all squares of the other
+     * unit that have it as candidates.
+     *
+     * @param {Sudoku} sudoku the game to solve
+     * @param {Square[][]} units boxes or lines
+     * @returns {SudokuStateChange[]} the resulting moves
+     */
     static boxLineIntersection(sudoku: Sudoku, units: Square[][]) {
         let moves: SudokuStateChange[] = [];
         units.forEach(unit => {
