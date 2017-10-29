@@ -94,13 +94,29 @@ export class BasicRules {
         return RulesHelper.hiddenTupleRule(sudoku, 4);
     }
 
-    //TODO document!
+    /**
+     * It checks every box whether there is there is a pointing pair or triple
+     * in a line. If it finds a pointing pair or triple it removes the values of the
+     * pointing pairs or triples from all squares in that line.
+     *
+     * @param {Sudoku} sudoku the sudoku to solve
+     * @returns {SudokuStateChange[]} the moves to do
+     * @private
+     */
     private static _ppRuleFn: TRuleFunction = (sudoku) => {
         let boxes = sudoku.getBoxes();
         return RulesHelper.boxLineIntersection(sudoku, boxes);
     }
 
-    //TODO document!
+    /**
+     * It checks every line whether there is there is a pointing pair or triple
+     * in a box. If it finds a pointing pair or triple it removes the values of the
+     * pointing pairs or triples from all squares in that box.
+     *
+     * @param {Sudoku} sudoku the sudoku to solve
+     * @returns {SudokuStateChange[]} the moves to do
+     * @private
+     */
     private static _blrRuleFn: TRuleFunction = (sudoku) => {
         let lines = sudoku.getLines();
         return RulesHelper.boxLineIntersection(sudoku, lines);
