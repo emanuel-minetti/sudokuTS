@@ -21,8 +21,7 @@ export class BasicRules {
      * by this pair.
      *
      * @param {Sudoku} sudoku the state of the game
-     * @returns {SudokuStateChange[]} an array of moves that could be
-     * done according this rule
+     * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
      */
     private static _npRuleFn: TRuleFunction = (sudoku) => {
         return RulesHelper.nakedTupleRule(sudoku, 2);

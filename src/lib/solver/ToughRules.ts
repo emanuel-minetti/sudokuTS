@@ -13,7 +13,20 @@ import {RulesHelper} from "./RulesHelper";
  */
 export class ToughRules {
 
-    //TODO document
+    /**
+     * The Y-Wing rule checks all squares that have two remaining candidates.
+     * From these squares it takes the union of all remaining candidates.
+     * From this union it takes all triples of values. For every remaining
+     * candidate and every value triple it checks for possible wings. Possible
+     * wings are pairs of squares whose candidates give the full triple and
+     * that have one candidate in common with the square candidate. For each such
+     * pair of wings it removes the common candidate from each common peer
+     * whose candidates contain it.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
+     * @private
+     */
     private static _ywRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
         //find all squares with two candidates, the candidate squares
