@@ -84,13 +84,13 @@ export class ToughRules {
                                             ' from candidates of ' + commonPeer.getName());
                                         moves.push(move);
                                     });
-                                };
+                                }
                             });
-                        };
-                    };
+                        }
+                    }
                 });
             });
-        };
+        }
         return moves;
     }
 

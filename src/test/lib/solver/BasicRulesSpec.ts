@@ -50,7 +50,7 @@ describe('A Solver with BasicRules', () => {
 
     it('should be able to solve a game with the pointing pairs rule',
         () => {
-        let pointingPairsString = `
+            let pointingPairsString = `
 9** *5* ***
 2** 63* **5
 **6 **2 ***
@@ -64,12 +64,12 @@ describe('A Solver with BasicRules', () => {
 *** *6* **8
 `;
 
-        let game = new SudokuGame(pointingPairsString);
-        let solver = new Solver(game);
-        solver.addStandardRules();
-        solver.solve();
-        expect(game.isSolved()).toBe(true);
-    });
+            let game = new SudokuGame(pointingPairsString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
 
     it('should be able to get 43 moves on a game with the box/line rule',
         () => {
