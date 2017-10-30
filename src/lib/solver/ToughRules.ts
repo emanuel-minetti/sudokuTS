@@ -42,8 +42,8 @@ export class ToughRules {
             //for each triplet and candidate square
             valueTriplets.forEach(valueTriplet => {
                 candidateSquares.forEach(candidateSquare => {
-                    let candidates = candidateSquare.getCandidates();
-                    let firstIntersection = _.intersection(candidates, valueTriplet);
+                    let candidatesOfCandidateSquare = candidateSquare.getCandidates();
+                    let firstIntersection = _.intersection(candidatesOfCandidateSquare, valueTriplet);
                     //if this candidate square has two values from the triplet
                     if (firstIntersection.length === 2) {
                         let peers = sudoku.getPeers(candidateSquare);
@@ -71,9 +71,9 @@ export class ToughRules {
                                     //filter out the candidate square, the already set squares and the squares that
                                     //haven't the one common candidate as own candidate
                                     commonPeers = commonPeers.filter(commonPeer => {
-                                        let candidates = commonPeer.getCandidates();
-                                        return (commonPeer !== candidateSquare && candidates &&
-                                            candidates.indexOf(secondIntersection[0]) !== -1);
+                                        let commonPeerCandidates = commonPeer.getCandidates();
+                                        return (commonPeer !== candidateSquare && commonPeerCandidates &&
+                                            commonPeerCandidates.indexOf(secondIntersection[0]) !== -1);
                                     });
                                     //for each such common peer
                                     commonPeers.forEach(commonPeer => {
