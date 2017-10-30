@@ -42,30 +42,37 @@ export class ToughRules {
                                 _.intersection(peerCandidates, firstIntersection).length === 1);
                         });
                         if (wings.length >= 2) {
-                            //TODO review whether it is OK to check only the first two wings!
-                            let secondIntersection = _.intersection(wings[0].getCandidates(), wings[1].getCandidates());
-                            //if the wings have one common candidate
-                            if (secondIntersection.length === 1) {
-                                //an Y-Wing is found!
-                                //So get all common peers
-                                let commonPeers = _.intersection(sudoku.getPeers(wings[0]), sudoku.getPeers(wings[1]));
-                                //filter out the candidate square, the already set squares and the squares that
-                                //haven't the one common candidate as own candidate
-                                commonPeers = commonPeers.filter(commonPeer => {
-                                    let candidates = commonPeer.getCandidates();
-                                    return (commonPeer !== candidateSquare && candidates &&
-                                        candidates.indexOf(secondIntersection[0]) !== -1);
-                                });
-                                //for each such common peer
-                                commonPeers.forEach(commonPeer => {
-                                    //remove the common value
-                                    let move = new SudokuStateChange(commonPeer.getIndex(), secondIntersection,
-                                        candidateSquare.getName() + ' points to wings ' + wings[0].getName() + '/' +
-                                        wings[1].getName() + ', so removed ' + secondIntersection[0] +
-                                        ' from candidates of ' + commonPeer.getName());
-                                    moves.push(move);
-                                });
-                            };
+                            //get all pairs of wings
+                            let wingPairs = RulesHelper.getTupelesOfSquares(wings, 2);
+                            let secondIntersection: number[];
+                            //for each pair
+                            wingPairs.forEach(wingPair => {
+                                secondIntersection = _.intersection(wingPair[0].getCandidates(),
+                                    wingPair[1].getCandidates());
+                                //if the wings have one common candidate
+                                if (secondIntersection.length === 1) {
+                                    //an Y-Wing is found!
+                                    //So get all common peers
+                                    let commonPeers = _.intersection(sudoku.getPeers(wingPair[0]),
+                                        sudoku.getPeers(wingPair[1]));
+                                    //filter out the candidate square, the already set squares and the squares that
+                                    //haven't the one common candidate as own candidate
+                                    commonPeers = commonPeers.filter(commonPeer => {
+                                        let candidates = commonPeer.getCandidates();
+                                        return (commonPeer !== candidateSquare && candidates &&
+                                            candidates.indexOf(secondIntersection[0]) !== -1);
+                                    });
+                                    //for each such common peer
+                                    commonPeers.forEach(commonPeer => {
+                                        //remove the common value
+                                        let move = new SudokuStateChange(commonPeer.getIndex(), secondIntersection,
+                                            candidateSquare.getName() + ' points to wings ' + wingPair[0].getName() +
+                                            '/' + wingPair[1].getName() + ', so removed ' + secondIntersection[0] +
+                                            ' from candidates of ' + commonPeer.getName());
+                                        moves.push(move);
+                                    });
+                                };
+                            });
                         };
                     };
                 });
