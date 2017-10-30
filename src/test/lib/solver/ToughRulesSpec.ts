@@ -50,7 +50,7 @@ describe('A Solver with ToughRules', () => {
 
     it('should be able to solve a Y-Wing game with the Y-Wing Rule',
         () => {
-            let moderateString = `
+            let y_wingString = `
 9** *4* ***
 *** 6** *31
 *2* *** *9*
@@ -64,7 +64,30 @@ describe('A Solver with ToughRules', () => {
 *** *8* **9
 `;
 
-            let game = new SudokuGame(moderateString);
+            let game = new SudokuGame(y_wingString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
+
+    it('should be able to solve a game with the X-Wing Rule',
+        () => {
+            let x_wingString = `
+*1* *37 ***
+*** *** *1*
+6** **8 *29
+
+*7* *49 6**
+1** *** **3
+**9 35* *7*
+
+39* 2** **8
+*4* *** ***
+*** 79* *6*
+`;
+
+            let game = new SudokuGame(x_wingString);
             let solver = new Solver(game);
             solver.addStandardRules();
             solver.solve();
