@@ -117,15 +117,27 @@ export class ToughRules {
                                 return (squareCandidates && squareCandidates.indexOf(value) !== -1)
                             });
                             if (secondContainingSquares.length === 2) {
-                                //TODO review
+                                //TODO review if statement
                                 if (sudoku.getPeers(firstContainingSquares[0]).indexOf(secondContainingSquares[0]) !== -1 &&
                                     sudoku.getPeers(firstContainingSquares[1]).indexOf(secondContainingSquares[1]) !== -1) {
                                     //X-Wing found
-
+                                    let unitsToEliminate = eliminationUnits.filter(squaresToEliminate => {
+                                        squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1 || squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1
+                                    });
+                                    unitsToEliminate.forEach(unitToEliminate => {
+                                        unitToEliminate.forEach(squareToRemoveValue => {
+                                            let squareToRemoveValeCandidates = squareToRemoveValue.getCandidates();
+                                            if (squareToRemoveValeCandidates && squareToRemoveValeCandidates.indexOf(value) !== -1) {
+                                                let move = new SudokuStateChange(squareToRemoveValue.getIndex(), [value],
+                                                    'removed ' + value + ' from ' + squareToRemoveValue.getName());
+                                                moves.push(move);
+                                            }
+                                        });
+                                    });
                                 }
                             }
                         }
-                    })
+                    });
                 }
             });
         });
