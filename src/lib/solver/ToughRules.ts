@@ -3,6 +3,8 @@ import * as _ from "lodash";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {SolverRule, TRuleFunction} from "./SolverRule";
 import {RulesHelper} from "./RulesHelper";
+import {Sudoku} from "../game/Sudoku";
+import {Square} from "../game/Square";
 
 /**
  * A class grouping the tough sudoku rules.
@@ -94,10 +96,49 @@ export class ToughRules {
         return moves;
     }
 
+    //TODO comment and document!
+    private static _xwRuleFn: TRuleFunction = (sudoku) => {
+        let moves: SudokuStateChange[] = [];
+        let definingUnits = sudoku.getColumns();
+        let eliminationUnits = sudoku.getRows();
+        let definingUnitCandidates: Square[][];
+        let values = Sudoku.values;
+        values.forEach(value => {
+            definingUnits.forEach((firstDefiningUnit, firstUnitIndex) => {
+                let firstContainingSquares = firstDefiningUnit.filter(square => {
+                    let squareCandidates = square.getCandidates();
+                    return (squareCandidates && squareCandidates.indexOf(value) !== -1)
+                });
+                if (firstContainingSquares.length === 2) {
+                    definingUnits.forEach((secondDefiningUnit, secondUnitIndex) => {
+                        if (secondUnitIndex > firstUnitIndex) {
+                            let secondContainingSquares = secondDefiningUnit.filter(square => {
+                                let squareCandidates = square.getCandidates();
+                                return (squareCandidates && squareCandidates.indexOf(value) !== -1)
+                            });
+                            if (secondContainingSquares.length === 2) {
+                                //TODO review
+                                if (sudoku.getPeers(firstContainingSquares[0]).indexOf(secondContainingSquares[0]) !== -1 &&
+                                    sudoku.getPeers(firstContainingSquares[1]).indexOf(secondContainingSquares[1]) !== -1) {
+                                    //X-Wing found
+
+                                }
+                            }
+                        }
+                    })
+                }
+            });
+        });
+        return moves;
+    }
+
     rules: SolverRule[];
 
     constructor() {
         this.rules = [];
+
+        let xwRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._xwRuleFn);
+        this.rules.push(xwRule);
 
         let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);
         this.rules.push(ywRule);
