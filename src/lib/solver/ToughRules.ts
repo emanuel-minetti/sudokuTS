@@ -99,8 +99,8 @@ export class ToughRules {
     //TODO comment and document!
     private static _xwRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[] = [];
-        let definingUnits = sudoku.getColumns();
-        let eliminationUnits = sudoku.getRows();
+        let definingUnits = sudoku.getRows();
+        let eliminationUnits = sudoku.getColumns();
         let definingUnitCandidates: Square[][];
         let values = Sudoku.values;
         values.forEach(value => {
@@ -118,20 +118,32 @@ export class ToughRules {
                             });
                             if (secondContainingSquares.length === 2) {
                                 //TODO review if statement
-                                //TODO debug (view code on line 125)
-                                if (sudoku.getPeers(firstContainingSquares[0]).indexOf(secondContainingSquares[0]) !== -1 &&
-                                    sudoku.getPeers(firstContainingSquares[1]).indexOf(secondContainingSquares[1]) !== -1) {
+                                if (sudoku.getPeers(firstContainingSquares[0]).indexOf(secondContainingSquares[0])
+                                    !== -1 &&
+                                    sudoku.getPeers(firstContainingSquares[1]).indexOf(secondContainingSquares[1])
+                                    !== -1) {
                                     //X-Wing found
                                     let unitsToEliminate = eliminationUnits.filter(squaresToEliminate => {
-                                        squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1 || squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1
+                                        return (squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1 ||
+                                        squaresToEliminate.indexOf(firstContainingSquares[1]) !== -1)
                                     });
                                     unitsToEliminate.forEach(unitToEliminate => {
                                         unitToEliminate.forEach(squareToRemoveValue => {
-                                            let squareToRemoveValeCandidates = squareToRemoveValue.getCandidates();
-                                            if (squareToRemoveValeCandidates && squareToRemoveValeCandidates.indexOf(value) !== -1) {
-                                                let move = new SudokuStateChange(squareToRemoveValue.getIndex(), [value],
-                                                    'removed ' + value + ' from ' + squareToRemoveValue.getName());
-                                                moves.push(move);
+                                            if (firstContainingSquares.indexOf(squareToRemoveValue) === -1 &&
+                                                secondContainingSquares.indexOf(squareToRemoveValue) === -1) {
+                                                let squareToRemoveValeCandidates = squareToRemoveValue.getCandidates();
+                                                if (squareToRemoveValeCandidates &&
+                                                    squareToRemoveValeCandidates.indexOf(value) !== -1) {
+                                                    let move = new SudokuStateChange(squareToRemoveValue.getIndex(),
+                                                        [value],
+                                                        value + ' in ' + firstContainingSquares[0].getName() + '/' +
+                                                        firstContainingSquares[1].getName() + ' and ' +
+                                                        secondContainingSquares[0].getName() + '/' +
+                                                        secondContainingSquares[1].getName() +
+                                                        ', so removed ' + value + ' from ' +
+                                                        squareToRemoveValue.getName());
+                                                    moves.push(move);
+                                                }
                                             }
                                         });
                                     });
@@ -150,7 +162,7 @@ export class ToughRules {
     constructor() {
         this.rules = [];
 
-        let xwRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._xwRuleFn);
+        let xwRule = new SolverRule('X-Wing Rule: ', 15, ToughRules._xwRuleFn);
         this.rules.push(xwRule);
 
         let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);

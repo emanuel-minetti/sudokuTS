@@ -296,6 +296,6 @@ export class Sudoku {
     }
 
     getColumns() {
-        return this.rows;
+        return this.columns;
     }
 }
