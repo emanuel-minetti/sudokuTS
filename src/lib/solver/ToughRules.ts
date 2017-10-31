@@ -118,6 +118,7 @@ export class ToughRules {
                             });
                             if (secondContainingSquares.length === 2) {
                                 //TODO review if statement
+                                //TODO debug (view code on line 125)
                                 if (sudoku.getPeers(firstContainingSquares[0]).indexOf(secondContainingSquares[0]) !== -1 &&
                                     sudoku.getPeers(firstContainingSquares[1]).indexOf(secondContainingSquares[1]) !== -1) {
                                     //X-Wing found
