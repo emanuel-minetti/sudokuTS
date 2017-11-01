@@ -48,7 +48,7 @@ export class ToughRules {
                     let firstIntersection = _.intersection(candidatesOfCandidateSquare, valueTriplet);
                     //if this candidate square has two values from the triplet
                     if (firstIntersection.length === 2) {
-                        let peers = sudoku.getPeers(candidateSquare);
+                        let peers = sudoku.getPeersOfSquare(candidateSquare);
                         //find the wings for this candidate square
                         let wings = peers.filter(peer => {
                             let peerCandidates = peer.getCandidates();
@@ -68,8 +68,8 @@ export class ToughRules {
                                 if (secondIntersection.length === 1) {
                                     //an Y-Wing is found!
                                     //So get all common peers
-                                    let commonPeers = _.intersection(sudoku.getPeers(wingPair[0]),
-                                        sudoku.getPeers(wingPair[1]));
+                                    let commonPeers = _.intersection(sudoku.getPeersOfSquare(wingPair[0]),
+                                        sudoku.getPeersOfSquare(wingPair[1]));
                                     //filter out the candidate square, the already set squares and the squares that
                                     //haven't the one common candidate as own candidate
                                     commonPeers = commonPeers.filter(commonPeer => {
@@ -118,10 +118,12 @@ export class ToughRules {
                             });
                             if (secondContainingSquares.length === 2) {
                                 //TODO review if statement
-                                if (sudoku.getPeers(firstContainingSquares[0]).indexOf(secondContainingSquares[0])
-                                    !== -1 &&
-                                    sudoku.getPeers(firstContainingSquares[1]).indexOf(secondContainingSquares[1])
-                                    !== -1) {
+                                if (eliminationUnits.reduce((prev, curr) =>
+                                    {return (prev || (curr.indexOf(firstContainingSquares[0]) !== -1) &&
+                                        curr.indexOf(secondContainingSquares[0]) !== -1)}, false) &&
+                                    eliminationUnits.reduce((prev, curr) =>
+                                    {return (prev || (curr.indexOf(firstContainingSquares[1]) !== -1) &&
+                                            curr.indexOf(secondContainingSquares[1]) !== -1)}, false)) {
                                     //X-Wing found
                                     let unitsToEliminate = eliminationUnits.filter(squaresToEliminate => {
                                         return (squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1 ||
