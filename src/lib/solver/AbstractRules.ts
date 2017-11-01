@@ -161,8 +161,7 @@ export class AbstractRules {
                         let otherUnit = commonUnits[0] !== unit ? commonUnits[0] : commonUnits[1];
                         otherUnit.forEach(square => {
                             if (containingSquares.indexOf(square) === -1) {
-                                let candidates = square.getCandidates();
-                                if (candidates && candidates.indexOf(remainingValue) !== -1) {
+                                if (square.containsCandidate(remainingValue)) {
                                     //add move
                                     let move = new SudokuStateChange(
                                         square.getIndex(), [remainingValue],
@@ -225,12 +224,9 @@ export class AbstractRules {
                                             //if the square is none of defining squares
                                             if (firstContainingSquares.indexOf(squareToRemoveValue) === -1 &&
                                                 secondContainingSquares.indexOf(squareToRemoveValue) === -1) {
-                                                let squareToRemoveValueCandidates =
-                                                    squareToRemoveValue.getCandidates();
                                                 //and the square isn't already set and
                                                 //contains the value as a candidate
-                                                if (squareToRemoveValueCandidates &&
-                                                    squareToRemoveValueCandidates.indexOf(value) !== -1) {
+                                                if (squareToRemoveValue.containsCandidate(value)) {
                                                     let move = new SudokuStateChange(squareToRemoveValue.getIndex(),
                                                         [value],
                                                         value + ' in ' + firstContainingSquares[0].getName() + '/' +

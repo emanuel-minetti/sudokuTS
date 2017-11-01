@@ -73,11 +73,9 @@ export class ToughRules {
                                         sudoku.getPeersOfSquare(wingPair[1]));
                                     //filter out the candidate square, the already set squares and the squares that
                                     //haven't the one common candidate as own candidate
-                                    commonPeers = commonPeers.filter(commonPeer => {
-                                        let commonPeerCandidates = commonPeer.getCandidates();
-                                        return (commonPeer !== candidateSquare && commonPeerCandidates &&
-                                            commonPeerCandidates.indexOf(secondIntersection[0]) !== -1);
-                                    });
+                                    commonPeers = commonPeers.filter(commonPeer =>
+                                        (commonPeer !== candidateSquare &&
+                                            commonPeer.containsCandidate(secondIntersection[0])));
                                     //for each such common peer
                                     commonPeers.forEach(commonPeer => {
                                         //remove the common value
