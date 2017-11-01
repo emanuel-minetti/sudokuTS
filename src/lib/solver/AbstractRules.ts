@@ -180,9 +180,27 @@ export class AbstractRules {
         return moves;
     }
 
-    //TODO document!
+    /**
+     * An abstraction of the X-Wing rule.
+     *
+     * It abstracts whether columns or rows are searched for a defining 'X'. For each value it searches within
+     * the given 'lines to search' whether there are two lines that contain the value exactly two times. If
+     * these four defining squares are contained in exactly two of the 'lines to eliminate' a defining 'X' is
+     * found. Now it removes the value from all squares of the two 'lines to eliminate' except from the
+     * defining four.
+     *
+     * @param {Square[][]} linesToSearch the lines, that is rows or columns, to search for the defining 'X'.
+     * @param {Square[][]} linesToEliminate the lines, that is columns or rows, to remove candidates from.
+     * @returns {SudokuStateChange[]} the resulting moves
+     */
     static abstractX_Wing(linesToSearch: Square[][], linesToEliminate: Square[][]) {
-        //TODO comment!
+        /**
+         * Helper function to filter a square by whether its candidates contain a given value.
+         *
+         * @param {Square} square the square to filter
+         * @param {number} value the value to filter by
+         * @returns {boolean} whether the square is to be filtered
+         */
         let filterSquaresByCandidateFn = (square: Square, value: number): boolean => {
             let squareCandidates = square.getCandidates();
             return (!isNull(squareCandidates) && squareCandidates.indexOf(value) !== -1)
