@@ -5,7 +5,9 @@ import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Square} from "../game/Square";
 import {RulesHelper} from "./RulesHelper";
 
-//TODO document
+/**
+ * A class with abstract rules to help building solver rules.
+ */
 export class AbstractRules {
 
     /**
@@ -177,18 +179,21 @@ export class AbstractRules {
         return moves;
     }
 
-    //TODO comment and document!
+    //TODO document!
     static abstractX_Wing(linesToSearch: Square[][], linesToEliminate: Square[][]) {
         let moves: SudokuStateChange[] = [];
         let definingUnitCandidates: Square[][];
         let values = Sudoku.values;
+        //for each value
         values.forEach(value => {
+            //find the first line which contains the value in the candidates of exactly two squares
             linesToSearch.forEach((firstDefiningUnit, firstUnitIndex) => {
                 let firstContainingSquares = firstDefiningUnit.filter(square => {
                     let squareCandidates = square.getCandidates();
                     return (squareCandidates && squareCandidates.indexOf(value) !== -1)
                 });
                 if (firstContainingSquares.length === 2) {
+                    //find the first line which contains the value in the candidates of exactly two squares
                     linesToSearch.forEach((secondDefiningUnit, secondUnitIndex) => {
                         if (secondUnitIndex > firstUnitIndex) {
                             let secondContainingSquares = secondDefiningUnit.filter(square => {
@@ -196,6 +201,8 @@ export class AbstractRules {
                                 return (squareCandidates && squareCandidates.indexOf(value) !== -1)
                             });
                             if (secondContainingSquares.length === 2) {
+                                //two containing lines found
+                                //find intersecting lines
                                 let unitsToEliminate = linesToEliminate.filter(squaresToEliminate => {
                                     return ((squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1 &&
                                         squaresToEliminate.indexOf(secondContainingSquares[0]) !== -1) ||
@@ -203,7 +210,7 @@ export class AbstractRules {
                                         squaresToEliminate.indexOf(secondContainingSquares[1]) !== -1)
                                 });
                                 if (unitsToEliminate.length === 2) {
-                                    //X-Wing found
+                                    //X-Wing found, so remove candidates
                                     unitsToEliminate.forEach(unitToEliminate => {
                                         unitToEliminate.forEach(squareToRemoveValue => {
                                             if (firstContainingSquares.indexOf(squareToRemoveValue) === -1 &&

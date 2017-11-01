@@ -97,7 +97,7 @@ export class ToughRules {
         return moves;
     }
 
-    //TODO comment and document!
+    //TODO document!
     private static _xwRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[];
         let rows = sudoku.getRows();
