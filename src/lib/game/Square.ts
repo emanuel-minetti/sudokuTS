@@ -109,7 +109,12 @@ export class Square {
         return false;
     }
 
-    //TODO document!
+    /**
+     * Returns whether this square is unset and its candidates contain the given value.
+     *
+     * @param {number} value the value to look for
+     * @returns {boolean} whether the value is a candidate of this square
+     */
     containsCandidate(value: number): boolean {
         return (!isNull(this.candidates) && this.candidates.indexOf(value) !== -1);
     }
