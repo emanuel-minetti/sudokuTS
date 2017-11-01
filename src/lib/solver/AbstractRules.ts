@@ -4,6 +4,7 @@ import {Sudoku} from "../game/Sudoku";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Square} from "../game/Square";
 import {RulesHelper} from "./RulesHelper";
+import {isNull} from "util";
 
 /**
  * A class with abstract rules to help building solver rules.
@@ -181,6 +182,11 @@ export class AbstractRules {
 
     //TODO document!
     static abstractX_Wing(linesToSearch: Square[][], linesToEliminate: Square[][]) {
+        //TODO comment!
+        let filterFn = (square: Square, value: number):boolean => {
+            let squareCandidates = square.getCandidates();
+            return (!isNull(squareCandidates) && squareCandidates.indexOf(value) !== -1)
+        };
         let moves: SudokuStateChange[] = [];
         let definingUnitCandidates: Square[][];
         let values = Sudoku.values;
@@ -188,24 +194,19 @@ export class AbstractRules {
         values.forEach(value => {
             //find the first line which contains the value in the candidates of exactly two squares
             linesToSearch.forEach((firstDefiningUnit, firstUnitIndex) => {
-                let firstContainingSquares = firstDefiningUnit.filter(square => {
-                    let squareCandidates = square.getCandidates();
-                    return (squareCandidates && squareCandidates.indexOf(value) !== -1)
-                });
+                let firstContainingSquares = firstDefiningUnit.filter(square => filterFn(square, value));
                 if (firstContainingSquares.length === 2) {
                     //find the first line which contains the value in the candidates of exactly two squares
                     linesToSearch.forEach((secondDefiningUnit, secondUnitIndex) => {
                         if (secondUnitIndex > firstUnitIndex) {
-                            let secondContainingSquares = secondDefiningUnit.filter(square => {
-                                let squareCandidates = square.getCandidates();
-                                return (squareCandidates && squareCandidates.indexOf(value) !== -1)
-                            });
+                            let secondContainingSquares = secondDefiningUnit.filter(square => filterFn(square, value));
                             if (secondContainingSquares.length === 2) {
                                 //two containing lines found
                                 //find intersecting lines
                                 let unitsToEliminate = linesToEliminate.filter(squaresToEliminate => {
                                     return ((squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1 &&
-                                        squaresToEliminate.indexOf(secondContainingSquares[0]) !== -1) ||
+                                        squaresToEliminate.indexOf(secondContainingSquares[0]) !== -1)
+                                        ||
                                         (squaresToEliminate.indexOf(firstContainingSquares[1]) !== -1) &&
                                         squaresToEliminate.indexOf(secondContainingSquares[1]) !== -1)
                                 });
