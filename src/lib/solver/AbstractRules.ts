@@ -203,7 +203,7 @@ export class AbstractRules {
             linesToSearch.forEach((firstDefiningUnit, firstUnitIndex) => {
                 let firstContainingSquares = firstDefiningUnit.filter(square => square.containsCandidate(value));
                 if (firstContainingSquares.length === 2) {
-                    //find the first line which contains the value in the candidates of exactly two squares
+                    //find the second line which contains the value in the candidates of exactly two squares
                     linesToSearch.forEach((secondDefiningUnit, secondUnitIndex) => {
                         if (secondUnitIndex > firstUnitIndex) {
                             let secondContainingSquares = secondDefiningUnit.filter(square =>
