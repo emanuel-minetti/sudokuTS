@@ -144,13 +144,7 @@ export class AbstractRules {
         units.forEach(unit => {
             let remainingValues = RulesHelper.getRemainingValues(unit);
             remainingValues.forEach(remainingValue => {
-                let containingSquares = unit.filter(square => {
-                    let candidates = square.getCandidates();
-                    if (candidates) {
-                        return candidates.indexOf(remainingValue) !== -1
-                    }
-                    return false;
-                });
+                let containingSquares = unit.filter(square => square.containsCandidate(remainingValue));
                 //catch number of containing squares
                 let csLength = containingSquares.length;
                 if (csLength === 2 || csLength === 3) {
