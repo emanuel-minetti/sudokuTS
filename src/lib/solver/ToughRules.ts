@@ -112,7 +112,7 @@ export class ToughRules {
     constructor() {
         this.rules = [];
 
-        let xwRule = new SolverRule('X-Wing Rule: ', 15, ToughRules._xwRuleFn);
+        let xwRule = new SolverRule('X-Wing Rule: ', 13, ToughRules._xwRuleFn);
         this.rules.push(xwRule);
 
         let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);

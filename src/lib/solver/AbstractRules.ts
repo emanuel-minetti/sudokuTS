@@ -183,7 +183,7 @@ export class AbstractRules {
     //TODO document!
     static abstractX_Wing(linesToSearch: Square[][], linesToEliminate: Square[][]) {
         //TODO comment!
-        let filterFn = (square: Square, value: number):boolean => {
+        let filterSquaresByCandidateFn = (square: Square, value: number): boolean => {
             let squareCandidates = square.getCandidates();
             return (!isNull(squareCandidates) && squareCandidates.indexOf(value) !== -1)
         };
@@ -194,12 +194,14 @@ export class AbstractRules {
         values.forEach(value => {
             //find the first line which contains the value in the candidates of exactly two squares
             linesToSearch.forEach((firstDefiningUnit, firstUnitIndex) => {
-                let firstContainingSquares = firstDefiningUnit.filter(square => filterFn(square, value));
+                let firstContainingSquares = firstDefiningUnit.filter(square =>
+                    filterSquaresByCandidateFn(square, value));
                 if (firstContainingSquares.length === 2) {
                     //find the first line which contains the value in the candidates of exactly two squares
                     linesToSearch.forEach((secondDefiningUnit, secondUnitIndex) => {
                         if (secondUnitIndex > firstUnitIndex) {
-                            let secondContainingSquares = secondDefiningUnit.filter(square => filterFn(square, value));
+                            let secondContainingSquares = secondDefiningUnit.filter(square =>
+                                filterSquaresByCandidateFn(square, value));
                             if (secondContainingSquares.length === 2) {
                                 //two containing lines found
                                 //find intersecting lines
@@ -214,11 +216,15 @@ export class AbstractRules {
                                     //X-Wing found, so remove candidates
                                     unitsToEliminate.forEach(unitToEliminate => {
                                         unitToEliminate.forEach(squareToRemoveValue => {
+                                            //if the square is none of defining squares
                                             if (firstContainingSquares.indexOf(squareToRemoveValue) === -1 &&
                                                 secondContainingSquares.indexOf(squareToRemoveValue) === -1) {
-                                                let squareToRemoveValeCandidates = squareToRemoveValue.getCandidates();
-                                                if (squareToRemoveValeCandidates &&
-                                                    squareToRemoveValeCandidates.indexOf(value) !== -1) {
+                                                let squareToRemoveValueCandidates =
+                                                    squareToRemoveValue.getCandidates();
+                                                //and the square isn't already set and
+                                                //contains the value as a candidate
+                                                if (squareToRemoveValueCandidates &&
+                                                    squareToRemoveValueCandidates.indexOf(value) !== -1) {
                                                     let move = new SudokuStateChange(squareToRemoveValue.getIndex(),
                                                         [value],
                                                         value + ' in ' + firstContainingSquares[0].getName() + '/' +
