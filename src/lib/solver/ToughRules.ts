@@ -3,6 +3,9 @@ import * as _ from "lodash";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {SolverRule, TRuleFunction} from "./SolverRule";
 import {RulesHelper} from "./RulesHelper";
+import {Sudoku} from "../game/Sudoku";
+import {Square} from "../game/Square";
+import {AbstractRules} from "./AbstractRules";
 
 /**
  * A class grouping the tough sudoku rules.
@@ -46,7 +49,7 @@ export class ToughRules {
                     let firstIntersection = _.intersection(candidatesOfCandidateSquare, valueTriplet);
                     //if this candidate square has two values from the triplet
                     if (firstIntersection.length === 2) {
-                        let peers = sudoku.getPeers(candidateSquare);
+                        let peers = sudoku.getPeersOfSquare(candidateSquare);
                         //find the wings for this candidate square
                         let wings = peers.filter(peer => {
                             let peerCandidates = peer.getCandidates();
@@ -66,15 +69,13 @@ export class ToughRules {
                                 if (secondIntersection.length === 1) {
                                     //an Y-Wing is found!
                                     //So get all common peers
-                                    let commonPeers = _.intersection(sudoku.getPeers(wingPair[0]),
-                                        sudoku.getPeers(wingPair[1]));
+                                    let commonPeers = _.intersection(sudoku.getPeersOfSquare(wingPair[0]),
+                                        sudoku.getPeersOfSquare(wingPair[1]));
                                     //filter out the candidate square, the already set squares and the squares that
                                     //haven't the one common candidate as own candidate
-                                    commonPeers = commonPeers.filter(commonPeer => {
-                                        let commonPeerCandidates = commonPeer.getCandidates();
-                                        return (commonPeer !== candidateSquare && commonPeerCandidates &&
-                                            commonPeerCandidates.indexOf(secondIntersection[0]) !== -1);
-                                    });
+                                    commonPeers = commonPeers.filter(commonPeer =>
+                                        (commonPeer !== candidateSquare &&
+                                            commonPeer.containsCandidate(secondIntersection[0])));
                                     //for each such common peer
                                     commonPeers.forEach(commonPeer => {
                                         //remove the common value
@@ -94,10 +95,30 @@ export class ToughRules {
         return moves;
     }
 
+    /**
+     * The X-Wing rule searches firstly rows then columns for defining 'X'-es.
+     * @see AbstractRules.abstractX_Wing
+     *
+     * @param {Sudoku} sudoku sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
+     * @private
+     */
+    private static _xwRuleFn: TRuleFunction = (sudoku) => {
+        let moves: SudokuStateChange[];
+        let rows = sudoku.getRows();
+        let columns = sudoku.getColumns();
+        moves = AbstractRules.abstractX_Wing(rows, columns);
+        moves = _.concat(moves, AbstractRules.abstractX_Wing(columns, rows));
+        return moves;
+    }
+
     rules: SolverRule[];
 
     constructor() {
         this.rules = [];
+
+        let xwRule = new SolverRule('X-Wing Rule: ', 13, ToughRules._xwRuleFn);
+        this.rules.push(xwRule);
 
         let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);
         this.rules.push(ywRule);

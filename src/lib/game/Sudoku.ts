@@ -157,11 +157,11 @@ export class Sudoku {
             throw new Error("Square already filled!");
         }
 
-        if (_.indexOf(square.getCandidates(), value) !== -1) {
+        if (square.containsCandidate(value)) {
             // 'value' is 'candidate', so set it, remove it
             // from 'candidates' of all peers and increment numberOfSetSquares
             square.setValue(value);
-            this.getPeers(square).forEach(peer => {
+            this.getPeersOfSquare(square).forEach(peer => {
                 let candidates = peer.getCandidates();
                 if (candidates !== null) {
                     _.pull(candidates, value);
@@ -290,8 +290,12 @@ export class Sudoku {
         return this.lines;
     }
 
-    getPeers(square: Square): Square[] {
+    getPeersOfSquare(square: Square): Square[] {
         let peerIndices = square.getPeerIndices();
         return peerIndices.map(index => this.squares[index]);
+    }
+
+    getColumns() {
+        return this.columns;
     }
 }

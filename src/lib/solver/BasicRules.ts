@@ -1,7 +1,7 @@
 import {SolverRule, TRuleFunction} from "./SolverRule";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Sudoku} from "../game/Sudoku";
-import {RulesHelper} from "./RulesHelper";
+import {AbstractRules} from "./AbstractRules";
 
 /**
  * A class grouping the simple sudoku rules.
@@ -22,7 +22,7 @@ export class BasicRules {
      * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
      */
     private static _npRuleFn: TRuleFunction = (sudoku) => {
-        return RulesHelper.nakedTupleRule(sudoku, 2);
+        return AbstractRules.nakedTupleRule(sudoku, 2);
     }
 
     /**
@@ -36,7 +36,7 @@ export class BasicRules {
      * done according this rule
      */
     private static _ntRuleFn: TRuleFunction = (sudoku) => {
-        return RulesHelper.nakedTupleRule(sudoku, 3);
+        return AbstractRules.nakedTupleRule(sudoku, 3);
     }
 
     /**
@@ -50,7 +50,7 @@ export class BasicRules {
      * done according this rule
      */
     private static _nqRuleFn: TRuleFunction = (sudoku) => {
-        return RulesHelper.nakedTupleRule(sudoku, 4);
+        return AbstractRules.nakedTupleRule(sudoku, 4);
     }
 
     /**
@@ -63,7 +63,7 @@ export class BasicRules {
      * done according this rule
      */
     private static _hpRuleFn: TRuleFunction = (sudoku) => {
-        return RulesHelper.hiddenTupleRule(sudoku, 2);
+        return AbstractRules.hiddenTupleRule(sudoku, 2);
     }
 
     /**
@@ -76,7 +76,7 @@ export class BasicRules {
      * done according this rule
      */
     private static _htRuleFn: TRuleFunction = (sudoku) => {
-        return RulesHelper.hiddenTupleRule(sudoku, 3);
+        return AbstractRules.hiddenTupleRule(sudoku, 3);
     }
 
     /**
@@ -89,7 +89,7 @@ export class BasicRules {
      * done according this rule
      */
     private static _hqRuleFn: TRuleFunction = (sudoku) => {
-        return RulesHelper.hiddenTupleRule(sudoku, 4);
+        return AbstractRules.hiddenTupleRule(sudoku, 4);
     }
 
     /**
@@ -103,7 +103,7 @@ export class BasicRules {
      */
     private static _ppRuleFn: TRuleFunction = (sudoku) => {
         let boxes = sudoku.getBoxes();
-        return RulesHelper.boxLineIntersection(sudoku, boxes);
+        return AbstractRules.boxLineIntersection(sudoku, boxes);
     }
 
     /**
@@ -117,7 +117,7 @@ export class BasicRules {
      */
     private static _blrRuleFn: TRuleFunction = (sudoku) => {
         let lines = sudoku.getLines();
-        return RulesHelper.boxLineIntersection(sudoku, lines);
+        return AbstractRules.boxLineIntersection(sudoku, lines);
     }
 
     rules: SolverRule[];
