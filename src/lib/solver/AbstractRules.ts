@@ -194,17 +194,6 @@ export class AbstractRules {
      * @returns {SudokuStateChange[]} the resulting moves
      */
     static abstractX_Wing(linesToSearch: Square[][], linesToEliminate: Square[][]) {
-        /**
-         * Helper function to filter a square by whether its candidates contain a given value.
-         *
-         * @param {Square} square the square to filter
-         * @param {number} value the value to filter by
-         * @returns {boolean} whether the square is to be filtered
-         */
-        let filterSquaresByCandidateFn = (square: Square, value: number): boolean => {
-            let squareCandidates = square.getCandidates();
-            return (!isNull(squareCandidates) && squareCandidates.indexOf(value) !== -1)
-        };
         let moves: SudokuStateChange[] = [];
         let definingUnitCandidates: Square[][];
         let values = Sudoku.values;
@@ -212,14 +201,13 @@ export class AbstractRules {
         values.forEach(value => {
             //find the first line which contains the value in the candidates of exactly two squares
             linesToSearch.forEach((firstDefiningUnit, firstUnitIndex) => {
-                let firstContainingSquares = firstDefiningUnit.filter(square =>
-                    filterSquaresByCandidateFn(square, value));
+                let firstContainingSquares = firstDefiningUnit.filter(square => square.containsCandidate(value));
                 if (firstContainingSquares.length === 2) {
                     //find the first line which contains the value in the candidates of exactly two squares
                     linesToSearch.forEach((secondDefiningUnit, secondUnitIndex) => {
                         if (secondUnitIndex > firstUnitIndex) {
                             let secondContainingSquares = secondDefiningUnit.filter(square =>
-                                filterSquaresByCandidateFn(square, value));
+                                square.containsCandidate(value));
                             if (secondContainingSquares.length === 2) {
                                 //two containing lines found
                                 //find intersecting lines

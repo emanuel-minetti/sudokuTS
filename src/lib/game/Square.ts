@@ -1,5 +1,6 @@
 import {Sudoku} from "./Sudoku";
 import * as _ from "lodash";
+import {isNull} from "util";
 
 /**
  * Represents a square of a {@code Sudoku}.
@@ -106,5 +107,10 @@ export class Square {
             return true;
         }
         return false;
+    }
+
+    //TODO document!
+    containsCandidate(value: number): boolean {
+        return (!isNull(this.candidates) && this.candidates.indexOf(value) !== -1);
     }
 }

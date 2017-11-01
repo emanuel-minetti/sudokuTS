@@ -63,7 +63,7 @@ export class MostBasicRules {
             Sudoku.values.forEach((value) => {
                 let squares: Square[] = [];
                 unit.forEach((square) => {
-                    if (_.indexOf(square.getCandidates(), value) !== -1) {
+                    if (square.containsCandidate(value)) {
                         squares.push(square);
                     }
                 });

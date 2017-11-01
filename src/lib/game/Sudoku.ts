@@ -157,7 +157,7 @@ export class Sudoku {
             throw new Error("Square already filled!");
         }
 
-        if (_.indexOf(square.getCandidates(), value) !== -1) {
+        if (square.containsCandidate(value)) {
             // 'value' is 'candidate', so set it, remove it
             // from 'candidates' of all peers and increment numberOfSetSquares
             square.setValue(value);
