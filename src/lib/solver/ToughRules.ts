@@ -5,6 +5,7 @@ import {SolverRule, TRuleFunction} from "./SolverRule";
 import {RulesHelper} from "./RulesHelper";
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
+import {AbstractRules} from "./AbstractRules";
 
 /**
  * A class grouping the tough sudoku rules.
@@ -98,64 +99,11 @@ export class ToughRules {
 
     //TODO comment and document!
     private static _xwRuleFn: TRuleFunction = (sudoku) => {
-        let moves: SudokuStateChange[] = [];
-        let definingUnits = sudoku.getRows();
-        let eliminationUnits = sudoku.getColumns();
-        let definingUnitCandidates: Square[][];
-        let values = Sudoku.values;
-        values.forEach(value => {
-            definingUnits.forEach((firstDefiningUnit, firstUnitIndex) => {
-                let firstContainingSquares = firstDefiningUnit.filter(square => {
-                    let squareCandidates = square.getCandidates();
-                    return (squareCandidates && squareCandidates.indexOf(value) !== -1)
-                });
-                if (firstContainingSquares.length === 2) {
-                    definingUnits.forEach((secondDefiningUnit, secondUnitIndex) => {
-                        if (secondUnitIndex > firstUnitIndex) {
-                            let secondContainingSquares = secondDefiningUnit.filter(square => {
-                                let squareCandidates = square.getCandidates();
-                                return (squareCandidates && squareCandidates.indexOf(value) !== -1)
-                            });
-                            if (secondContainingSquares.length === 2) {
-                                //TODO review if statement
-                                if (eliminationUnits.reduce((prev, curr) =>
-                                    {return (prev || (curr.indexOf(firstContainingSquares[0]) !== -1) &&
-                                        curr.indexOf(secondContainingSquares[0]) !== -1)}, false) &&
-                                    eliminationUnits.reduce((prev, curr) =>
-                                    {return (prev || (curr.indexOf(firstContainingSquares[1]) !== -1) &&
-                                            curr.indexOf(secondContainingSquares[1]) !== -1)}, false)) {
-                                    //X-Wing found
-                                    let unitsToEliminate = eliminationUnits.filter(squaresToEliminate => {
-                                        return (squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1 ||
-                                        squaresToEliminate.indexOf(firstContainingSquares[1]) !== -1)
-                                    });
-                                    unitsToEliminate.forEach(unitToEliminate => {
-                                        unitToEliminate.forEach(squareToRemoveValue => {
-                                            if (firstContainingSquares.indexOf(squareToRemoveValue) === -1 &&
-                                                secondContainingSquares.indexOf(squareToRemoveValue) === -1) {
-                                                let squareToRemoveValeCandidates = squareToRemoveValue.getCandidates();
-                                                if (squareToRemoveValeCandidates &&
-                                                    squareToRemoveValeCandidates.indexOf(value) !== -1) {
-                                                    let move = new SudokuStateChange(squareToRemoveValue.getIndex(),
-                                                        [value],
-                                                        value + ' in ' + firstContainingSquares[0].getName() + '/' +
-                                                        firstContainingSquares[1].getName() + ' and ' +
-                                                        secondContainingSquares[0].getName() + '/' +
-                                                        secondContainingSquares[1].getName() +
-                                                        ', so removed ' + value + ' from ' +
-                                                        squareToRemoveValue.getName());
-                                                    moves.push(move);
-                                                }
-                                            }
-                                        });
-                                    });
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-        });
+        let moves: SudokuStateChange[];
+        let rows = sudoku.getRows();
+        let columns = sudoku.getColumns();
+        moves = AbstractRules.abstractX_Wing(rows, columns);
+        moves = _.concat(moves, AbstractRules.abstractX_Wing(columns, rows));
         return moves;
     }
 
