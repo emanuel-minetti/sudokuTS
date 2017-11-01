@@ -97,7 +97,14 @@ export class ToughRules {
         return moves;
     }
 
-    //TODO document!
+    /**
+     * The X-Wing rule searches firstly rows then columns for defining 'X'-es.
+     * @see AbstractRules.abstractX_Wing
+     *
+     * @param {Sudoku} sudoku sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
+     * @private
+     */
     private static _xwRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[];
         let rows = sudoku.getRows();
