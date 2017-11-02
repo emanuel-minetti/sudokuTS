@@ -41,7 +41,7 @@ Principles include:
  - DRY (Don't repeat yourself)
  - Use JavaScript's functional programming wherever it makes the code more readable 
  - KISS ("Keep it simple, stupid")
- - and finally the SOLID principles should be observed
+ - SOLID principles should be observed
 
 
 
