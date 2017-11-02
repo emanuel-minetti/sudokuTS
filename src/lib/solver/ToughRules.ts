@@ -45,8 +45,7 @@ export class ToughRules {
             //for each triplet and candidate square
             valueTriplets.forEach(valueTriplet => {
                 candidateSquares.forEach(candidateSquare => {
-                    let candidatesOfCandidateSquare = candidateSquare.getCandidates();
-                    let firstIntersection = _.intersection(candidatesOfCandidateSquare, valueTriplet);
+                    let firstIntersection = candidateSquare.getCandidateIntersection(valueTriplet);
                     //if this candidate square has two values from the triplet
                     if (firstIntersection.length === 2) {
                         let peers = sudoku.getPeersOfSquare(candidateSquare);
@@ -63,8 +62,7 @@ export class ToughRules {
                             let secondIntersection: number[];
                             //for each pair
                             wingPairs.forEach(wingPair => {
-                                secondIntersection = _.intersection(wingPair[0].getCandidates(),
-                                    wingPair[1].getCandidates());
+                                secondIntersection = wingPair[0].getCandidateIntersection(wingPair[1].getCandidates());
                                 //if the wings have one common candidate
                                 if (secondIntersection.length === 1) {
                                     //an Y-Wing is found!

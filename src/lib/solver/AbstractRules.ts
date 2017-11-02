@@ -52,7 +52,7 @@ export class AbstractRules {
                             //that is not part of the tuple
                             if (_.indexOf(tuple, square) === -1) {
                                 //find the values to remove
-                                let valuesToRemove = _.intersection(square.getCandidates(), union);
+                                let valuesToRemove = square.getCandidateIntersection(union);
                                 if (valuesToRemove.length !== 0) {
                                     let move = new SudokuStateChange(square.getIndex(), valuesToRemove,
                                         'removed ' + valuesToRemove + ' from candidates of ' + square.getName());
@@ -101,7 +101,7 @@ export class AbstractRules {
                 let squares = RulesHelper.getUnsetSquares(unit);
                 let containingSquares: Square[] = [];
                 squares.forEach((square) => {
-                    if (_.intersection(square.getCandidates(), tuple).length !== 0) {
+                    if (square.getCandidateIntersection(tuple).length !== 0) {
                         containingSquares.push(square);
                     }
                 })
@@ -243,5 +243,4 @@ export class AbstractRules {
         });
         return moves;
     }
-
 }
