@@ -39,7 +39,7 @@ Included in the repo are a lot of example sudoku. The examples can be run like s
 
 Principles include:
  - DRY (Don't repeat yourself)
- - Use JavaScript's functional programming wherever it makes the code more readable 
+ - Use JavaScript's functional programming wherever it helps making the code more readable 
  - KISS ("Keep it simple, stupid")
  - SOLID principles should be observed
 
