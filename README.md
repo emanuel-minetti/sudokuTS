@@ -43,7 +43,11 @@ Principles include:
  - KISS ("Keep it simple, stupid")
  - SOLID principles should be observed
 
+## Contribution
+Fell free to report any found bugs, problems or feature requests on the
+[Issues](https://github.com/emanuel-minetti/sudokuTS/issues) page.
 
+If you like to get involved in coding it would be best to write an [e-mail](mailto: e.minetti@posteo.de). 
 
 
 ## ToDo List
