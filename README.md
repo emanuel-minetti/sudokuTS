@@ -20,18 +20,20 @@ Clone a copy of the repo:
 Change into the sudokuTS directory:
 
     cd sudokuTS/
-Install dependencies:
+Install dependencies and compile TypeScript (ignore potential error messages):    
 
     npm install
-Compile TypeScript (ignore potential error messages):    
-
     node node_modules/typescript/bin/tsc
 Test installation:
 
     node src/sudoku_cli.js -h
 should print a help text.
 
+## Usage
 
+Included in the repo are a lot of example sudoku. The examples can be run like so:
+
+    node src/sudoku_cli.js -s --file examples/y_wing.txt
 
 
 
