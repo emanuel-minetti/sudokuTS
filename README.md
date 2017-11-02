@@ -34,6 +34,14 @@ should print a help text.
 Included in the repo are a lot of example sudoku. The examples can be run like so:
 
     node src/sudoku_cli.js -s --file examples/y_wing.txt
+    
+## Coding principles
+
+Principles include:
+ - DRY (Don't repeat yourself)
+ - Use JavaScript's functional programming wherever it  
+ - KISS ("Keep it simple, stupid")
+
 
 
 
