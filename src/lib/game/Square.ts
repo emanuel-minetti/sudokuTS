@@ -118,6 +118,7 @@ export class Square {
         return (!isNull(this.candidates) && this.candidates.indexOf(value) !== -1);
     }
 
+    //TODO document!
     getCandidateIntersection(values: number[]): number[] {
         return isNull(this.candidates) ? [] : _.intersection(this.candidates, values);
     }

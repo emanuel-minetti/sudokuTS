@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import {Square} from "../game/Square";
 import {Sudoku} from "../game/Sudoku";
 import {SudokuStateChange} from "../game/SudokuStateChange";
+import {isNull} from "util";
 
 /**
  * A class with some static functions to help building solver rules.

@@ -40,7 +40,7 @@ export class AbstractRules {
             let tuples = RulesHelper.getTupelesOfSquares(tupleCandidates, length);
             //for these tuples find all naked tuples
             tuples.forEach((tuple) => {
-                let union = tuple.reduce((prev, curr) => _.union(prev, curr.getCandidates()), []);
+                let union = tuple.reduce((prev: number[], curr: Square): number[] => _.union(prev, curr.getCandidates()), []);
                 if (union.length === length) {
                     //naked tuple found
                     //for this naked tuple find all common units
