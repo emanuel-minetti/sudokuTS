@@ -4,7 +4,6 @@ import {Sudoku} from "../game/Sudoku";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Square} from "../game/Square";
 import {RulesHelper} from "./RulesHelper";
-import {isNull} from "util";
 
 /**
  * A class with abstract rules to help building solver rules.
@@ -40,7 +39,8 @@ export class AbstractRules {
             let tuples = RulesHelper.getTupelesOfSquares(tupleCandidates, length);
             //for these tuples find all naked tuples
             tuples.forEach((tuple) => {
-                let union = tuple.reduce((prev: number[], curr: Square): number[] => _.union(prev, curr.getCandidates()), []);
+                let union = tuple.reduce((prev: number[], curr: Square): number[] =>
+                    _.union(prev, curr.getCandidates()), []);
                 if (union.length === length) {
                     //naked tuple found
                     //for this naked tuple find all common units
