@@ -118,7 +118,14 @@ export class Square {
         return (!isNull(this.candidates) && this.candidates.indexOf(value) !== -1);
     }
 
-    //TODO document!
+    /**
+     * Returns the intersection of the candidates of this square and the given values.
+     *
+     * If the square is already set an empty array is returned.
+     *
+     * @param {number[]} values the values to intersect the candidates with
+     * @returns {number[]} the intersection, empty or not
+     */
     getCandidateIntersection(values: number[]): number[] {
         return isNull(this.candidates) ? [] : _.intersection(this.candidates, values);
     }
