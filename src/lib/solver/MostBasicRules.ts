@@ -2,7 +2,6 @@ import {SolverRule, TRuleFunction} from "./SolverRule";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
-import * as _ from "lodash";
 
 /**
  * A class grouping the most simple sudoku rules.
