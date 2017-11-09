@@ -4,7 +4,6 @@ import {Sudoku} from "../game/Sudoku";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {Square} from "../game/Square";
 import {RulesHelper} from "./RulesHelper";
-import {isNull} from "util";
 
 /**
  * A class with abstract rules to help building solver rules.

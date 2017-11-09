@@ -4,7 +4,6 @@ import {SudokuStateChange} from "../game/SudokuStateChange";
 import {SolverRule, TRuleFunction} from "./SolverRule";
 import {RulesHelper} from "./RulesHelper";
 import {Sudoku} from "../game/Sudoku";
-import {Square} from "../game/Square";
 import {AbstractRules} from "./AbstractRules";
 
 /**
