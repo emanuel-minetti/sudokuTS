@@ -20,7 +20,7 @@ Clone a copy of the repo:
 Change into the sudokuTS directory:
 
     cd sudokuTS/
-Install dependencies and compile TypeScript (ignore potential error messages):    
+Install dependencies and compile TypeScript:    
 
     npm install
     node node_modules/typescript/bin/tsc
