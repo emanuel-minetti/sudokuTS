@@ -99,14 +99,13 @@ export class Square {
      * @returns {boolean} whether candidates were removed
      */
     removeCandidates(values: number[]): boolean {
-        let candidates = this.candidates
-        let intersection = _.intersection(candidates, values);
-        if (candidates && !_.isEqual(intersection, [])) {
-            let difference = _.difference(candidates, intersection);
+        let intersection = this.getCandidateIntersection(values);
+        if (intersection.length !== 0) {
+            let difference = _.difference(this.candidates, intersection);
             this.candidates = difference;
             return true;
         }
-        return false;
+            return false;
     }
 
     /**
@@ -117,5 +116,17 @@ export class Square {
      */
     containsCandidate(value: number): boolean {
         return (!isNull(this.candidates) && this.candidates.indexOf(value) !== -1);
+    }
+
+    /**
+     * Returns the intersection of the candidates of this square and the given values.
+     *
+     * If the square is already set an empty array is returned.
+     *
+     * @param {number[]} values the values to intersect the candidates with
+     * @returns {number[]} the intersection, empty or not
+     */
+    getCandidateIntersection(values: number[]): number[] {
+        return isNull(this.candidates) ? [] : _.intersection(this.candidates, values);
     }
 }
