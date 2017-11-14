@@ -62,9 +62,10 @@ export class SudokuCli {
                     cliString = cliCharArray.join('');
                 }
             });
+            // transform back to string[]
+            cliArray = cliString.split(' ');
         }
-        // transform back to string[]
-        cliArray = cliString.split(' ');
+
 
         //Use 'minimist' to parse the arguments
         let parsedArgs = minimist(cliArray, {
@@ -72,7 +73,7 @@ export class SudokuCli {
             boolean: ['version', 's', 'b', 'h'],
             // handle unknown options
             unknown: (option) => {
-                throw new Error('Unknown option ' + option);
+                throw new Error('Unknown option: ' + option);
             }
         });
 
@@ -81,14 +82,16 @@ export class SudokuCli {
         if (parsedArgs['s'] && parsedArgs['b']) {
             throw new Error('Only one solver may be chosen!')
         }
-        if (!(parsedArgs['s'] || parsedArgs['b'])) {
+        if ((!(parsedArgs['h'] || parsedArgs['version'])) &&
+            (!(parsedArgs['s'] || parsedArgs['b']))) {
             throw new Error('No solver chosen!')
         }
         // one initializer chosen
         if (parsedArgs['string'] && parsedArgs['file']) {
             throw new Error('Only one input may be given!')
         }
-        if (!(parsedArgs['string'] || parsedArgs['file'])) {
+        if ((!(parsedArgs['h'] || parsedArgs['version'])) &&
+            (!(parsedArgs['string'] || parsedArgs['file']))) {
             throw new Error('No input given')
         }
 
@@ -119,17 +122,19 @@ export class SudokuCli {
      */
     static printHelp(): string {
         let message = `
-        USAGE: node sudoku_cli [-s | b] [-h] [--version[=true]] [--string=sudokuString | --file=sudokuFile]
+        USAGE: node sudoku_cli [- [s|b]] [-h] [--version[=true]] [--string=SUDOKU_STRING | --file=SUDOKU_FILE]
         
         OPTIONS:
             -s: solve with solver. Only solver can be chosen.
             -b: solve with backtracker. Only one solver can be chosen.
-            -h: print this help message
-            --version[=true]: print a version message
             --string: The string to initialize the sudoku game. You may give either a string
                 or a file.
             --file: The filename to initialize the sudoku game. You may give either a file
-                or a string.  
+                or a string.
+            --version[=true]: print a version message.
+            -h: print this help message.
+            
+             
         `;
         return message;
     }
