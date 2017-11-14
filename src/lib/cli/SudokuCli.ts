@@ -62,9 +62,9 @@ export class SudokuCli {
                     cliString = cliCharArray.join('');
                 }
             });
-            // transform back to string[]
-            cliArray = cliString.split(' ');
         }
+        // transform back to string[]
+        cliArray = cliString.split(' ');
 
 
         //Use 'minimist' to parse the arguments
