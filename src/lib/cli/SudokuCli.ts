@@ -122,7 +122,7 @@ export class SudokuCli {
      */
     static printHelp(): string {
         let message = `
-        USAGE: node sudoku_cli [- [s|b]] [-h] [--version[=true]] [--string=SUDOKU_STRING | --file=SUDOKU_FILE]
+        USAGE: node sudoku_cli [-[s|b]] [-h] [--version[=true]] [--string=SUDOKU_STRING | --file=SUDOKU_FILE]
         
         OPTIONS:
             -s: solve with solver. Only solver can be chosen.
