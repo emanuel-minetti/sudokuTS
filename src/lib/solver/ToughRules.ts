@@ -6,6 +6,7 @@ import {RulesHelper} from "./RulesHelper";
 import {Sudoku} from "../game/Sudoku";
 import {AbstractRules} from "./AbstractRules";
 import {isNull} from "util";
+import {Square} from "../game/Square";
 
 /**
  * A class grouping the tough sudoku rules.
