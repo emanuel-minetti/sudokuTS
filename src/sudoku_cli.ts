@@ -16,11 +16,13 @@ try {
     }
     ;
 
-    let game = new SudokuGame(sudokuString);
-    let solver = new Solver(game);
-    solver.addStandardRules();
-    solver.solve();
-    console.log('Game:\n' + game.toString());
+    if (sudokuString) {
+        let game = new SudokuGame(sudokuString);
+        let solver = new Solver(game);
+        solver.addStandardRules();
+        solver.solve();
+        console.log('Game:\n' + game.toString());
+    }
 }
 catch (e) {
     console.log(e.message);
