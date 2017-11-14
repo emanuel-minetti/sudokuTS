@@ -23,7 +23,6 @@ Change into the sudokuTS directory:
 Install dependencies and compile TypeScript:    
 
     npm install
-    node node_modules/typescript/bin/tsc
 Test installation:
 
     node src/sudoku_cli.js -h

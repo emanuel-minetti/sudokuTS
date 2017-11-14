@@ -4,7 +4,9 @@
   "description": "A TypeScript implementation of the Sudoku game.",
   "main": "sudoku_cli.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "install": "npm run build",
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
@@ -17,10 +19,10 @@
   "author": "Emanuel Minetti",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@types/jasmine": "^2.6.2",
-    "@types/lodash": "^4.14.80",
+    "@types/jasmine": "^2.8.0",
+    "@types/lodash": "^4.14.85",
     "@types/minimist": "^1.2.0",
-    "@types/node": "^8.0.47",
+    "@types/node": "^8.0.52",
     "jasmine": "^2.8.0",
     "jasmine-core": "^2.8.0",
     "jasmine-ts": "^0.2.1",
