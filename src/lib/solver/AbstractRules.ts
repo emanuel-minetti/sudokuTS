@@ -257,15 +257,15 @@ export class AbstractRules {
                 //for each line
                 lineTuple.forEach(line => {
                     let containingSquares = line.filter(square => square.containsCandidate(value));
-                    if (containingSquares.length === tupleLength) {
+                    if (containingSquares.length > 0 && containingSquares.length <= tupleLength) {
                         definingLines.push(line);
                     }
                 });
                 if (definingLines.length === tupleLength) {
                     //defining tuple found
-                    //TODO finds only 3-3-3!!!
+                    //TODO find if there are intersecting lines
                     //TODO test and implement!
-                    console.log('Defining triple found!');
+                    console.log("Defining triple found: Value: " + value);
                 }
             });
         });
