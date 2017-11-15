@@ -112,6 +112,16 @@ export class ToughRules {
         return moves;
     }
 
+    //TODO document!
+    private static _sfRuleFn: TRuleFunction = (sudoku) => {
+        let moves: SudokuStateChange[];
+        let rows = sudoku.getRows();
+        let columns = sudoku.getColumns();
+        moves = AbstractRules.abstractCrossExclude(rows, columns, 3);
+        moves = _.concat(moves, AbstractRules.abstractCrossExclude(columns, rows, 3));
+        return moves;
+    }
+
     rules: SolverRule[];
 
     constructor() {
@@ -122,5 +132,8 @@ export class ToughRules {
 
         let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);
         this.rules.push(ywRule);
+
+        let sfRule = new SolverRule('Swordfish Rule: ', 15, ToughRules._sfRuleFn);
+        this.rules.push(sfRule);
     }
 }

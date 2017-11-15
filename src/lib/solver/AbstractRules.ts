@@ -243,4 +243,32 @@ export class AbstractRules {
         });
         return moves;
     }
+
+    static abstractCrossExclude(linesToSearch: Square[][],
+                         linesToEliminate: Square[][],
+                         tupleLength: number): SudokuStateChange[] {
+        let moves: SudokuStateChange[] = [];
+        let lineTuples = RulesHelper.getTuplesOfLines(linesToSearch, tupleLength);
+        let values = Sudoku.values;
+        //for each value and each tuple of lines
+        values.forEach(value => {
+            lineTuples.forEach(lineTuple => {
+                let definingLines: Square[][] = [];
+                //for each line
+                lineTuple.forEach(line => {
+                    let containingSquares = line.filter(square => square.containsCandidate(value));
+                    if (containingSquares.length === tupleLength) {
+                        definingLines.push(line);
+                    }
+                });
+                if (definingLines.length === tupleLength) {
+                    //defining tuple found
+                    //TODO test and implement!
+                    console.log('Defining triple found!');
+                }
+            });
+        });
+
+        return moves;
+    }
 }
