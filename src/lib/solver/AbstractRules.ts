@@ -263,6 +263,7 @@ export class AbstractRules {
                 });
                 if (definingLines.length === tupleLength) {
                     //defining tuple found
+                    //TODO finds only 3-3-3!!!
                     //TODO test and implement!
                     console.log('Defining triple found!');
                 }
