@@ -276,6 +276,11 @@ export class AbstractRules {
                     //TODO test and implement!
                     if (subTuples.length === containingSubTuples.length) {
                         console.log("Defining triple found: Value: " + value);
+                        console.log("\nLines: ");
+                        definingLines.forEach(line => console.log(line.reduce(
+                            (prev: String, curr: Square): String => {return prev + " " + curr.getName()}, ""
+                        )));
+                        console.log(("\n"));
                     }
                     //TODO find if there are intersecting lines
                 }
