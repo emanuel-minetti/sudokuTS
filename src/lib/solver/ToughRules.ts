@@ -118,7 +118,7 @@ export class ToughRules {
         let rows = sudoku.getRows();
         let columns = sudoku.getColumns();
         moves = AbstractRules.abstractCrossExclude(rows, columns, 3);
-        moves = _.concat(moves, AbstractRules.abstractCrossExclude(columns, rows, 3));
+        //moves = _.concat(moves, AbstractRules.abstractCrossExclude(columns, rows, 3));
         return moves;
     }
 
