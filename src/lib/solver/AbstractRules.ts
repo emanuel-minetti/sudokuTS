@@ -263,26 +263,14 @@ export class AbstractRules {
                 });
                 if (definingLines.length === tupleLength) {
                     //defining tuple candidate found
-                    //test whether there at least 2 containing squares in each sub tuple
-                    let subTuples = RulesHelper.getTuplesOfLines(definingLines, tupleLength - 1);
-                    let containingSubTuples = subTuples.filter(
-                        subTuple => subTuple.reduce((prev: boolean, curr: Square[]): boolean => {
-                            return prev && curr.reduce((prev: number, curr: Square): number => {
-                                return prev + (curr.containsCandidate(value) ? 1 : 0);
-                            }, 0) === tupleLength - 1;
-                        }, true)
-                    );
-
+                    //TODO find if there are intersecting lines
                     //TODO test and implement!
-                    if (subTuples.length === containingSubTuples.length) {
                         console.log("Defining triple found: Value: " + value);
                         console.log("\nLines: ");
                         definingLines.forEach(line => console.log(line.reduce(
                             (prev: String, curr: Square): String => {return prev + " " + curr.getName()}, ""
                         )));
                         console.log(("\n"));
-                    }
-                    //TODO find if there are intersecting lines
                 }
             });
         });
