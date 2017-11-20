@@ -280,7 +280,8 @@ export class AbstractRules {
                                     return (intermediateResult + (intersection[0].containsCandidate(value) ? 1 : 0));
                                 }, 0) >= 2));
                             }, true)) {
-                            //TODO implement final testing!
+                            //TODO test whether there aren't candidate squares outside the intersecting lines
+                            //TODO implement test for covering in defining lines!
                             console.log("Defining triple found: Value: " + value);
                             console.log("Defining lines: ");
                             definingLines.forEach(line => console.log(line.reduce(
