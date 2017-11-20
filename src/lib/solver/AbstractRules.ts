@@ -281,7 +281,7 @@ export class AbstractRules {
                                 return prev + " " + curr.getName()
                             }, ""
                         )));
-                        console.log("Elemination lines: ");
+                        console.log("Elimination lines: ");
                         intersectingLines.forEach(line => console.log(line.reduce(
                             (prev: String, curr: Square): String => {
                                 return prev + " " + curr.getName()
