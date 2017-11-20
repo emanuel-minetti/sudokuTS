@@ -10,3 +10,4 @@ package-lock.json
 .idea/misc.xml
 .idea/workspace.xml
 examples/moderate.txt~
+.idea/angular-settings.xml
