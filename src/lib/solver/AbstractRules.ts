@@ -245,8 +245,8 @@ export class AbstractRules {
     }
 
     static abstractCrossExclude(linesToSearch: Square[][],
-                         linesToEliminate: Square[][],
-                         tupleLength: number): SudokuStateChange[] {
+                                linesToEliminate: Square[][],
+                                tupleLength: number): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
         let lineTuples = RulesHelper.getTuplesOfLines(linesToSearch, tupleLength);
         let values = Sudoku.values;
@@ -257,42 +257,49 @@ export class AbstractRules {
                 //for each line
                 lineTuple.forEach(line => {
                     let containingSquares = line.filter(square => square.containsCandidate(value));
-                    if (containingSquares.length > 0 && containingSquares.length <= tupleLength) {
+                    if (containingSquares.length >= 2 && containingSquares.length <= tupleLength) {
                         definingLines.push(line);
                     }
                 });
                 if (definingLines.length === tupleLength) {
                     //defining tuple candidate found
                     //find intersecting lines
+                    let squaresInLineTuple: Square[] = _.flatten(lineTuple);
                     let intersectingLines = linesToEliminate.filter(
                         intersectingLine => {
-                            let squaresInLineTuple: Square[] = _.flattenDeep(lineTuple);
                             let intersectingSquares = _.intersection(intersectingLine, squaresInLineTuple);
                             intersectingSquares = intersectingSquares.filter(square => square.containsCandidate(value));
                             return (intersectingSquares.length >= 2);
                         }
                     );
                     if (intersectingLines.length === 3) {
-                        //TODO implement final testing!
-                        console.log("Defining triple found: Value: " + value);
-                        console.log("Defining lines: ");
-                        definingLines.forEach(line => console.log(line.reduce(
-                            (prev: String, curr: Square): String => {
-                                return prev + " " + curr.getName()
-                            }, ""
-                        )));
-                        console.log("Elimination lines: ");
-                        intersectingLines.forEach(line => console.log(line.reduce(
-                            (prev: String, curr: Square): String => {
-                                return prev + " " + curr.getName()
-                            }, ""
-                        )));
-                        console.log(("\n"));
+                        //test whether the intersecting lines are really intersecting
+                        if (definingLines.reduce((result: boolean, definingLine: Square[]): boolean => {
+                                return (result && (intersectingLines.reduce((intermediateResult: number, intersectingLine: Square[]): number => {
+                                    let intersection = _.intersection(definingLine, intersectingLine);
+                                    return (intermediateResult + (intersection[0].containsCandidate(value) ? 1 : 0));
+                                }, 0) >= 2));
+                            }, true)) {
+                            //TODO implement final testing!
+                            console.log("Defining triple found: Value: " + value);
+                            console.log("Defining lines: ");
+                            definingLines.forEach(line => console.log(line.reduce(
+                                (prev: String, curr: Square): String => {
+                                    return prev + " " + curr.getName()
+                                }, ""
+                            )));
+                            console.log("Elimination lines: ");
+                            intersectingLines.forEach(line => console.log(line.reduce(
+                                (prev: String, curr: Square): String => {
+                                    return prev + " " + curr.getName()
+                                }, ""
+                            )));
+                            console.log(("\n"));
+                        }
                     }
                 }
             });
         });
-
         return moves;
     }
 }
