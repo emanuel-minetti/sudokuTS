@@ -275,12 +275,14 @@ export class AbstractRules {
                     if (intersectingLines.length === 3) {
                         //test whether the intersecting lines are really intersecting
                         if (definingLines.reduce((result: boolean, definingLine: Square[]): boolean => {
-                                return (result && (intersectingLines.reduce((intermediateResult: number, intersectingLine: Square[]): number => {
-                                    let intersection = _.intersection(definingLine, intersectingLine);
-                                    return (intermediateResult + (intersection[0].containsCandidate(value) ? 1 : 0));
-                                }, 0) >= 2));
+                                return (result && (intersectingLines.reduce(
+                                    (intermediateResult: number, intersectingLine: Square[]): number => {
+                                        let intersection = _.intersection(definingLine, intersectingLine);
+                                        return (intermediateResult + (intersection[0].containsCandidate(value) ? 1 : 0));
+                                    }, 0) >= 2));
                             }, true)) {
-                            //TODO test whether there aren't candidate squares outside the intersecting lines
+                            //TODO test whether there aren't candidate squares in defining lines outside the intersecting lines
+
                             //TODO implement test for covering in defining lines!
                             console.log("Defining triple found: Value: " + value);
                             console.log("Defining lines: ");
