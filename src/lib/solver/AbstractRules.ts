@@ -278,26 +278,35 @@ export class AbstractRules {
                                 return (result && (intersectingLines.reduce(
                                     (intermediateResult: number, intersectingLine: Square[]): number => {
                                         let intersection = _.intersection(definingLine, intersectingLine);
-                                        return (intermediateResult + (intersection[0].containsCandidate(value) ? 1 : 0));
+                                        return intermediateResult + (intersection[0].containsCandidate(value) ? 1 : 0);
                                     }, 0) >= 2));
                             }, true)) {
-                            //TODO test whether there aren't candidate squares in defining lines outside the intersecting lines
-
-                            //TODO implement test for covering in defining lines!
-                            console.log("Defining triple found: Value: " + value);
-                            console.log("Defining lines: ");
-                            definingLines.forEach(line => console.log(line.reduce(
-                                (prev: String, curr: Square): String => {
-                                    return prev + " " + curr.getName()
-                                }, ""
-                            )));
-                            console.log("Elimination lines: ");
-                            intersectingLines.forEach(line => console.log(line.reduce(
-                                (prev: String, curr: Square): String => {
-                                    return prev + " " + curr.getName()
-                                }, ""
-                            )));
-                            console.log(("\n"));
+                            //test whether there are no candidate squares
+                            //in defining lines outside the intersecting ones
+                            if (definingLines.reduce((result: boolean, definingLine: Square[]): boolean => {
+                                let intersectingSquares = _.flatten(intersectingLines);
+                                return (result && definingLine.reduce((result: boolean, square: Square): boolean => {
+                                    return (result &&
+                                        (!square.containsCandidate(value) ||
+                                            (intersectingSquares.indexOf(square) !== -1)));
+                                }, true));
+                            }, true)) {
+                                //TODO implement test for covering in defining lines!
+                                console.log("Defining triple found: Value: " + value);
+                                console.log("Defining lines: ");
+                                definingLines.forEach(line => console.log(line.reduce(
+                                    (prev: String, curr: Square): String => {
+                                        return prev + " " + curr.getName()
+                                    }, ""
+                                )));
+                                console.log("Elimination lines: ");
+                                intersectingLines.forEach(line => console.log(line.reduce(
+                                    (prev: String, curr: Square): String => {
+                                        return prev + " " + curr.getName()
+                                    }, ""
+                                )));
+                                console.log(("\n"));
+                            }
                         }
                     }
                 }
