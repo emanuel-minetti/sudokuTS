@@ -291,20 +291,36 @@ export class AbstractRules {
                                             (intersectingSquares.indexOf(square) !== -1)));
                                 }, true));
                             }, true)) {
+                                //TODO Add further test examples!
                                 //TODO implement test for covering in defining lines!
-                                console.log("Defining triple found: Value: " + value);
-                                console.log("Defining lines: ");
-                                definingLines.forEach(line => console.log(line.reduce(
-                                    (prev: String, curr: Square): String => {
-                                        return prev + " " + curr.getName()
-                                    }, ""
-                                )));
-                                console.log("Elimination lines: ");
-                                intersectingLines.forEach(line => console.log(line.reduce(
-                                    (prev: String, curr: Square): String => {
-                                        return prev + " " + curr.getName()
-                                    }, ""
-                                )));
+                                //CrossExclude found, so remove candidates
+                                //TODO comment!
+                                let unitsToEliminate = intersectingLines;
+                                let isDefiningColumns = (definingLines[0][0].getColumnName() ===
+                                    definingLines[0][1].getColumnName());
+                                let definingString = definingLines.reduce((result: String, line: Square[]): String => {
+                                    return result + (isDefiningColumns ? line[0].getColumnName(): line[0].getRowName());
+                                }, "");
+                                definingString = intersectingLines.reduce((result: String, line: Square[]): String => {
+                                    return result + (isDefiningColumns ? line[0].getRowName(): line[0].getColumnName());
+                                }, definingString);
+                                unitsToEliminate.forEach(unitToEliminate => {
+                                    unitToEliminate.forEach(squareToRemoveValue => {
+                                        //if the square is none of defining squares
+                                        if (squaresInLineTuple.indexOf(squareToRemoveValue) === -1) {
+                                            //and the square isn't already set and
+                                            //contains the value as a candidate
+                                            if (squareToRemoveValue.containsCandidate(value)) {
+                                                let move = new SudokuStateChange(squareToRemoveValue.getIndex(),
+                                                    [value],
+                                                    value + ' in ' + definingString +
+                                                    ', so removed ' + value + ' from ' +
+                                                    squareToRemoveValue.getName());
+                                                moves.push(move);
+                                            }
+                                        }
+                                    });
+                                });
                                 console.log(("\n"));
                             }
                         }
