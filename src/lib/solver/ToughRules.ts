@@ -97,7 +97,7 @@ export class ToughRules {
 
     /**
      * The X-Wing rule searches firstly rows then columns for defining 'X'-es.
-     * @see AbstractRules.abstractX_Wing
+     * @see AbstractRules.abstractCrossExclude
      *
      * @param {Sudoku} sudoku sudoku the state of the game
      * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
@@ -112,7 +112,14 @@ export class ToughRules {
         return moves;
     }
 
-    //TODO document!
+    /**
+     * The Swordfish rule searches firstly rows then columns for defining '3*3' squares.
+     * @see AbstractRules.abstractCrossExclude
+     *
+     * @param {Sudoku} sudoku sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
+     * @private
+     */
     private static _sfRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[];
         let rows = sudoku.getRows();
@@ -133,7 +140,7 @@ export class ToughRules {
         let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);
         this.rules.push(ywRule);
 
-        let sfRule = new SolverRule('Swordfish Rule: ', 15, ToughRules._sfRuleFn);
+        let sfRule = new SolverRule('Swordfish Rule: ', 16, ToughRules._sfRuleFn);
         this.rules.push(sfRule);
     }
 }
