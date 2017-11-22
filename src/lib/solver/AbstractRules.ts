@@ -173,77 +173,15 @@ export class AbstractRules {
         return moves;
     }
 
+    //TODO complete documenting!
+    //TODO comment!
     /**
-     * An abstraction of the X-Wing rule.
+     * An abstraction of the X-Wing and Swordfish rules.
      *
-     * It abstracts whether columns or rows are searched for a defining 'X'. For each value it searches within
-     * the given 'lines to search' whether there are two lines that contain the value exactly two times. If
-     * these four defining squares are contained in exactly two of the 'lines to eliminate' a defining 'X' is
-     * found. Now it removes the value from all squares of the two 'lines to eliminate' except from the
-     * defining four.
-     *
-     * @param {Square[][]} linesToSearch the lines, that is rows or columns, to search for the defining 'X'.
+     * @param {Square[][]} linesToSearch the lines, that is rows or columns, to search for the defining square of squares.
      * @param {Square[][]} linesToEliminate the lines, that is columns or rows, to remove candidates from.
      * @returns {SudokuStateChange[]} the resulting moves
      */
-    static abstractX_Wing(linesToSearch: Square[][], linesToEliminate: Square[][]) {
-        let moves: SudokuStateChange[] = [];
-        let definingUnitCandidates: Square[][];
-        let values = Sudoku.values;
-        //for each value
-        values.forEach(value => {
-            //find the first line which contains the value in the candidates of exactly two squares
-            linesToSearch.forEach((firstDefiningUnit, firstUnitIndex) => {
-                let firstContainingSquares = firstDefiningUnit.filter(square => square.containsCandidate(value));
-                if (firstContainingSquares.length === 2) {
-                    //find the second line which contains the value in the candidates of exactly two squares
-                    linesToSearch.forEach((secondDefiningUnit, secondUnitIndex) => {
-                        if (secondUnitIndex > firstUnitIndex) {
-                            let secondContainingSquares = secondDefiningUnit.filter(square =>
-                                square.containsCandidate(value));
-                            if (secondContainingSquares.length === 2) {
-                                //two containing lines found
-                                //find intersecting lines
-                                let unitsToEliminate = linesToEliminate.filter(squaresToEliminate => {
-                                    return ((squaresToEliminate.indexOf(firstContainingSquares[0]) !== -1 &&
-                                        squaresToEliminate.indexOf(secondContainingSquares[0]) !== -1)
-                                        ||
-                                        (squaresToEliminate.indexOf(firstContainingSquares[1]) !== -1) &&
-                                        squaresToEliminate.indexOf(secondContainingSquares[1]) !== -1)
-                                });
-                                if (unitsToEliminate.length === 2) {
-                                    //X-Wing found, so remove candidates
-                                    unitsToEliminate.forEach(unitToEliminate => {
-                                        unitToEliminate.forEach(squareToRemoveValue => {
-                                            //if the square is none of defining squares
-                                            if (firstContainingSquares.indexOf(squareToRemoveValue) === -1 &&
-                                                secondContainingSquares.indexOf(squareToRemoveValue) === -1) {
-                                                //and the square isn't already set and
-                                                //contains the value as a candidate
-                                                if (squareToRemoveValue.containsCandidate(value)) {
-                                                    let move = new SudokuStateChange(squareToRemoveValue.getIndex(),
-                                                        [value],
-                                                        value + ' in ' + firstContainingSquares[0].getName() + '/' +
-                                                        firstContainingSquares[1].getName() + ' and ' +
-                                                        secondContainingSquares[0].getName() + '/' +
-                                                        secondContainingSquares[1].getName() +
-                                                        ', so removed ' + value + ' from ' +
-                                                        squareToRemoveValue.getName());
-                                                    moves.push(move);
-                                                }
-                                            }
-                                        });
-                                    });
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-        });
-        return moves;
-    }
-
     static abstractCrossExclude(linesToSearch: Square[][],
                                 linesToEliminate: Square[][],
                                 tupleLength: number): SudokuStateChange[] {
@@ -294,7 +232,6 @@ export class AbstractRules {
                                 //TODO Add further test examples!
                                 //TODO implement test for covering in defining lines!
                                 //CrossExclude found, so remove candidates
-                                //TODO comment!
                                 let unitsToEliminate = intersectingLines;
                                 let isDefiningColumns = (definingLines[0][0].getColumnName() ===
                                     definingLines[0][1].getColumnName());
