@@ -116,4 +116,27 @@ describe('A Solver with ToughRules', () => {
             solver.solve();
             expect(game.isSolved()).toBe(true);
         });
+
+    it('should be able to solve a game with the Swordfish Rule (eliminating rows)',
+        () => {
+            let sfString = `
+9** *** ***
+*37 *1* 42*
+84* *** 6*3
+
+*** *34 81*
+*** *6* ***
+*68 12* ***
+
+1*2 *** *84
+*85 *7* 36*
+*** *** **1
+`;
+
+            let game = new SudokuGame(sfString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
 });
