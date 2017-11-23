@@ -229,7 +229,6 @@ export class AbstractRules {
                                             (intersectingSquares.indexOf(square) !== -1)));
                                 }, true));
                             }, true)) {
-                                //TODO is testing needed for covering in defining lines?
                                 //CrossExclude found, so remove candidates
                                 let unitsToEliminate = intersectingLines;
                                 let isDefiningColumns = (definingLines[0][0].getColumnName() ===
@@ -257,7 +256,6 @@ export class AbstractRules {
                                         }
                                     });
                                 });
-                                console.log(("\n"));
                             }
                         }
                     }
