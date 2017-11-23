@@ -37,7 +37,7 @@ export class ToughRules {
             let candidates = square.getCandidates();
             return (candidates && candidates.length === 2);
         });
-        //collect all values in these squares
+        //collect all candidate values in these squares
         let candidateValues = candidateSquares.reduce((prev: number[], curr: Square): number[] =>
             _.union(prev, curr.getCandidates()), []);
         //get all triplets of these values
