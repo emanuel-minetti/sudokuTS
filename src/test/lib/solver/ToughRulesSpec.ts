@@ -116,4 +116,73 @@ describe('A Solver with ToughRules', () => {
             solver.solve();
             expect(game.isSolved()).toBe(true);
         });
+
+    it('should be able to solve a game with the Swordfish Rule',
+        () => {
+            let sfString = `
+98* *1* *2*
+**2 7** ***
+*** **9 *1*
+
+7** *4* 8**
+6** 1*7 **2
+**9 *3* **5
+
+*4* 9** ***
+*** **5 7**
+*7* *2* *39
+`;
+
+            let game = new SudokuGame(sfString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
+
+    it('should be able to solve a game with the Swordfish Rule (eliminating rows)',
+        () => {
+            let sfString = `
+9** *** ***
+*37 *1* 42*
+84* *** 6*3
+
+*** *34 81*
+*** *6* ***
+*68 12* ***
+
+1*2 *** *84
+*85 *7* 36*
+*** *** **1
+`;
+
+            let game = new SudokuGame(sfString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
+
+    it('should be able to solve a game with the Swordfish Rule (eliminating columns)',
+        () => {
+            let sfString = `
+*2* *4* *69
+**3 8*6 2**
+*6* *2* ***
+
+89* 5** *1*
+*** *** ***
+*3* **1 *26
+
+*** *1* *7*
+**9 6*4 3**
+27* *5* *9*
+`;
+
+            let game = new SudokuGame(sfString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
 });

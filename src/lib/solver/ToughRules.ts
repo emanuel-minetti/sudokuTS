@@ -5,7 +5,6 @@ import {SolverRule, TRuleFunction} from "./SolverRule";
 import {RulesHelper} from "./RulesHelper";
 import {Sudoku} from "../game/Sudoku";
 import {AbstractRules} from "./AbstractRules";
-import {isNull} from "util";
 import {Square} from "../game/Square";
 
 /**
@@ -97,7 +96,7 @@ export class ToughRules {
 
     /**
      * The X-Wing rule searches firstly rows then columns for defining 'X'-es.
-     * @see AbstractRules.abstractX_Wing
+     * @see AbstractRules.abstractCrossExclude
      *
      * @param {Sudoku} sudoku sudoku the state of the game
      * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
@@ -107,8 +106,25 @@ export class ToughRules {
         let moves: SudokuStateChange[];
         let rows = sudoku.getRows();
         let columns = sudoku.getColumns();
-        moves = AbstractRules.abstractX_Wing(rows, columns);
-        moves = _.concat(moves, AbstractRules.abstractX_Wing(columns, rows));
+        moves = AbstractRules.abstractCrossExclude(columns, rows, 2);
+        moves = _.concat(moves, AbstractRules.abstractCrossExclude(rows, columns, 2));
+        return moves;
+    }
+
+    /**
+     * The Swordfish rule searches firstly rows then columns for defining '3*3' squares.
+     * @see AbstractRules.abstractCrossExclude
+     *
+     * @param {Sudoku} sudoku sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
+     * @private
+     */
+    private static _sfRuleFn: TRuleFunction = (sudoku) => {
+        let moves: SudokuStateChange[];
+        let rows = sudoku.getRows();
+        let columns = sudoku.getColumns();
+        moves = AbstractRules.abstractCrossExclude(columns, rows, 3);
+        moves = _.concat(moves, AbstractRules.abstractCrossExclude(rows, columns, 3));
         return moves;
     }
 
@@ -122,5 +138,8 @@ export class ToughRules {
 
         let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);
         this.rules.push(ywRule);
+
+        let sfRule = new SolverRule('Swordfish Rule: ', 16, ToughRules._sfRuleFn);
+        this.rules.push(sfRule);
     }
 }

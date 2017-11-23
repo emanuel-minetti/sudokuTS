@@ -105,7 +105,7 @@ export class Square {
             this.candidates = difference;
             return true;
         }
-            return false;
+        return false;
     }
 
     /**

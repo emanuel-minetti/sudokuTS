@@ -26,7 +26,7 @@ export class RulesHelper {
     }
 
     /**
-     * Returns the remaining possible values for an given array os squares.
+     * Returns the remaining possible values for an given array of squares.
      *
      * @param {Square[]} unit the array of squares
      * @returns {number[]} the remaining values
@@ -41,48 +41,6 @@ export class RulesHelper {
             }
         });
         return remainingValues;
-    }
-
-    /**
-     * Takes an array of squares and returns all tupeles of a given length.
-     *
-     * Returns all sorted tupels with unique squares of a given length and
-     * a given array of squares.
-     *
-     * @param {Square[]} squares the squares to get tuples from
-     * @param {number} length the length of the tuples
-     * @returns {Square[][]} the tuples
-     */
-    static getTupelesOfSquares(squares: Square[], length: number): Square[][] {
-        let indexTuples = RulesHelper.getTuples(squares.length, length);
-        let squareTuples: Square[][] = [];
-        let squareTuple: Square[];
-        indexTuples.forEach((tuple) => {
-            squareTuple = tuple.map((index) => squares[index]);
-            squareTuples.push(squareTuple)
-        });
-        return squareTuples;
-    }
-
-    /**
-     * Takes an array of values and returns all tupeles of a given length.
-     *
-     * Returns all sorted tupels with unique values of a given length and
-     * a given array of values.
-     *
-     * @param {Square[]} squares the squares to get tuples from
-     * @param {number} length the length of the tuples
-     * @returns {Square[][]} the tuples
-     */
-    static getTuplesOfValues(values: number[], length: number): number[][] {
-        let indexTuples = RulesHelper.getTuples(values.length, length);
-        let valueTuples: number[][] = [];
-        let valueTuple: number[];
-        indexTuples.forEach((tuple) => {
-            valueTuple = tuple.map((index) => values[index]);
-            valueTuples.push(valueTuple)
-        });
-        return valueTuples;
     }
 
     /**
@@ -120,4 +78,47 @@ export class RulesHelper {
         })
         return tuples;
     }
+
+    /**
+     * Takes an array of squares and returns all tupeles of a given length.
+     *
+     * Returns all sorted tupels with unique squares of a given length and
+     * a given array of squares.
+     *
+     * @param {Square[]} squares the squares to get tuples from
+     * @param {number} length the length of the tuples
+     * @returns {Square[][]} the tuples
+     */
+    static getTupelesOfSquares(squares: Square[], length: number): Square[][] {
+        return RulesHelper.getTuples(squares.length, length).map(tuple => tuple.map(index => squares[index]));
+    }
+
+    /**
+     * Takes an array of values and returns all tupeles of a given length.
+     *
+     * Returns all sorted tupels with unique values of a given length and
+     * a given array of values.
+     *
+     * @param {Square[]} squares the squares to get tuples from
+     * @param {number} length the length of the tuples
+     * @returns {Square[][]} the tuples
+     */
+    static getTuplesOfValues(values: number[], length: number): number[][] {
+        return RulesHelper.getTuples(values.length, length).map(tuple => tuple.map(index => values[index]));
+    }
+
+    /**
+     * Takes an array of arrays of squares, e.g. lines, and returns all tupeles of a given length.
+     *
+     * Returns all sorted tupels with unique values of a given length and
+     * a given array of arrays of squares.
+     *
+     * @param {Square[][]} lines the lines to get tuples from
+     * @param {number} length the length of the tuples
+     * @returns {Square[][][]} the tuples
+     */
+    static getTuplesOfLines(lines: Square[][], length: number): Square[][][] {
+        return RulesHelper.getTuples(lines.length, length).map(tuple => tuple.map(index => lines[index]));
+    }
+
 }
