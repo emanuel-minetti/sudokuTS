@@ -4,8 +4,9 @@ import {SudokuStateChange} from "../game/SudokuStateChange";
 import {SolverRule, TRuleFunction} from "./SolverRule";
 import {RulesHelper} from "./RulesHelper";
 import {Sudoku} from "../game/Sudoku";
-import {AbstractRules} from "./AbstractRules";
+import {AbstractBasicRules} from "./AbstractBasicRules";
 import {Square} from "../game/Square";
+import {AbstractToughRules} from "./AbstractToughRules";
 
 /**
  * A class grouping the tough sudoku rules.
@@ -96,7 +97,7 @@ export class ToughRules {
 
     /**
      * The X-Wing rule searches firstly rows then columns for defining 'X'-es.
-     * @see AbstractRules.abstractCrossExclude
+     * @see AbstractBasicRules.abstractCrossExclude
      *
      * @param {Sudoku} sudoku sudoku the state of the game
      * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
@@ -106,14 +107,14 @@ export class ToughRules {
         let moves: SudokuStateChange[];
         let rows = sudoku.getRows();
         let columns = sudoku.getColumns();
-        moves = AbstractRules.abstractCrossExclude(columns, rows, 2);
-        moves = _.concat(moves, AbstractRules.abstractCrossExclude(rows, columns, 2));
+        moves = AbstractToughRules.abstractCrossExclude(columns, rows, 2);
+        moves = _.concat(moves, AbstractToughRules.abstractCrossExclude(rows, columns, 2));
         return moves;
     }
 
     /**
      * The Swordfish rule searches firstly rows then columns for defining '3*3' squares.
-     * @see AbstractRules.abstractCrossExclude
+     * @see AbstractBasicRules.abstractCrossExclude
      *
      * @param {Sudoku} sudoku sudoku the state of the game
      * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
@@ -123,8 +124,8 @@ export class ToughRules {
         let moves: SudokuStateChange[];
         let rows = sudoku.getRows();
         let columns = sudoku.getColumns();
-        moves = AbstractRules.abstractCrossExclude(columns, rows, 3);
-        moves = _.concat(moves, AbstractRules.abstractCrossExclude(rows, columns, 3));
+        moves = AbstractToughRules.abstractCrossExclude(columns, rows, 3);
+        moves = _.concat(moves, AbstractToughRules.abstractCrossExclude(rows, columns, 3));
         return moves;
     }
 
