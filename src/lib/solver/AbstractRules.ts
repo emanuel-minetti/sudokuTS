@@ -201,12 +201,9 @@ export class AbstractRules {
             lineTuples.forEach(lineTuple => {
                 //find defining lines that is lines that contain the value as a candidate
                 //in 2 <= x <= tupleLength squares
-                let definingLines: Square[][] = [];
-                lineTuple.forEach(line => {
-                    let containingSquares = line.filter(square => square.containsCandidate(value));
-                    if (containingSquares.length >= 2 && containingSquares.length <= tupleLength) {
-                        definingLines.push(line);
-                    }
+                let definingLines = lineTuple.filter(line => {
+                    let numberOfContainingSquares = line.filter(square => square.containsCandidate(value)).length;
+                    return (numberOfContainingSquares >= 2 && numberOfContainingSquares <= tupleLength);
                 });
                 if (definingLines.length === tupleLength) {
                     //defining tuple candidate found
