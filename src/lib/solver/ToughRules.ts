@@ -16,6 +16,7 @@ import {AbstractToughRules} from "./AbstractToughRules";
  */
 export class ToughRules {
 
+    //TODO review documentation!
     /**
      * The Y-Wing rule checks all squares that have two remaining candidates.
      * From these squares it takes the union of all remaining candidates.
@@ -31,67 +32,7 @@ export class ToughRules {
      * @private
      */
     private static _ywRuleFn: TRuleFunction = (sudoku) => {
-        let moves: SudokuStateChange[] = [];
-        //find all squares with two candidates, the candidate squares
-        let candidateSquares = sudoku.getSquares().filter(square => {
-            let candidates = square.getCandidates();
-            return (candidates && candidates.length === 2);
-        });
-        //collect all candidate values in these squares
-        let candidateValues = candidateSquares.reduce((prev: number[], curr: Square): number[] =>
-            _.union(prev, curr.getCandidates()), []);
-        //get all triplets of these values
-        let valueTriplets = RulesHelper.getTuplesOfValues(candidateValues, 3);
-        if (candidateSquares.length >= 3) {
-            //for each triplet and candidate square
-            valueTriplets.forEach(valueTriplet => {
-                candidateSquares.forEach(candidateSquare => {
-                    let firstIntersection = candidateSquare.getCandidateIntersection(valueTriplet);
-                    //if this candidate square has two values from the triplet
-                    if (firstIntersection.length === 2) {
-                        let peers = sudoku.getPeersOfSquare(candidateSquare);
-                        //find the wings for this candidate square
-                        let wings = peers.filter(peer => {
-                            let peerCandidates = peer.getCandidates();
-                            return (peerCandidates && peerCandidates.length === 2 &&
-                                _.intersection(peerCandidates, valueTriplet).length === 2 &&
-                                _.intersection(peerCandidates, firstIntersection).length === 1);
-                        });
-                        if (wings.length >= 2) {
-                            //get all pairs of wings
-                            let wingPairs = RulesHelper.getTupelesOfSquares(wings, 2);
-                            let secondIntersection: number[];
-                            //for each pair
-                            wingPairs.forEach(wingPair => {
-                                secondIntersection = wingPair[0].getCandidateIntersection(wingPair[1].getCandidates()!);
-                                //if the wings have one common candidate
-                                if (secondIntersection.length === 1) {
-                                    //an Y-Wing is found!
-                                    //So get all common peers
-                                    let commonPeers = _.intersection(sudoku.getPeersOfSquare(wingPair[0]),
-                                        sudoku.getPeersOfSquare(wingPair[1]));
-                                    //filter out the candidate square, the already set squares and the squares that
-                                    //haven't the one common candidate as own candidate
-                                    commonPeers = commonPeers.filter(commonPeer =>
-                                        (commonPeer !== candidateSquare &&
-                                            commonPeer.containsCandidate(secondIntersection[0])));
-                                    //for each such common peer
-                                    commonPeers.forEach(commonPeer => {
-                                        //remove the common value
-                                        let move = new SudokuStateChange(commonPeer.getIndex(), secondIntersection,
-                                            candidateSquare.getName() + ' points to wings ' + wingPair[0].getName() +
-                                            '/' + wingPair[1].getName() + ', so removed ' + secondIntersection[0] +
-                                            ' from candidates of ' + commonPeer.getName());
-                                        moves.push(move);
-                                    });
-                                }
-                            });
-                        }
-                    }
-                });
-            });
-        }
-        return moves;
+        return AbstractToughRules.abstractY_Wing(sudoku, false);
     }
 
     /**
