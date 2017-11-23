@@ -258,10 +258,8 @@ export class AbstractRules {
                                             //contains the value as a candidate
                                             if (squareToRemoveValue.containsCandidate(value)) {
                                                 let move = new SudokuStateChange(squareToRemoveValue.getIndex(),
-                                                    [value],
-                                                    value + ' in ' + definingString +
-                                                    ', so removed ' + value + ' from ' +
-                                                    squareToRemoveValue.getName());
+                                                    [value], value + ' in ' + definingString + ', so removed ' +
+                                                    value + ' from ' + squareToRemoveValue.getName());
                                                 moves.push(move);
                                             }
                                         }
