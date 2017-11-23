@@ -174,7 +174,6 @@ export class AbstractRules {
     }
 
     //TODO complete documenting!
-    //TODO comment!
     /**
      * An abstraction of the X-Wing and Swordfish rules.
      *
@@ -191,8 +190,9 @@ export class AbstractRules {
         //for each value and each tuple of lines
         values.forEach(value => {
             lineTuples.forEach(lineTuple => {
+                //find defining lines that is lines that contain the value as a candidate
+                //in 2 <= x <= tupleLength squares
                 let definingLines: Square[][] = [];
-                //for each line
                 lineTuple.forEach(line => {
                     let containingSquares = line.filter(square => square.containsCandidate(value));
                     if (containingSquares.length >= 2 && containingSquares.length <= tupleLength) {
@@ -230,17 +230,19 @@ export class AbstractRules {
                                 }, true));
                             }, true)) {
                                 //CrossExclude found, so remove candidates
-                                let unitsToEliminate = intersectingLines;
+                                //find whether columns or rows are defining units
                                 let isDefiningColumns = (definingLines[0][0].getColumnName() ===
                                     definingLines[0][1].getColumnName());
+                                //construct a string explaining the move
                                 let definingString = definingLines.reduce((result: String, line: Square[]): String => {
                                     return result + (isDefiningColumns ? line[0].getColumnName(): line[0].getRowName());
                                 }, "");
                                 definingString = intersectingLines.reduce((result: String, line: Square[]): String => {
                                     return result + (isDefiningColumns ? line[0].getRowName(): line[0].getColumnName());
                                 }, definingString);
-                                unitsToEliminate.forEach(unitToEliminate => {
-                                    unitToEliminate.forEach(squareToRemoveValue => {
+                                //for each line to eliminate
+                                intersectingLines.forEach(intersectingLine => {
+                                    intersectingLine.forEach(squareToRemoveValue => {
                                         //if the square is none of defining squares
                                         if (squaresInLineTuple.indexOf(squareToRemoveValue) === -1) {
                                             //and the square isn't already set and
