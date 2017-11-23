@@ -173,16 +173,25 @@ export class AbstractRules {
         return moves;
     }
 
-    //TODO complete documenting!
     /**
      * An abstraction of the X-Wing and Swordfish rules.
+     *
+     * This rule works on values and lines that is rows or columns. It takes lines to search (rows or columns) and lines
+     * to eliminate the value from. It also takes a tuple length that determines the size of the defining square of
+     * squares that is 2*2 or 3*3.
+     *
+     * For every value x it searches for tuples of lines to search that lines contain x 2 <= #x <= tuple length times.
+     * Such a tuple is called 'defining lines'. For each set of defining lines it tests whether there are tuple length
+     * lines to eliminate that contain x in at least two squares that intersect with the defining lines. If such lines
+     * to eliminate exist they are called 'intersecting lines'. If the defining lines don't contain x in any square
+     * other than the intersecting a Cross Exclude is found. Now x can be removed from all squares of the intersecting
+     * lines except the defining squares.
      *
      * @param {Square[][]} linesToSearch the lines, that is rows or columns, to search for the defining square of squares.
      * @param {Square[][]} linesToEliminate the lines, that is columns or rows, to remove candidates from.
      * @returns {SudokuStateChange[]} the resulting moves
      */
-    static abstractCrossExclude(linesToSearch: Square[][],
-                                linesToEliminate: Square[][],
+    static abstractCrossExclude(linesToSearch: Square[][], linesToEliminate: Square[][],
                                 tupleLength: number): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
         let lineTuples = RulesHelper.getTuplesOfLines(linesToSearch, tupleLength);
