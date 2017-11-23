@@ -90,14 +90,7 @@ export class RulesHelper {
      * @returns {Square[][]} the tuples
      */
     static getTupelesOfSquares(squares: Square[], length: number): Square[][] {
-        let indexTuples = RulesHelper.getTuples(squares.length, length);
-        let squareTuples: Square[][] = [];
-        let squareTuple: Square[];
-        indexTuples.forEach((tuple) => {
-            squareTuple = tuple.map((index) => squares[index]);
-            squareTuples.push(squareTuple)
-        });
-        return squareTuples;
+        return RulesHelper.getTuples(squares.length, length).map(tuple => tuple.map(index => squares[index]));
     }
 
     /**
@@ -111,14 +104,7 @@ export class RulesHelper {
      * @returns {Square[][]} the tuples
      */
     static getTuplesOfValues(values: number[], length: number): number[][] {
-        let indexTuples = RulesHelper.getTuples(values.length, length);
-        let valueTuples: number[][] = [];
-        let valueTuple: number[];
-        indexTuples.forEach((tuple) => {
-            valueTuple = tuple.map((index) => values[index]);
-            valueTuples.push(valueTuple)
-        });
-        return valueTuples;
+        return RulesHelper.getTuples(values.length, length).map(tuple => tuple.map(index => values[index]));
     }
 
     /**
@@ -132,14 +118,7 @@ export class RulesHelper {
      * @returns {Square[][][]} the tuples
      */
     static getTuplesOfLines(lines: Square[][], length: number): Square[][][] {
-        let indexTuples = RulesHelper.getTuples(lines.length, length);
-        let lineTuples: Square[][][] = [];
-        let lineTuple: Square[][];
-        indexTuples.forEach((tuple) => {
-            lineTuple = tuple.map((index) => lines[index]);
-            lineTuples.push(lineTuple)
-        });
-        return lineTuples;
+        return RulesHelper.getTuples(lines.length, length).map(tuple => tuple.map(index => lines[index]));
     }
 
 }
