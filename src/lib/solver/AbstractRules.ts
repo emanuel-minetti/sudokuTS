@@ -217,55 +217,56 @@ export class AbstractRules {
                         }
                     );
                     if (intersectingLines.length === 3) {
-                        //test whether the intersecting lines are really intersecting
-                        if (definingLines.reduce((result: boolean, definingLine: Square[]): boolean => {
+                        //test whether each defining line has the value as a candidate
+                        // in at least two intersecting lines ...
+                        if ((definingLines.reduce((result: boolean, definingLine: Square[]): boolean => {
                                 return (result && (intersectingLines.reduce(
                                     (intermediateResult: number, intersectingLine: Square[]): number => {
                                         let intersection = _.intersection(definingLine, intersectingLine);
                                         return intermediateResult + (intersection[0].containsCandidate(value) ? 1 : 0);
                                     }, 0) >= 2));
-                            }, true)) {
-                            //test whether there are no candidate squares
+                            }, true)) &&
+                            //... and whether there are no candidate squares
                             //in defining lines outside the intersecting ones
-                            if (definingLines.reduce((result: boolean, definingLine: Square[]): boolean => {
+                            (definingLines.reduce((result: boolean, definingLine: Square[]): boolean => {
                                 let intersectingSquares = _.flatten(intersectingLines);
                                 return (result && definingLine.reduce((result: boolean, square: Square): boolean => {
                                     return (result &&
                                         (!square.containsCandidate(value) ||
                                             (intersectingSquares.indexOf(square) !== -1)));
                                 }, true));
-                            }, true)) {
-                                //CrossExclude found, so remove candidates
-                                //find whether columns or rows are defining units
-                                let isDefiningColumns = (definingLines[0][0].getColumnName() ===
-                                    definingLines[0][1].getColumnName());
-                                //construct a string explaining the move
-                                let definingString = definingLines.reduce((result: String, line: Square[]): String => {
-                                    return result + (isDefiningColumns ? line[0].getColumnName(): line[0].getRowName());
-                                }, "");
-                                definingString = intersectingLines.reduce((result: String, line: Square[]): String => {
-                                    return result + (isDefiningColumns ? line[0].getRowName(): line[0].getColumnName());
-                                }, definingString);
-                                //for each line to eliminate
-                                intersectingLines.forEach(intersectingLine => {
-                                    intersectingLine.forEach(squareToRemoveValue => {
-                                        //if the square is none of defining squares
-                                        if (squaresInLineTuple.indexOf(squareToRemoveValue) === -1) {
-                                            //and the square isn't already set and
-                                            //contains the value as a candidate
-                                            if (squareToRemoveValue.containsCandidate(value)) {
-                                                let move = new SudokuStateChange(squareToRemoveValue.getIndex(),
-                                                    [value], value + ' in ' + definingString + ', so removed ' +
-                                                    value + ' from ' + squareToRemoveValue.getName());
-                                                moves.push(move);
-                                            }
+                            }, true))) {
+                            //CrossExclude found, so remove candidates
+                            //find whether columns or rows are defining units
+                            let isDefiningColumns = (definingLines[0][0].getColumnName() ===
+                                definingLines[0][1].getColumnName());
+                            //construct a string explaining the move
+                            let definingString = definingLines.reduce((result: String, line: Square[]): String => {
+                                return result + (isDefiningColumns ? line[0].getColumnName() : line[0].getRowName());
+                            }, "");
+                            definingString = intersectingLines.reduce((result: String, line: Square[]): String => {
+                                return result + (isDefiningColumns ? line[0].getRowName() : line[0].getColumnName());
+                            }, definingString);
+                            //for each line to eliminate
+                            intersectingLines.forEach(intersectingLine => {
+                                intersectingLine.forEach(squareToRemoveValue => {
+                                    //if the square is none of defining squares
+                                    if (squaresInLineTuple.indexOf(squareToRemoveValue) === -1) {
+                                        //and the square isn't already set and
+                                        //contains the value as a candidate
+                                        if (squareToRemoveValue.containsCandidate(value)) {
+                                            let move = new SudokuStateChange(squareToRemoveValue.getIndex(),
+                                                [value], value + ' in ' + definingString + ', so removed ' +
+                                                value + ' from ' + squareToRemoveValue.getName());
+                                            moves.push(move);
                                         }
-                                    });
+                                    }
                                 });
-                            }
+                            });
                         }
                     }
                 }
+                //}
             });
         });
         return moves;
