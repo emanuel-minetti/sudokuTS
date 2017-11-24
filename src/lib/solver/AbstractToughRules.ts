@@ -139,21 +139,19 @@ export class AbstractToughRules {
                                 _.intersection(peerCandidates, valueTriplet).length === 2 &&
                                 _.intersection(peerCandidates, firstIntersection).length === 1);
                         });
-                        //TODO Here is the bug! You have to test whether the number of units is >= 2!
-                        if (wings.reduce((unitIndicesIntersection: number[], wing: Square): number[] => {
-                                return _.union(unitIndicesIntersection, wing.getUnitIndices())
-                            }, []).length > 3) {
+                        if (wings.length >= 2) {
                             //get all pairs of wings
                             let wingPairs = RulesHelper.getTupelesOfSquares(wings, 2);
                             let secondIntersection: number[];
                             //for each pair
                             wingPairs.forEach(wingPair => {
+                                //TODO Test whether the two wings have different unit indices!
                                 secondIntersection = wingPair[0].getCandidateIntersection(wingPair[1].getCandidates()!);
                                 //if the wings have one common candidate
                                 if (secondIntersection.length === 1) {
                                     //an Y-Wing is found!
                                     //So get all common peers
-                                    //TODO review completely for XYZ-Wing!
+                                    //TODO for XYZ-Wing: test for 'full' triple!
                                     let commonPeers = _.intersection(sudoku.getPeersOfSquare(wingPair[0]),
                                         sudoku.getPeersOfSquare(wingPair[1]));
                                     if (allowThreeValueForHinge) {
