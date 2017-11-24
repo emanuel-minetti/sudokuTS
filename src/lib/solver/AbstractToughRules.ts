@@ -139,7 +139,10 @@ export class AbstractToughRules {
                                 _.intersection(peerCandidates, valueTriplet).length === 2 &&
                                 _.intersection(peerCandidates, firstIntersection).length === 1);
                         });
-                        if (wings.length >= 2) {
+                        //TODO Here is the bug! You have to test whether the number of units is >= 2!
+                        if (wings.reduce((unitIndicesIntersection: number[], wing: Square): number[] => {
+                                return _.union(unitIndicesIntersection, wing.getUnitIndices())
+                            }, []).length > 3) {
                             //get all pairs of wings
                             let wingPairs = RulesHelper.getTupelesOfSquares(wings, 2);
                             let secondIntersection: number[];
