@@ -111,10 +111,10 @@ export class AbstractToughRules {
 
     //TODO review code completely!
     //TODO document!
-    //TODO review comments!
     static abstractY_Wing(sudoku: Sudoku, allowThreeValueForHinge: boolean): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
-        //find all squares with two candidates, the candidate squares
+        //find all squares with two, or if activated `allowThreeValueForHinge` candidates with three,
+        // candidate squares
         let candidateSquares = sudoku.getSquares().filter(square => {
             let candidates = square.getCandidates();
             return (candidates &&
