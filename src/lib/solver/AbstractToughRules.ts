@@ -145,7 +145,8 @@ export class AbstractToughRules {
                             let secondIntersection: number[];
                             //for each pair
                             wingPairs.forEach(wingPair => {
-                                //test whether the two wings have no common unit!
+                                //TODO review!
+                                //test whether the two wings have no common unit
                                 if ( (_.intersection(wingPair[0].getUnitIndices(), wingPair[1].getUnitIndices()).length === 0)) {
                                     secondIntersection = wingPair[0].getCandidateIntersection(wingPair[1].getCandidates()!);
                                     //if the wings have one common candidate
