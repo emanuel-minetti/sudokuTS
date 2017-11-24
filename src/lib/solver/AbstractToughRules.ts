@@ -117,7 +117,9 @@ export class AbstractToughRules {
         //find all squares with two candidates, the candidate squares
         let candidateSquares = sudoku.getSquares().filter(square => {
             let candidates = square.getCandidates();
-            return (candidates && (candidates.length === 2 || (allowThreeValueForHinge && (candidates.length === 3 || candidates.length === 2))));
+            return (candidates &&
+                (candidates.length === 2 ||
+                    (allowThreeValueForHinge && (candidates.length === 3 || candidates.length === 2))));
         });
         //collect all candidate values in these squares
         let candidateValues = candidateSquares.reduce((prev: number[], curr: Square): number[] =>
@@ -130,14 +132,17 @@ export class AbstractToughRules {
                 candidateSquares.forEach(candidateSquare => {
                     let firstIntersection = candidateSquare.getCandidateIntersection(valueTriplet);
                     //if this candidate square has two values from the triplet
-                    if (firstIntersection.length === 2 || (allowThreeValueForHinge && (firstIntersection.length === 3))) {
+                    if (firstIntersection.length === 2 ||
+                        (allowThreeValueForHinge && (firstIntersection.length === 3))) {
                         let peers = sudoku.getPeersOfSquare(candidateSquare);
                         //find the wings for this candidate square
                         let wings = peers.filter(peer => {
                             let peerCandidates = peer.getCandidates();
                             return (peerCandidates && peerCandidates.length === 2 &&
                                 _.intersection(peerCandidates, valueTriplet).length === 2 &&
-                                (_.intersection(peerCandidates, firstIntersection).length === 1 || (allowThreeValueForHinge && _.intersection(peerCandidates, firstIntersection).length === 2)));
+                                (_.intersection(peerCandidates, firstIntersection).length === 1 ||
+                                    (allowThreeValueForHinge &&
+                                        _.intersection(peerCandidates, firstIntersection).length === 2)));
                         });
                         if (wings.length >= 2) {
                             //get all pairs of wings
@@ -147,8 +152,10 @@ export class AbstractToughRules {
                             wingPairs.forEach(wingPair => {
                                 //TODO review!
                                 //test whether the two wings have no common unit
-                                if ( (_.intersection(wingPair[0].getUnitIndices(), wingPair[1].getUnitIndices()).length === 0)) {
-                                    secondIntersection = wingPair[0].getCandidateIntersection(wingPair[1].getCandidates()!);
+                                if ((_.intersection(wingPair[0].getUnitIndices(),
+                                        wingPair[1].getUnitIndices()).length === 0)) {
+                                    secondIntersection =
+                                        wingPair[0].getCandidateIntersection(wingPair[1].getCandidates()!);
                                     //if the wings have one common candidate
                                     if (secondIntersection.length === 1) {
                                         //an Y-Wing is found!
@@ -157,7 +164,8 @@ export class AbstractToughRules {
                                         let commonPeers = _.intersection(sudoku.getPeersOfSquare(wingPair[0]),
                                             sudoku.getPeersOfSquare(wingPair[1]));
                                         if (allowThreeValueForHinge) {
-                                            commonPeers = commonPeers.filter(peer => (candidateSquare.getPeerIndices().indexOf(peer.getIndex()) !== -1))
+                                            commonPeers = commonPeers.filter(peer =>
+                                                (candidateSquare.getPeerIndices().indexOf(peer.getIndex()) !== -1))
                                         }
                                         //filter out the candidate square, the already set squares and the squares that
                                         //haven't the one common candidate as own candidate
