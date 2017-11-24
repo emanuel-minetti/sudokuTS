@@ -109,7 +109,7 @@ export class AbstractToughRules {
         return moves;
     }
 
-    //TODO review code!
+    //TODO review code completely!
     //TODO document!
     //TODO review comments!
     static abstractY_Wing(sudoku: Sudoku, allowThreeValueForHinge: boolean): SudokuStateChange[] {
@@ -117,7 +117,7 @@ export class AbstractToughRules {
         //find all squares with two candidates, the candidate squares
         let candidateSquares = sudoku.getSquares().filter(square => {
             let candidates = square.getCandidates();
-            return (candidates && candidates.length === 2);
+            return (candidates && (candidates.length === 2 || (allowThreeValueForHinge && (candidates.length === 3))));
         });
         //collect all candidate values in these squares
         let candidateValues = candidateSquares.reduce((prev: number[], curr: Square): number[] =>
@@ -130,7 +130,7 @@ export class AbstractToughRules {
                 candidateSquares.forEach(candidateSquare => {
                     let firstIntersection = candidateSquare.getCandidateIntersection(valueTriplet);
                     //if this candidate square has two values from the triplet
-                    if (firstIntersection.length === 2) {
+                    if (firstIntersection.length === 2 || (allowThreeValueForHinge && (firstIntersection.length === 3))) {
                         let peers = sudoku.getPeersOfSquare(candidateSquare);
                         //find the wings for this candidate square
                         let wings = peers.filter(peer => {
@@ -150,8 +150,12 @@ export class AbstractToughRules {
                                 if (secondIntersection.length === 1) {
                                     //an Y-Wing is found!
                                     //So get all common peers
+                                    //TODO review completely for XYZ-Wing!
                                     let commonPeers = _.intersection(sudoku.getPeersOfSquare(wingPair[0]),
                                         sudoku.getPeersOfSquare(wingPair[1]));
+                                    if (allowThreeValueForHinge) {
+                                        commonPeers.filter(peer => (candidateSquare.getPeerIndices().indexOf(candidateSquare.getIndex()) !== -1))
+                                    }
                                     //filter out the candidate square, the already set squares and the squares that
                                     //haven't the one common candidate as own candidate
                                     commonPeers = commonPeers.filter(commonPeer =>
