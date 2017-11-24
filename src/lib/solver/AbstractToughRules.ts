@@ -117,7 +117,7 @@ export class AbstractToughRules {
         //find all squares with two candidates, the candidate squares
         let candidateSquares = sudoku.getSquares().filter(square => {
             let candidates = square.getCandidates();
-            return (candidates && (candidates.length === 2 || (allowThreeValueForHinge && (candidates.length === 3))));
+            return (candidates && (candidates.length === 2 || (allowThreeValueForHinge && (candidates.length === 3 || candidates.length === 2))));
         });
         //collect all candidate values in these squares
         let candidateValues = candidateSquares.reduce((prev: number[], curr: Square): number[] =>
@@ -137,7 +137,7 @@ export class AbstractToughRules {
                             let peerCandidates = peer.getCandidates();
                             return (peerCandidates && peerCandidates.length === 2 &&
                                 _.intersection(peerCandidates, valueTriplet).length === 2 &&
-                                _.intersection(peerCandidates, firstIntersection).length === 1);
+                                (_.intersection(peerCandidates, firstIntersection).length === 1 || (allowThreeValueForHinge && _.intersection(peerCandidates, firstIntersection).length === 2)));
                         });
                         if (wings.length >= 2) {
                             //get all pairs of wings
@@ -145,32 +145,34 @@ export class AbstractToughRules {
                             let secondIntersection: number[];
                             //for each pair
                             wingPairs.forEach(wingPair => {
-                                //TODO Test whether the two wings have different unit indices!
-                                secondIntersection = wingPair[0].getCandidateIntersection(wingPair[1].getCandidates()!);
-                                //if the wings have one common candidate
-                                if (secondIntersection.length === 1) {
-                                    //an Y-Wing is found!
-                                    //So get all common peers
-                                    //TODO for XYZ-Wing: test for 'full' triple!
-                                    let commonPeers = _.intersection(sudoku.getPeersOfSquare(wingPair[0]),
-                                        sudoku.getPeersOfSquare(wingPair[1]));
-                                    if (allowThreeValueForHinge) {
-                                        commonPeers.filter(peer => (candidateSquare.getPeerIndices().indexOf(candidateSquare.getIndex()) !== -1))
+                                //test whether the two wings have no common unit!
+                                if ( (_.intersection(wingPair[0].getUnitIndices(), wingPair[1].getUnitIndices()).length === 0)) {
+                                    secondIntersection = wingPair[0].getCandidateIntersection(wingPair[1].getCandidates()!);
+                                    //if the wings have one common candidate
+                                    if (secondIntersection.length === 1) {
+                                        //an Y-Wing is found!
+                                        //So get all common peers
+                                        //TODO for XYZ-Wing: test for 'full' triple!
+                                        let commonPeers = _.intersection(sudoku.getPeersOfSquare(wingPair[0]),
+                                            sudoku.getPeersOfSquare(wingPair[1]));
+                                        if (allowThreeValueForHinge) {
+                                            commonPeers = commonPeers.filter(peer => (candidateSquare.getPeerIndices().indexOf(peer.getIndex()) !== -1))
+                                        }
+                                        //filter out the candidate square, the already set squares and the squares that
+                                        //haven't the one common candidate as own candidate
+                                        commonPeers = commonPeers.filter(commonPeer =>
+                                            (commonPeer !== candidateSquare &&
+                                                commonPeer.containsCandidate(secondIntersection[0])));
+                                        //for each such common peer
+                                        commonPeers.forEach(commonPeer => {
+                                            //remove the common value
+                                            let move = new SudokuStateChange(commonPeer.getIndex(), secondIntersection,
+                                                candidateSquare.getName() + ' points to wings ' + wingPair[0].getName() +
+                                                '/' + wingPair[1].getName() + ', so removed ' + secondIntersection[0] +
+                                                ' from candidates of ' + commonPeer.getName());
+                                            moves.push(move);
+                                        });
                                     }
-                                    //filter out the candidate square, the already set squares and the squares that
-                                    //haven't the one common candidate as own candidate
-                                    commonPeers = commonPeers.filter(commonPeer =>
-                                        (commonPeer !== candidateSquare &&
-                                            commonPeer.containsCandidate(secondIntersection[0])));
-                                    //for each such common peer
-                                    commonPeers.forEach(commonPeer => {
-                                        //remove the common value
-                                        let move = new SudokuStateChange(commonPeer.getIndex(), secondIntersection,
-                                            candidateSquare.getName() + ' points to wings ' + wingPair[0].getName() +
-                                            '/' + wingPair[1].getName() + ', so removed ' + secondIntersection[0] +
-                                            ' from candidates of ' + commonPeer.getName());
-                                        moves.push(move);
-                                    });
                                 }
                             });
                         }
