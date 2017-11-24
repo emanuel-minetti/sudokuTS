@@ -35,6 +35,11 @@ export class ToughRules {
         return AbstractToughRules.abstractY_Wing(sudoku, false);
     }
 
+    //TODO document!
+    private static _xyzwRuleFn: TRuleFunction = (sudoku) => {
+        return AbstractToughRules.abstractY_Wing(sudoku, true);
+    }
+
     /**
      * The X-Wing rule searches firstly rows then columns for defining 'X'-es.
      * @see AbstractBasicRules.abstractCrossExclude
@@ -82,5 +87,8 @@ export class ToughRules {
 
         let sfRule = new SolverRule('Swordfish Rule: ', 16, ToughRules._sfRuleFn);
         this.rules.push(sfRule);
+
+        let xyzwRule = new SolverRule('XYZ-Wing Rule: ', 17, ToughRules._xyzwRuleFn);
+        this.rules.push(xyzwRule);
     }
 }
