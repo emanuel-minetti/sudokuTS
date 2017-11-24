@@ -150,17 +150,18 @@ export class AbstractToughRules {
                             let secondIntersection: number[];
                             //for each pair
                             wingPairs.forEach(wingPair => {
-                                //TODO review!
                                 //test whether the two wings have no common unit
                                 if ((_.intersection(wingPair[0].getUnitIndices(),
                                         wingPair[1].getUnitIndices()).length === 0)) {
                                     secondIntersection =
                                         wingPair[0].getCandidateIntersection(wingPair[1].getCandidates()!);
-                                    //if the wings have one common candidate
-                                    if (secondIntersection.length === 1) {
+                                    //if the wings have one common candidate and contain the whole value triplet, is
+                                    //covered by the candidate and the two wings
+                                    if (secondIntersection.length === 1 &&
+                                        (_.union(wingPair[0].getCandidates(), wingPair[1].getCandidates(),
+                                            candidateSquare.getCandidates()).length === 3)) {
                                         //an Y-Wing is found!
                                         //So get all common peers
-                                        //TODO for XYZ-Wing: test for 'full' triple!
                                         let commonPeers = _.intersection(sudoku.getPeersOfSquare(wingPair[0]),
                                             sudoku.getPeersOfSquare(wingPair[1]));
                                         if (allowThreeValueForHinge) {
@@ -176,9 +177,9 @@ export class AbstractToughRules {
                                         commonPeers.forEach(commonPeer => {
                                             //remove the common value
                                             let move = new SudokuStateChange(commonPeer.getIndex(), secondIntersection,
-                                                candidateSquare.getName() + ' points to wings ' + wingPair[0].getName() +
-                                                '/' + wingPair[1].getName() + ', so removed ' + secondIntersection[0] +
-                                                ' from candidates of ' + commonPeer.getName());
+                                                candidateSquare.getName() + ' points to wings ' +
+                                                wingPair[0].getName() + '/' + wingPair[1].getName() + ', so removed ' +
+                                                secondIntersection[0] + ' from candidates of ' + commonPeer.getName());
                                             moves.push(move);
                                         });
                                     }
