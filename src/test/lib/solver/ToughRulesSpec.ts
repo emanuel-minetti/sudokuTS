@@ -185,4 +185,27 @@ describe('A Solver with ToughRules', () => {
             solver.solve();
             expect(game.isSolved()).toBe(true);
         });
+
+    it('should be able to solve a game with the XYZ-Wing Rule',
+        () => {
+            let xyzwString = `
+*72 *** 68*
+*** 7** ***
+5** *16 ***
+
+*** *28 1**
+2** 371 **6
+**4 56* ***
+
+*** 13* **4
+*** **7 ***
+*15 *** 89*
+`;
+
+            let game = new SudokuGame(xyzwString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
 });
