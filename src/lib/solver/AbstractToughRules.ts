@@ -129,7 +129,7 @@ export class AbstractToughRules {
     static abstractY_Wing(sudoku: Sudoku, allowThreeValueForHinge: boolean): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
         //find all squares with two, or if activated `allowThreeValueForHinge` candidates with three,
-        // candidate squares
+        //candidate squares
         let candidateSquares = sudoku.getSquares().filter(square => {
             let candidates = square.getCandidates();
             return (candidates &&
@@ -149,7 +149,7 @@ export class AbstractToughRules {
                     //if this candidate square has two values from the triplet or,
                     //if allowThreeValueForHinge is set, all three values
                     if (firstIntersection.length === 2 ||
-                        (allowThreeValueForHinge && (firstIntersection.length === 3))) {
+                        (allowThreeValueForHinge && firstIntersection.length === 3)) {
                         let peers = sudoku.getPeersOfSquare(candidateSquare);
                         //find the wings for this candidate square
                         let wings = peers.filter(peer => {
