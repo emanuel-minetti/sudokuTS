@@ -4,6 +4,7 @@ import {SudokuStateChange} from "../game/SudokuStateChange";
 import {SolverRule, TRuleFunction} from "./SolverRule";
 import {Sudoku} from "../game/Sudoku";
 import {AbstractToughRules} from "./AbstractToughRules";
+import {AbstractColoringRules} from "./AbstractColoringRules";
 
 /**
  * A class grouping the tough sudoku rules.
@@ -75,6 +76,13 @@ export class ToughRules {
         return moves;
     }
 
+    //TODO document
+    //TODO comment
+    //TODO implement
+    private static _scRuleFn: TRuleFunction = (sudoku) => {
+        return AbstractColoringRules.twoColorsSeen(sudoku);
+    }
+
     rules: SolverRule[];
 
     constructor() {
@@ -82,6 +90,9 @@ export class ToughRules {
 
         let xwRule = new SolverRule('X-Wing Rule: ', 13, ToughRules._xwRuleFn);
         this.rules.push(xwRule);
+
+        let scRule = new SolverRule('Simple Coloring Rule: ', 14, ToughRules._scRuleFn);
+        this.rules.push(scRule);
 
         let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);
         this.rules.push(ywRule);
