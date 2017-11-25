@@ -109,7 +109,6 @@ export class AbstractToughRules {
         return moves;
     }
 
-    //TODO review code completely!
     //TODO document!
     static abstractY_Wing(sudoku: Sudoku, allowThreeValueForHinge: boolean): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
@@ -131,7 +130,8 @@ export class AbstractToughRules {
             valueTriplets.forEach(valueTriplet => {
                 candidateSquares.forEach(candidateSquare => {
                     let firstIntersection = candidateSquare.getCandidateIntersection(valueTriplet);
-                    //if this candidate square has two values from the triplet
+                    //if this candidate square has two values from the triplet or,
+                    //if allowThreeValueForHinge is set, all three values
                     if (firstIntersection.length === 2 ||
                         (allowThreeValueForHinge && (firstIntersection.length === 3))) {
                         let peers = sudoku.getPeersOfSquare(candidateSquare);
@@ -155,7 +155,7 @@ export class AbstractToughRules {
                                         wingPair[1].getUnitIndices()).length === 0)) {
                                     secondIntersection =
                                         wingPair[0].getCandidateIntersection(wingPair[1].getCandidates()!);
-                                    //if the wings have one common candidate and contain the whole value triplet, is
+                                    //if the wings have one common candidate and contain the value triplet is
                                     //covered by the candidate and the two wings
                                     if (secondIntersection.length === 1 &&
                                         (_.union(wingPair[0].getCandidates(), wingPair[1].getCandidates(),
