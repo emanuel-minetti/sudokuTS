@@ -30,7 +30,7 @@ export class AbstractToughRules {
      * @returns {SudokuStateChange[]} the resulting moves
      */
     static abstractCrossExclude(linesToSearch: Square[][], linesToEliminate: Square[][],
-                         tupleLength: number): SudokuStateChange[] {
+                                tupleLength: number): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
         let lineTuples = RulesHelper.getTuplesOfLines(linesToSearch, tupleLength);
         let values = Sudoku.values;

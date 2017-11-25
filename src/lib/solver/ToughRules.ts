@@ -2,9 +2,7 @@ import * as _ from "lodash";
 
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {SolverRule, TRuleFunction} from "./SolverRule";
-import {RulesHelper} from "./RulesHelper";
 import {Sudoku} from "../game/Sudoku";
-import {Square} from "../game/Square";
 import {AbstractToughRules} from "./AbstractToughRules";
 
 /**
