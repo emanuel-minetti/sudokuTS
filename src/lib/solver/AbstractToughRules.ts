@@ -24,7 +24,8 @@ export class AbstractToughRules {
      * other than the intersecting a Cross Exclude is found. Now x can be removed from all squares of the intersecting
      * lines except the defining squares.
      *
-     * @param {Square[][]} linesToSearch the lines, that is rows or columns, to search for the defining square of squares.
+     * @param {Square[][]} linesToSearch the lines, that is rows or columns, to search for the defining square of
+     *  squares.
      * @param {Square[][]} linesToEliminate the lines, that is columns or rows, to remove candidates from.
      * @returns {SudokuStateChange[]} the resulting moves
      */
@@ -103,13 +104,28 @@ export class AbstractToughRules {
                         }
                     }
                 }
-                //}
             });
         });
         return moves;
     }
 
-    //TODO document!
+    /**
+     * An abstraction of the Y-Wing and XYZ-Wing rules.
+     *
+     * This rule works on squares with two or if `allowThreeValueForHinge` is set on squares with two or three values.
+     *
+     * For those squares, called "candidate squares", all remaining candidates, called "candidate values", are
+     * collected. For each triplet of candidate values and each candidate square, that contains two or if
+     * `allowThreeValueForHinge` is set all three values of the triplet, the candidate square is called the "hinge".
+     * If this hinge has two "wings" which contain exactly two values from the triplet and none more and that contain
+     * exactly one candidate in common. All squares that are peers of both wings or if `allowThreeValueForHinge` is set
+     * all squares that are peers of both wings and the hinge are the squares from which the value which is the common
+     * candidate can be removed from candidates.
+     *
+     * @param {Sudoku} sudoku the sudoku to solve
+     * @param {boolean} allowThreeValueForHinge whether the XYZ-Wing rule is to be applied
+     * @returns {SudokuStateChange[]} the resulting moves
+     */
     static abstractY_Wing(sudoku: Sudoku, allowThreeValueForHinge: boolean): SudokuStateChange[] {
         let moves: SudokuStateChange[] = [];
         //find all squares with two, or if activated `allowThreeValueForHinge` candidates with three,
