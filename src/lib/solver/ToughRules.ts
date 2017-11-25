@@ -16,16 +16,12 @@ import {AbstractToughRules} from "./AbstractToughRules";
  */
 export class ToughRules {
 
-    //TODO review documentation!
     /**
-     * The Y-Wing rule checks all squares that have two remaining candidates.
-     * From these squares it takes the union of all remaining candidates.
-     * From this union it takes all triples of values. For every remaining
-     * candidate and every value triple it checks for possible wings. Possible
-     * wings are pairs of squares whose candidates give the full triple and
-     * that have one candidate in common with the square candidate. For each such
-     * pair of wings it removes the common candidate from each common peer
-     * whose candidates contain it.
+     * The Y-Wing rule checks all squares that have two remaining candidates.From these squares it takes the union
+     * of all remaining candidates. From this union it takes all triples of values. For every remaining candidate and
+     * every value triple it checks for possible wings. Possible wings are pairs of squares whose candidates give the
+     * full triple and that have one candidate in common with the square candidate. For each such pair of wings it
+     * removes the common candidate from each common peer whose candidates contain it.
      *
      * @param {Sudoku} sudoku the state of the game
      * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
@@ -35,7 +31,14 @@ export class ToughRules {
         return AbstractToughRules.abstractY_Wing(sudoku, false);
     }
 
-    //TODO document!
+    /**
+     * The XYZ-Wing rule is a variant of the Y-Wing rule. It differs from that rule in that the hinge contains
+     * all three values and the common value is removed from the peers of the two wings and the hinge.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
+     * @private
+     */
     private static _xyzwRuleFn: TRuleFunction = (sudoku) => {
         return AbstractToughRules.abstractY_Wing(sudoku, true);
     }
