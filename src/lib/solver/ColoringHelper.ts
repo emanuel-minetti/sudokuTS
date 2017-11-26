@@ -31,7 +31,9 @@ export class ColoringHelper {
     static color(sudoku: Sudoku, value: number): Coloring {
         let containingSquares = sudoku.getSquares().filter(square => square.containsCandidate(value));
         let squaresToColor = containingSquares.slice();
-        //TODO Start here!
+        while (squaresToColor.length !== 0) {
+            //TODO Start here!
+        }
 
         return new Coloring(sudoku.getSquares());
     }
