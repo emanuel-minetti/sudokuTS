@@ -1,20 +1,20 @@
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
 
-//TODO document
-export enum Color {
-    Blue,
-    Green
+enum Color {
+    Green,
+    Blue
 }
 
 //TODO document
 export class Coloring {
-    value: number;
+    static colors = [
+        Color.Green, Color.Blue
+    ];
     coloredSquares: Square[][];
     private readonly squares: Square[];
 
-    constructor(value: number, squares: Square[]) {
-        this.value = value;
+    constructor(squares: Square[]) {
         this.squares = squares;
     }
 
@@ -26,9 +26,11 @@ export class Coloring {
 //TODO document
 //TODO comment
 //TODO implement
+//TODO Start here!
 export class ColoringHelper {
     static color(sudoku: Sudoku, value: number): Coloring {
+        //let containingSquares =
 
-        return new Coloring(value, sudoku.getSquares());
+        return new Coloring(sudoku.getSquares());
     }
 }
