@@ -30,6 +30,7 @@ export class Coloring {
 export class ColoringHelper {
     static color(sudoku: Sudoku, value: number): Coloring {
         let containingSquares = sudoku.getSquares().filter(square => square.containsCandidate(value));
+        let squaresToColor = containingSquares.slice();
         //TODO Start here!
 
         return new Coloring(sudoku.getSquares());
