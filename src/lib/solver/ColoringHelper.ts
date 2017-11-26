@@ -3,13 +3,14 @@ import {Square} from "../game/Square";
 
 enum Color {
     Green,
-    Blue
+    Blue,
+    Uncolored
 }
 
 //TODO document
 export class Coloring {
     static colors = [
-        Color.Green, Color.Blue
+        Color.Green, Color.Blue, Color.Uncolored
     ];
     coloredSquares: Square[][];
     private readonly squares: Square[];
@@ -26,10 +27,10 @@ export class Coloring {
 //TODO document
 //TODO comment
 //TODO implement
-//TODO Start here!
 export class ColoringHelper {
     static color(sudoku: Sudoku, value: number): Coloring {
-        //let containingSquares =
+        let containingSquares = sudoku.getSquares().filter(square => square.containsCandidate(value));
+        //TODO Start here!
 
         return new Coloring(sudoku.getSquares());
     }
