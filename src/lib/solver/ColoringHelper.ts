@@ -1,3 +1,5 @@
+import * as _ from "lodash";
+
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
 
@@ -29,50 +31,21 @@ export class Coloring {
 //TODO implement
 export class ColoringHelper {
     static color(sudoku: Sudoku, value: number): Coloring {
-        //TODO review
-        let containingSquares = sudoku.getSquares().filter(square => square.containsCandidate(value));
-        let squaresToColor = containingSquares.slice();
-        let chains: Square[][] = [];
-        containingSquares.forEach(containingSquare => {
-            if ((squaresToColor.indexOf(containingSquare) !== -1)) {
-                let neighbours = _.intersection(sudoku.getPeersOfSquare(containingSquare), containingSquares);
-                if (neighbours.length >= 2) {
-                    let chainsWithNeighbours = chains.filter(chain => (_.intersection(chain, neighbours).length > 0));
-                    if (chainsWithNeighbours.length === 0) {
-                        chains.push([containingSquare]);
-                        _.pull(squaresToColor, containingSquare);
-                    }
-                    else if (chainsWithNeighbours.length === 1) {
-                        chainsWithNeighbours[0].push(containingSquare);
-                        _.pull(squaresToColor, containingSquare);
-                    }
-                    else {
-                        let newChain: Square[] = [containingSquare];
-                        chainsWithNeighbours.forEach(chainWithNeighbours => {
-                            _.concat(newChain, chainWithNeighbours);
-                            _.pull(chains, chainWithNeighbours);
-                        });
-                        chains.push(newChain);
-                        _.pull(squaresToColor, containingSquare);
-                    }
-                }
-                else if (neighbours.length = 1) {
-                    let chainWithNeighbor = chains.filter(chain => (chain.indexOf(neighbours[0]) !== -1));
-                    if (chainWithNeighbor.length === 1) {
-                        chainWithNeighbor.push(containingSquare);
-                    }
-                    else {
-                        chains.push([containingSquare]);
-                    }
-                    _.pull(squaresToColor, containingSquare);
-                }
-                else {
-                    _.pull(squaresToColor, containingSquare);
-                }
+        let links: Square[][] = [];
+        let units = sudoku.getUnits();
+        units.forEach(unit => {
+            let squares = unit.filter(square => square.containsCandidate(value));
+            if (squares.length === 2) {
+                links = _.unionWith(links, [squares], (link, newLink) => _.isEqual(link, newLink));
             }
-        });
-        //TODO add debugging output!
-
+        })
+        let linksString = links.reduce((string: string, link:Square[]): string => {
+            return string + link.reduce((string: string, square:Square): string => {
+                return string + square.getName();
+            }, '') + '\n'
+        }, '');
+        console.log('Links: \n' + linksString);
+        //TODO remove debugging!
         return new Coloring(sudoku.getSquares());
     }
 }
