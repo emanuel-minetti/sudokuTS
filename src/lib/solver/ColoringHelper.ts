@@ -13,6 +13,7 @@ enum Color {
 export class Coloring {
     private coloredSquares: Square[][];
     private readonly squares: Square[];
+    static colors: Color[] = [Color.Blue, Color.Green];
 
     constructor(sudoku: Sudoku) {
         this.squares = sudoku.getSquares();
@@ -40,7 +41,7 @@ export class Coloring {
 //TODO comment
 //TODO implement
 export class ColoringHelper {
-    static color(sudoku: Sudoku, value: number): Coloring {
+    static color(sudoku: Sudoku, value: number): Coloring[] {
         let links: Square[][] = [];
         let units = sudoku.getUnits();
         units.forEach(unit => {
@@ -75,11 +76,24 @@ export class ColoringHelper {
                 chains.push(newChain);
             }
         });
-        let coloring = new Coloring(sudoku);
+        let colorings: Coloring[] = []
         chains = chains.filter(chain => (chain.length !== 1));
-        let squaresToColor = _.flattenDeep(chains);
-        squaresToColor = _.uniq(squaresToColor);
-        //TODO color!
+        chains.forEach(chain => {
+            let coloring = new Coloring(sudoku);
+            let coloredSquares: Square[][] = [];
+            coloredSquares[Color.Blue] = [];
+            coloredSquares[Color.Green] = [];
+            let squaresToColor = _.flattenDeep(chain);
+            squaresToColor = _.uniq(squaresToColor);
+            coloredSquares[Color.Blue].push(squaresToColor[0]);
+            squaresToColor.shift();
+            //TODO color the rest!
+            while (squaresToColor.length !== 0) {
+
+            }
+
+            colorings.push(coloring);
+        });
 
         //TODO remove debugging!
         let chainsString = chains.reduce((chainsString: string, chain: Square[][]): string => {
@@ -90,6 +104,6 @@ export class ColoringHelper {
             }, '') + '\n';
         }, '');
         console.log('Chains:\n' + chainsString);
-        return coloring;
+        return colorings;
     }
 }
