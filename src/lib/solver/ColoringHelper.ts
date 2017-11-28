@@ -76,6 +76,7 @@ export class ColoringHelper {
             }
         });
         let coloring = new Coloring(sudoku);
+        chains = chains.filter(chain => (chain.length !== 1));
         //TODO color!
 
         //TODO remove debugging!
