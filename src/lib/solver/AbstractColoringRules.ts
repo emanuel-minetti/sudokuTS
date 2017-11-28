@@ -8,7 +8,7 @@ export class AbstractColoringRules {
     //TODO comment
     //TODO implement
     static twoColorsSeen(sudoku: Sudoku) {
-        let coloring = ColoringHelper.color(sudoku, 7);
+        let colorings = ColoringHelper.color(sudoku, 7);
         let moves: SudokuStateChange[] = [];
 
         return moves;

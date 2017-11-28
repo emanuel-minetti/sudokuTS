@@ -76,7 +76,7 @@ export class ColoringHelper {
                 chains.push(newChain);
             }
         });
-        let colorings: Coloring[] = []
+        let colorings: Coloring[] = [];
         chains = chains.filter(chain => (chain.length !== 1));
         chains.forEach(chain => {
             let coloring = new Coloring(sudoku);
@@ -87,7 +87,7 @@ export class ColoringHelper {
             squaresToColor = _.uniq(squaresToColor);
             coloredSquares[Color.Blue].push(squaresToColor[0]);
             squaresToColor.shift();
-            coloredSquares[Color.Uncolored] = squaresToColor.slice();
+            coloredSquares[Color.Uncolored] = squaresToColor;
             //TODO debug!
             //color the rest!
             while (squaresToColor.length !== 0) {
@@ -108,7 +108,8 @@ export class ColoringHelper {
                         squaresToColor = squaresToColor.filter(remains => remains !== squareToColor);
                         squareColored = true
                         //color uncolored neighbours
-                        let uncoloredNeighbours = neighbours.filter(neighbour => coloredNeighbours[color].indexOf(neighbour) === -1);
+                        let uncoloredNeighbours = neighbours.filter(neighbour =>
+                            coloredNeighbours[color].indexOf(neighbour) === -1);
                         uncoloredNeighbours.forEach(uncoloredNeighbour => {
                             coloredSquares[color].push(uncoloredNeighbour);
                             squaresToColor = squaresToColor.filter(remains => remains !== uncoloredNeighbour);
