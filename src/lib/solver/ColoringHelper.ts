@@ -39,13 +39,43 @@ export class ColoringHelper {
                 links = _.unionWith(links, [squares], (link, newLink) => _.isEqual(link, newLink));
             }
         })
-        let linksString = links.reduce((string: string, link:Square[]): string => {
-            return string + link.reduce((string: string, square:Square): string => {
-                return string + square.getName();
-            }, '') + '\n'
-        }, '');
-        console.log('Links: \n' + linksString);
+        let chains: Square[][][] = [];
+        links.forEach(link => {
+            let neighbouringChains = chains.filter(chain => chain.reduce(
+                (neighbouring: boolean, neighbouringLink: Square[]): boolean => {
+                    return (neighbouring || _.intersection(link, neighbouringLink).length !== 0);
+                },
+                false)
+            );
+            if (neighbouringChains.length === 0) {
+                chains.push([link]);
+            }
+            else if (neighbouringChains.length === 1) {
+                neighbouringChains[0].push(link);
+            }
+            else {
+                chains = _.differenceWith(chains, neighbouringChains, (arrVal, othVal) => _.isEqual(arrVal, othVal));
+                let newChain: Square[][] = [];
+                //TODO compose a better `newChain`
+                neighbouringChains.forEach(neighbouringChain => {
+                        let neighbouringChainWithoutLink = neighbouringChain.filter(linkInChain =>
+                            !_.isEqual(linkInChain, link));
+                        newChain = _.concat(newChain, neighbouringChainWithoutLink);
+                    }
+                );
+                chains.push(newChain);
+            }
+        });
+
         //TODO remove debugging!
+        let chainsString = chains.reduce((chainsString: string, chain: Square[][]): string => {
+            return chainsString + chain.reduce((chainString: string, link: Square[]): string => {
+                return chainString + link.reduce((linkString: string, square: Square): string => {
+                    return linkString + square.getName();
+                }, '');
+            }, '') + '\n';
+        }, '');
+        console.log('Chains:\n' + chainsString);
         return new Coloring(sudoku.getSquares());
     }
 }
