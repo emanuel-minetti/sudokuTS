@@ -77,6 +77,8 @@ export class ColoringHelper {
         });
         let coloring = new Coloring(sudoku);
         chains = chains.filter(chain => (chain.length !== 1));
+        let squaresToColor = _.flattenDeep(chains);
+        squaresToColor = _.uniq(squaresToColor);
         //TODO color!
 
         //TODO remove debugging!
