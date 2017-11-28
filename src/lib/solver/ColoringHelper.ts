@@ -11,14 +11,24 @@ enum Color {
 
 //TODO document
 export class Coloring {
-    static colors = [
-        Color.Green, Color.Blue, Color.Uncolored
-    ];
-    coloredSquares: Square[][];
+    private coloredSquares: Square[][];
     private readonly squares: Square[];
 
-    constructor(squares: Square[]) {
-        this.squares = squares;
+    constructor(sudoku: Sudoku) {
+        this.squares = sudoku.getSquares();
+        this.coloredSquares = [];
+        this.coloredSquares[Color.Uncolored] = this.squares;
+        this.coloredSquares[Color.Blue] = [];
+        this.coloredSquares[Color.Green] = [];
+    }
+
+    colorSquares(squares: Square[], color:Color) {
+        if (squares.reduce((res, square) =>
+                (res || this.coloredSquares[Color.Uncolored].indexOf(square) === -1) ,false)) {
+            throw new Error('Square already colored');
+        }
+        this.coloredSquares[color] = _.concat(this.coloredSquares[color], squares);
+        this.coloredSquares[Color.Uncolored] = _.difference(this.coloredSquares[Color.Uncolored], squares);
     }
 
     getSquares(color: Color): Square[] {
@@ -56,7 +66,6 @@ export class ColoringHelper {
             else {
                 chains = _.differenceWith(chains, neighbouringChains, (arrVal, othVal) => _.isEqual(arrVal, othVal));
                 let newChain: Square[][] = [];
-                //TODO compose a better `newChain`
                 neighbouringChains.forEach(neighbouringChain => {
                         let neighbouringChainWithoutLink = neighbouringChain.filter(linkInChain =>
                             !_.isEqual(linkInChain, link));
@@ -66,6 +75,8 @@ export class ColoringHelper {
                 chains.push(newChain);
             }
         });
+        let coloring = new Coloring(sudoku);
+        //TODO color!
 
         //TODO remove debugging!
         let chainsString = chains.reduce((chainsString: string, chain: Square[][]): string => {
@@ -76,6 +87,6 @@ export class ColoringHelper {
             }, '') + '\n';
         }, '');
         console.log('Chains:\n' + chainsString);
-        return new Coloring(sudoku.getSquares());
+        return coloring;
     }
 }
