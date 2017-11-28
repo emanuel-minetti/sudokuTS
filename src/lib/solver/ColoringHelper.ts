@@ -87,11 +87,31 @@ export class ColoringHelper {
             squaresToColor = _.uniq(squaresToColor);
             coloredSquares[Color.Blue].push(squaresToColor[0]);
             squaresToColor.shift();
+            coloredSquares[Color.Uncolored] = squaresToColor.slice();
             //TODO color the rest!
             while (squaresToColor.length !== 0) {
-
+                let squareToColor = squaresToColor[0];
+                let neighbours = links.filter(link => (link.indexOf(squareToColor) !== -1)).map(link => (link[0] === squareToColor ? link[1] : link [0]));
+                let coloredNeighbours = Coloring.colors.map(color => neighbours.filter(neighbour => coloredSquares[color].indexOf(neighbour) !== -1));
+                //TODO whether there are more than one different colors among the neighbours
+                Coloring.colors.forEach(color => {
+                   if (coloredNeighbours[color].length > 0) {
+                       //color the square to color
+                       let otherColor = color == Color.Green ? Color.Blue : Color.Green;
+                       coloredSquares[otherColor].push(squareToColor);
+                       squaresToColor = squaresToColor.filter(remains => remains !== squareToColor);
+                       //color uncolored neighbours
+                       let uncoloredNeighbours = neighbours.filter(neighbour => coloredNeighbours[color].indexOf(neighbour) === -1);
+                       uncoloredNeighbours.forEach(uncoloredNeighbour => {
+                          coloredSquares[color].push(uncoloredNeighbour);
+                           squaresToColor = squaresToColor.filter(remains => remains !== uncoloredNeighbour);
+                       });
+                   }
+                });
             }
-
+            Coloring.colors.forEach(color => {
+                coloring.colorSquares(coloredSquares[color], color);
+            });
             colorings.push(coloring);
         });
 
