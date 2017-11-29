@@ -4,8 +4,8 @@ import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
 
 enum Color {
-    Green,
     Blue,
+    Green,
     Uncolored
 }
 
