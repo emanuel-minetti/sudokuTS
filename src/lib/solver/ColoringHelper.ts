@@ -38,9 +38,9 @@ export class Coloring {
 }
 
 //TODO document
-//TODO comment
 export class ColoringHelper {
     static color(sudoku: Sudoku, value: number): Coloring[] {
+        //find all links
         let links: Square[][] = [];
         let units = sudoku.getUnits();
         units.forEach(unit => {
@@ -49,22 +49,29 @@ export class ColoringHelper {
                 links = _.unionWith(links, [squares], (link, newLink) => _.isEqual(link, newLink));
             }
         })
+        //find all chains formed by these links
         let chains: Square[][][] = [];
         links.forEach(link => {
+            //find chains that intersect with this link
             let neighbouringChains = chains.filter(chain => chain.reduce(
                 (neighbouring: boolean, neighbouringLink: Square[]): boolean => {
                     return (neighbouring || _.intersection(link, neighbouringLink).length !== 0);
                 },
                 false)
             );
+            //if this link hasn't intersections, add a new chain
             if (neighbouringChains.length === 0) {
                 chains.push([link]);
             }
+            //if it has one intersection, add this link to the intersecting chain
             else if (neighbouringChains.length === 1) {
                 neighbouringChains[0].push(link);
             }
+            //it has more connections ...
             else {
+                //... so find all intersecting chains ...
                 chains = _.differenceWith(chains, neighbouringChains, (arrVal, othVal) => _.isEqual(arrVal, othVal));
+                //... and form a new chain
                 let newChain: Square[][] = [];
                 neighbouringChains.forEach(neighbouringChain => {
                         let neighbouringChainWithoutLink = neighbouringChain.filter(linkInChain =>
@@ -75,6 +82,7 @@ export class ColoringHelper {
                 chains.push(newChain);
             }
         });
+        //find all colorings produced by these chains, that are longer than a single link
         let colorings: Coloring[] = [];
         chains = chains.filter(chain => (chain.length !== 1));
         chains.forEach(chain => {
@@ -84,6 +92,7 @@ export class ColoringHelper {
             coloredSquares[Color.Green] = [];
             let squaresToColor = _.flattenDeep(chain);
             squaresToColor = _.uniq(squaresToColor);
+            //color the first square
             coloredSquares[Color.Blue].push(squaresToColor[0]);
             squaresToColor.shift();
             coloredSquares[Color.Uncolored] = squaresToColor;
