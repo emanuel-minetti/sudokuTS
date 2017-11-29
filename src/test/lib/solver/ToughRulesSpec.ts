@@ -231,4 +231,27 @@ describe('A Solver with ToughRules', () => {
             solver.solve();
             expect(game.isSolved()).toBe(true);
         });
+
+    it('should be able to solve a game with the Simple Coloring / Two Colors Seen rule.',
+        () => {
+            let tcString = `
+1** 4** **6
+*46 *91 *8*
+**5 *2* ***
+
+*** 5** 1*9
+*9* *** *5*
+4*2 **9 ***
+
+*** *1* 9**
+*8* 93* 56*
+5** **8 **4
+`;
+
+            let game = new SudokuGame(tcString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
 });
