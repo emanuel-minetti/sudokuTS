@@ -19,10 +19,10 @@
   "author": "Emanuel Minetti",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@types/jasmine": "^2.8.0",
-    "@types/lodash": "^4.14.85",
+    "@types/jasmine": "^2.8.2",
+    "@types/lodash": "^4.14.86",
     "@types/minimist": "^1.2.0",
-    "@types/node": "^8.0.52",
+    "@types/node": "^8.0.53",
     "jasmine": "^2.8.0",
     "jasmine-core": "^2.8.0",
     "jasmine-ts": "^0.2.1",
@@ -31,7 +31,7 @@
     "karma-jasmine": "^1.1.0",
     "karma-typescript": "^3.0.8",
     "tslint": "^5.8.0",
-    "typescript": "^2.6.1"
+    "typescript": "^2.6.2"
   },
   "dependencies": {
     "lodash": "^4.17.4",
