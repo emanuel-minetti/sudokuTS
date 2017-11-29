@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
 
-enum Color {
+export enum Color {
     Blue,
     Green,
     Uncolored
@@ -39,7 +39,6 @@ export class Coloring {
 
 //TODO document
 //TODO comment
-//TODO implement
 export class ColoringHelper {
     static color(sudoku: Sudoku, value: number): Coloring[] {
         let links: Square[][] = [];
