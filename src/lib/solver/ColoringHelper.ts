@@ -125,16 +125,6 @@ export class ColoringHelper {
             });
             colorings.push(coloring);
         });
-
-        //TODO remove debugging!
-        // let chainsString = chains.reduce((chainsString: string, chain: Square[][]): string => {
-        //     return chainsString + chain.reduce((chainString: string, link: Square[]): string => {
-        //         return chainString + link.reduce((linkString: string, square: Square): string => {
-        //             return linkString + square.getName();
-        //         }, '');
-        //     }, '') + '\n';
-        // }, '');
-        // console.log('Chains:\n' + chainsString);
         return colorings;
     }
 }
