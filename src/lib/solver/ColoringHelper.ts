@@ -88,7 +88,6 @@ export class ColoringHelper {
             coloredSquares[Color.Blue].push(squaresToColor[0]);
             squaresToColor.shift();
             coloredSquares[Color.Uncolored] = squaresToColor;
-            //TODO debug!
             //color the rest!
             while (squaresToColor.length !== 0) {
                 let squareColored = false;
@@ -99,7 +98,7 @@ export class ColoringHelper {
                 let coloredNeighbours = Coloring.colors.map(color => neighbours.filter(neighbour =>
                     coloredSquares[color].indexOf(neighbour) !== -1)
                 );
-                //TODO whether there are more than one different colors among the neighbours
+                //TODO test whether there are more than one different colors among the neighbours
                 Coloring.colors.forEach(color => {
                     if (coloredNeighbours[color].length > 0) {
                         //color the square to color
@@ -129,14 +128,14 @@ export class ColoringHelper {
         });
 
         //TODO remove debugging!
-        let chainsString = chains.reduce((chainsString: string, chain: Square[][]): string => {
-            return chainsString + chain.reduce((chainString: string, link: Square[]): string => {
-                return chainString + link.reduce((linkString: string, square: Square): string => {
-                    return linkString + square.getName();
-                }, '');
-            }, '') + '\n';
-        }, '');
-        console.log('Chains:\n' + chainsString);
+        // let chainsString = chains.reduce((chainsString: string, chain: Square[][]): string => {
+        //     return chainsString + chain.reduce((chainString: string, link: Square[]): string => {
+        //         return chainString + link.reduce((linkString: string, square: Square): string => {
+        //             return linkString + square.getName();
+        //         }, '');
+        //     }, '') + '\n';
+        // }, '');
+        // console.log('Chains:\n' + chainsString);
         return colorings;
     }
 }
