@@ -9,12 +9,23 @@ export enum Color {
     Uncolored
 }
 
-//TODO document
+/**
+ * A class representing a coloring of a sudoku.
+ */
 export class Coloring {
-    private coloredSquares: Square[][];
-    private readonly squares: Square[];
+    /**
+     * The colors used to color the sudoku.
+     * @type {Color[]} the colors
+     */
     static colors: Color[] = [Color.Blue, Color.Green];
 
+    private coloredSquares: Square[][];
+    private readonly squares: Square[];
+
+    /**
+     * Returns an empty coloring of a sudoku, that is a sudoku with all squares uncolored.
+     * @param {Sudoku} sudoku the sudoku to color
+     */
     constructor(sudoku: Sudoku) {
         this.squares = sudoku.getSquares();
         this.coloredSquares = [];
@@ -23,6 +34,14 @@ export class Coloring {
         this.coloredSquares[Color.Green] = [];
     }
 
+    /**
+     * Colors the given squares to the given colors.
+     *
+     * Tests whether each of the given squares is uncolored.
+     *
+     * @param {Square[]} squares the squares to color
+     * @param {Color} color the color to use
+     */
     colorSquares(squares: Square[], color:Color) {
         if (squares.reduce((res, square) =>
                 (res || this.coloredSquares[Color.Uncolored].indexOf(square) === -1) ,false)) {
@@ -32,13 +51,32 @@ export class Coloring {
         this.coloredSquares[Color.Uncolored] = _.difference(this.coloredSquares[Color.Uncolored], squares);
     }
 
+    /**
+     * Gets all squares colored with a given color.
+     *
+     * @param {Color} color the color to search for
+     * @returns {Square[]} the colored squares
+     */
     getSquares(color: Color): Square[] {
         return this.coloredSquares[color];
     }
 }
 
-//TODO document
+/**
+ * A class with helper functions for coloring.
+ */
 export class ColoringHelper {
+
+    //TODO complete documentation
+    /**
+     * Colors a given sudoku for a given value.
+     *
+     *
+     *
+     * @param {Sudoku} sudoku the sudoku to color
+     * @param {number} value the value to color the sudoku for
+     * @returns {Coloring[]} the colored sudoku
+     */
     static color(sudoku: Sudoku, value: number): Coloring[] {
         //find all links
         let links: Square[][] = [];
