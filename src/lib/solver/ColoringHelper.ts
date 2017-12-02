@@ -67,15 +67,19 @@ export class Coloring {
  */
 export class ColoringHelper {
 
-    //TODO complete documentation
     /**
-     * Colors a given sudoku for a given value.
+     * Returns all colorings of a given sudoku for a given value.
      *
-     *
+     *First it finds all 'links' for the given value, that is pairs of squares in a unit that
+     * are the last possibilities in this unit for this value. Then it finds all 'chains' that can be
+     * formed with these links. 'Chains' are links that share a square. For each chain that is longer
+     * than a single link find the accompanying 'coloring'. A 'coloring' is found by giving the first
+     * square in the first link in a chain a randomly chosen color and then alternating the color for
+     * each square in the chain.
      *
      * @param {Sudoku} sudoku the sudoku to color
      * @param {number} value the value to color the sudoku for
-     * @returns {Coloring[]} the colored sudoku
+     * @returns {Coloring[]} the colorings of the sudoku
      */
     static color(sudoku: Sudoku, value: number): Coloring[] {
         //find all links
