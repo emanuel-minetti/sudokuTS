@@ -2,9 +2,21 @@ import {Sudoku} from "../game/Sudoku";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {ColoringHelper, Color, Coloring} from "./ColoringHelper";
 
+/**
+ * A class with abstract coloring rules to help building tough solver rules.
+ */
 export class AbstractColoringRules {
 
-    //TODO document
+    /**
+     * The Two Colors Seen rule is part of the Simple Coloring rule.
+     *
+     * For each value it finds all colorings. For each coloring and each square that is uncolored
+     * and contains the value it tests whether that square has two differently colored peers.
+     * If so the value can be removed from the candidates of the square.
+     *
+     * @param {Sudoku} sudoku the sudoku to solve
+     * @returns {SudokuStateChange[]} the resulting moves
+     */
     static twoColorsSeen(sudoku: Sudoku) {
         let moves: SudokuStateChange[] = [];
         //for each value
