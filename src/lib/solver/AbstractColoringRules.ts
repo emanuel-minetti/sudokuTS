@@ -55,17 +55,20 @@ export class AbstractColoringRules {
         return moves;
     }
 
-    //TODO comment
     //TODO document
     static twiceInUnit(sudoku: Sudoku) {
         let moves: SudokuStateChange[] = [];
+        //for each value
         Sudoku.values.forEach(value => {
+            //find all colorings
             let colorings = ColoringHelper.color(sudoku, value);
+            //for each coloring, unit and color
             colorings.forEach(coloring => {
                 sudoku.getUnits().forEach((unit, unitIndex) => {
                     Coloring.colors.forEach(color => {
-                        let equalColoredSquaresInUnit = _.intersection(coloring.getSquares(color), unit);
-                        if (equalColoredSquaresInUnit.length >= 2) {
+                        //find all squares in this unit with this color
+                        let equallyColoredSquaresInUnit = _.intersection(coloring.getSquares(color), unit);
+                        if (equallyColoredSquaresInUnit.length >= 2) {
                             //twice in unit found
                             let unitName = Sudoku.unitNames[unitIndex];
                             let squaresToRemoveValue = coloring.getSquares(color);
