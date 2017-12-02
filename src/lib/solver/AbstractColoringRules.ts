@@ -62,12 +62,19 @@ export class AbstractColoringRules {
         Sudoku.values.forEach(value => {
             let colorings = ColoringHelper.color(sudoku, value);
             colorings.forEach(coloring => {
-                sudoku.getUnits().forEach(unit => {
+                sudoku.getUnits().forEach((unit, unitIndex) => {
                     Coloring.colors.forEach(color => {
                         let equalColoredSquaresInUnit = _.intersection(coloring.getSquares(color), unit);
                         if (equalColoredSquaresInUnit.length >= 2) {
                             //twice in unit found
-                            console.log('Twice in Unit found!');
+                            let unitName = Sudoku.unitNames[unitIndex];
+                            let squaresToRemoveValue = coloring.getSquares(color);
+                            squaresToRemoveValue.forEach(square => {
+                                let move = new SudokuStateChange(square.getIndex(), [value],
+                                    value + ' found twice in Unit ' + unitName + ' found: Removed ' + value +
+                                    ' from ' + square.getName());
+                                moves.push(move);
+                            });
                         }
                     });
                 });
