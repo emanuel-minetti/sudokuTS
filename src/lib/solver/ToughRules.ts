@@ -77,8 +77,6 @@ export class ToughRules {
     }
 
     //TODO document
-    //TODO comment
-    //TODO implement
     private static _scRuleFn: TRuleFunction = (sudoku) => {
         let moves: SudokuStateChange[];
         moves = AbstractColoringRules.twiceInUnit(sudoku);
