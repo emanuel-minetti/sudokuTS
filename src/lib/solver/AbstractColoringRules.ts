@@ -1,3 +1,5 @@
+import * as _ from "lodash";
+
 import {Sudoku} from "../game/Sudoku";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 import {ColoringHelper, Color, Coloring} from "./ColoringHelper";
@@ -47,6 +49,27 @@ export class AbstractColoringRules {
                             }
                         }
                     }
+                });
+            });
+        });
+        return moves;
+    }
+
+    //TODO comment
+    //TODO document
+    static twiceInUnit(sudoku: Sudoku) {
+        let moves: SudokuStateChange[] = [];
+        Sudoku.values.forEach(value => {
+            let colorings = ColoringHelper.color(sudoku, value);
+            colorings.forEach(coloring => {
+                sudoku.getUnits().forEach(unit => {
+                    Coloring.colors.forEach(color => {
+                        let equalColoredSquaresInUnit = _.intersection(coloring.getSquares(color), unit);
+                        if (equalColoredSquaresInUnit.length >= 2) {
+                            //twice in unit found
+                            console.log('Twice in Unit found!');
+                        }
+                    });
                 });
             });
         });

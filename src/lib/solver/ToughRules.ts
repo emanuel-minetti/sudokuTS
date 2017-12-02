@@ -80,7 +80,10 @@ export class ToughRules {
     //TODO comment
     //TODO implement
     private static _scRuleFn: TRuleFunction = (sudoku) => {
-        return AbstractColoringRules.twoColorsSeen(sudoku);
+        let moves: SudokuStateChange[];
+        moves = AbstractColoringRules.twiceInUnit(sudoku);
+        moves = _.concat(moves, AbstractColoringRules.twoColorsSeen(sudoku));
+        return moves;
     }
 
     rules: SolverRule[];
