@@ -107,12 +107,8 @@ export class ColoringHelper {
         let chains: Square[][][] = [];
         links.forEach(link => {
             //find chains that intersect with this link
-            let neighbouringChains = chains.filter(chain => chain.reduce(
-                (neighbouring: boolean, neighbouringLink: Square[]): boolean => {
-                    return (neighbouring || _.intersection(link, neighbouringLink).length !== 0);
-                },
-                false)
-            );
+            let neighbouringChains = chains.filter(chain => chain.reduce((neighbouring, neighbouringLink) =>
+                    (neighbouring || _.intersection(link, neighbouringLink).length !== 0), false));
             //if this link hasn't intersections, add a new chain
             if (neighbouringChains.length === 0) {
                 chains.push([link]);
