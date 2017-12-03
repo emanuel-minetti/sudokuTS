@@ -148,7 +148,6 @@ export class ColoringHelper {
                 let coloredNeighbours = Coloring.colors.map(color => neighbours.filter(neighbour =>
                     coloredSquares[color].indexOf(neighbour) !== -1)
                 );
-                //TODO test whether there are more than one different colors among the neighbours
                 Coloring.colors.forEach(color => {
                     if (coloredNeighbours[color].length > 0) {
                         //color the square to color
