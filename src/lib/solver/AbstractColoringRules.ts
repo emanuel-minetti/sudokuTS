@@ -55,7 +55,17 @@ export class AbstractColoringRules {
         return moves;
     }
 
-    //TODO document
+    /**
+     * The Twice in Unit rule is part of the Simple Coloring rule.
+     *
+     * For each value, each coloring for this value each unit and each color
+     * test whether there are two or mor squares in this unit with this color.
+     * If such a unit is found remove the value from the candidates of all squares
+     * colored in this color.
+     *
+     * @param {Sudoku} sudoku the sudoku to solve
+     * @returns {SudokuStateChange[]} the resulting moves
+     */
     static twiceInUnit(sudoku: Sudoku) {
         let moves: SudokuStateChange[] = [];
         //for each value
