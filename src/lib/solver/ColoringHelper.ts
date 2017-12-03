@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
 
-export enum Color {
+enum Color {
     Blue,
     Green,
     Uncolored
@@ -13,6 +13,9 @@ export enum Color {
  * A class representing a coloring of a sudoku.
  */
 export class Coloring {
+
+    static Color = Color;
+
     /**
      * The colors used to color the sudoku.
      * @type {Color[]} the colors
@@ -42,7 +45,7 @@ export class Coloring {
      * @param {Square[]} squares the squares to color
      * @param {Color} color the color to use
      */
-    colorSquares(squares: Square[], color:Color) {
+    colorSquares(squares: Square[], color: Color) {
         if (squares.reduce((res, square) =>
                 (res || this.coloredSquares[Color.Uncolored].indexOf(square) === -1) ,false)) {
             throw new Error('Square already colored');
@@ -59,6 +62,15 @@ export class Coloring {
      */
     getSquares(color: Color): Square[] {
         return this.coloredSquares[color];
+    }
+
+    /**
+     * Gets all uncolored squares.
+     *
+     * @returns {Square[]} the uncolored squares
+     */
+    getUncoloredSquares(): Square[] {
+        return this.coloredSquares[Color.Uncolored];
     }
 }
 

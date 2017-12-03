@@ -2,7 +2,7 @@ import * as _ from "lodash";
 
 import {Sudoku} from "../game/Sudoku";
 import {SudokuStateChange} from "../game/SudokuStateChange";
-import {ColoringHelper, Color, Coloring} from "./ColoringHelper";
+import {ColoringHelper, Coloring} from "./ColoringHelper";
 
 /**
  * A class with abstract coloring rules to help building tough solver rules.
@@ -29,11 +29,11 @@ export class AbstractColoringRules {
             colorings.forEach(coloring => {
                 sudoku.getSquares().forEach(square => {
                     //... that is uncolored and contains the value as a candidate ...
-                    if (coloring.getSquares(Color.Uncolored).indexOf(square) !== -1 &&
+                    if (coloring.getUncoloredSquares().indexOf(square) !== -1 &&
                         square.containsCandidate(value)) {
                         //... get the colored peers of this square
                         let coloredPeers = sudoku.getPeersOfSquare(square).filter(peer =>
-                            coloring.getSquares(Color.Uncolored).indexOf(peer) === -1);
+                            coloring.getUncoloredSquares().indexOf(peer) === -1);
                         //if there are more than one peers ...
                         if (coloredPeers.length > 1) {
                             //... get the color of the first colored peer
