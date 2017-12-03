@@ -4,6 +4,7 @@ import {SudokuStateChange} from "../game/SudokuStateChange";
 import {SolverRule, TRuleFunction} from "./SolverRule";
 import {Sudoku} from "../game/Sudoku";
 import {AbstractToughRules} from "./AbstractToughRules";
+import {AbstractColoringRules} from "./AbstractColoringRules";
 
 /**
  * A class grouping the tough sudoku rules.
@@ -62,7 +63,7 @@ export class ToughRules {
      * The Swordfish rule searches firstly rows then columns for defining '3*3' squares.
      * @see AbstractBasicRules.abstractCrossExclude
      *
-     * @param {Sudoku} sudoku sudoku the state of the game
+     * @param {Sudoku} sudoku the state of the game
      * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
      * @private
      */
@@ -75,6 +76,20 @@ export class ToughRules {
         return moves;
     }
 
+    /**
+     * The Simple Coloring rule applies the Twice in Unit and Two Colors seen rules.
+     *
+     * @param {Sudoku} sudoku the state of the game
+     * @returns {SudokuStateChange[]} an array of moves that could be done according this rule
+     * @private
+     */
+    private static _scRuleFn: TRuleFunction = (sudoku) => {
+        let moves: SudokuStateChange[];
+        moves = AbstractColoringRules.twiceInUnit(sudoku);
+        moves = _.concat(moves, AbstractColoringRules.twoColorsSeen(sudoku));
+        return moves;
+    }
+
     rules: SolverRule[];
 
     constructor() {
@@ -82,6 +97,9 @@ export class ToughRules {
 
         let xwRule = new SolverRule('X-Wing Rule: ', 13, ToughRules._xwRuleFn);
         this.rules.push(xwRule);
+
+        let scRule = new SolverRule('Simple Coloring Rule: ', 14, ToughRules._scRuleFn);
+        this.rules.push(scRule);
 
         let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);
         this.rules.push(ywRule);
