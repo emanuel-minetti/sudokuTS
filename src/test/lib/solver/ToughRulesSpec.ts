@@ -254,4 +254,27 @@ describe('A Solver with ToughRules', () => {
             solver.solve();
             expect(game.isSolved()).toBe(true);
         });
+
+    it('should be able to solve a game with the Simple Coloring / Twice in Unit rule.',
+        () => {
+            let tuString = `
+4** 8** **3
+**6 *1* 4*9
+*** **5 ***
+
+*1* *6* *92
+*** 3*1 ***
+64* *5* *8*
+
+*** 6** ***
+9*7 *8* 1**
+8** **9 **4
+`;
+
+            let game = new SudokuGame(tuString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            expect(game.isSolved()).toBe(true);
+        });
 });
