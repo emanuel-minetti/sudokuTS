@@ -47,10 +47,7 @@ export class DoublyLinkedList<T>  implements Iterable<T> {
                 }
             }.bind(this),
             hasNext: function () {
-                if (current !== null) {
-                    return current.hasNext();
-                }
-                return false;
+                return current !== current!.next;
             }.bind(this)
         }
     }

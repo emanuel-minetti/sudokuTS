@@ -42,4 +42,16 @@ describe('A newly created Doubly Linked List' , () => {
         expect(stringList.length).toBe(3);
     });
 
+    it('should be able to return a functional iterator',  () => {
+        let intIterator = intList[Symbol.iterator]();
+        expect(intIterator.hasNext()).toBe(true);
+        expect(intIterator.next().value).toBe(1);
+        expect(intIterator.hasNext()).toBe(true);
+        expect(intIterator.next().value).toBe(2);
+        expect(intIterator.hasNext()).toBe(true);
+        expect(intIterator.next().value).toBe(3);
+        expect(intIterator.hasNext()).toBe(false);
+        expect(intIterator.next().value).toBeUndefined();
+    });
+
 });
