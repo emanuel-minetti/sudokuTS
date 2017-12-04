@@ -37,4 +37,9 @@ describe('A newly created Doubly Linked List' , () => {
         expect(stringList.toArray()).toEqual(['A', 'b', 'C']);
     });
 
+    it('should be able to report its length',  () => {
+        expect(intList.length).toBe(3);
+        expect(stringList.length).toBe(3);
+    });
+
 });

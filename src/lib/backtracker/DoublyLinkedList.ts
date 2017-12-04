@@ -1,23 +1,31 @@
 export class DoublyLinkedList<T>  {
+    get length(): number {
+        return this._length;
+    }
     private head: Node<T> | null;
     private tail: Node<T> | null;
-    private length: number;
+    private _length: number;
     private isCircular: boolean;
 
     constructor(isCircular = false) {
         this.isCircular = isCircular;
         this.head = null;
         this.tail = null;
-        this.length = 0;
+        this._length = 0;
     }
 
-    isEmpty(): boolean {
-        return this.length === 0;
-    }
+    /**
+     * Returns whether the List is empty.
+     *
+     * @returns {boolean} true if empty
+     */
+    isEmpty = () => this._length === 0;
 
-    toArray(): T[] {
+    getLength = () => this._length;
+
+    toArray = (): T[] => {
         var array: T[] = [];
-        var currentHead: Node<T> | null = this.head;
+        var currentHead = this.head;
         if (currentHead !== null) {
             array.push(currentHead.data);
             while (currentHead!.hasNext()) {
@@ -28,36 +36,36 @@ export class DoublyLinkedList<T>  {
         return array;
     }
 
-    push(data: T): void {
+    push = (data: T) => {
         const newNode = new Node(data);
 
         if (this.isEmpty()) {
             this.head = newNode;
             this.tail = newNode;
-            this.length++;
+            this._length++;
         }
         else {
             //TODO test `isCircular`
             this.tail!.next = newNode;
             newNode.prev = this.tail!;
             this.tail = newNode;
-            this.length++;
+            this._length++;
         }
     }
 }
 
 class Node<T> {
     data: T;
-    prev: Node<T> | null;
-    next: Node<T> | null;
+    prev: Node<T>;
+    next: Node<T>;
 
     constructor(data: T) {
         this.data = data;
-        this.next = null;
-        this.prev = null;
+        this.next = this;
+        this.prev = this;
     }
 
     hasNext(): boolean {
-        return this.next !== null;
+        return this.next !== this;
     }
 }
