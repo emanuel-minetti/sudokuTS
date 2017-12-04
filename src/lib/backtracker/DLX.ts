@@ -1,3 +1,6 @@
+import {DoublyLinkedList} from "./DoublyLinkedList";
+
+
 export class DLC {
     
 }
@@ -32,8 +35,33 @@ class Representation {
         });
     }
 
-    //TODO implement!
     private addNewRow(row: boolean[], rowIndex: number) {
+        let rowList = new DoublyLinkedList<DataObject>();
+        row.forEach((filled, columnIndex) => {
+            rowList.clear();
+            if (filled) {
+                let newDataObject = new DataObject();
+                newDataObject.up = this.columns[columnIndex].header.up;
+                newDataObject.down = this.columns[columnIndex].header;
+                newDataObject.column = this.columns[columnIndex].header;
+                this.columns[columnIndex].header.up.down = newDataObject;
+                this.columns[columnIndex].header.up = newDataObject;
+                this.columns[columnIndex].size++;
+                rowList.push(newDataObject);
+            }
+        });
+
+        if (!rowList.isEmpty()) {
+            let rowIterator = rowList[Symbol.iterator]();
+            let firstInRow = rowIterator.next().value;
+            while (rowIterator.hasNext()) {
+                let thisDataObject = rowIterator.next().value;
+                thisDataObject.left = firstInRow.left;
+                thisDataObject.right = firstInRow;
+                firstInRow.left.right = thisDataObject;
+                firstInRow.left = thisDataObject;
+            }
+        }
 
     }
 }

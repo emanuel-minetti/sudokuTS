@@ -1,14 +1,12 @@
-export class DoublyLinkedList<T>  {
+export class DoublyLinkedList<T>  implements Iterable<T> {
     get length(): number {
         return this._length;
     }
     private head: Node<T> | null;
     private tail: Node<T> | null;
     private _length: number;
-    private isCircular: boolean;
 
-    constructor(isCircular = false) {
-        this.isCircular = isCircular;
+    constructor() {
         this.head = null;
         this.tail = null;
         this._length = 0;
@@ -22,6 +20,32 @@ export class DoublyLinkedList<T>  {
     isEmpty = () => this._length === 0;
 
     getLength = () => this._length;
+
+    clear = () => {
+        this.head = null;
+        this.tail = null;
+        this._length = 0;
+    }
+
+    //TODO test!
+    [Symbol.iterator]() {
+        let current = this.head;
+        return {
+            next: function() {
+                let isNull = current === null;
+                let value = current.data;
+                let hasNext = current.hasNext();
+                current = current.next;
+                return isNull ? {
+                    value: value,
+                    done: hasNext
+                } : {done: true};
+            }.bind(this),
+            hasNext: function () {
+                return current.hasNext();
+            }
+        }
+    }
 
     toArray = (): T[] => {
         var array: T[] = [];
