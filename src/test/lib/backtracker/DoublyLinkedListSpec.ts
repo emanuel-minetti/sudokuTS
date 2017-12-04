@@ -22,4 +22,12 @@ describe('A newly created Doubly Linked List' , () => {
         expect(intList.toArray()).toEqual([1]);
         expect(stringList.toArray()).toEqual(['A']);
     });
+
+    it('should be able to push a second value and return an correct array',  () => {
+        intList.push(2);
+        stringList.push('b')
+        expect(intList.toArray()).toEqual([1, 2]);
+        expect(stringList.toArray()).toEqual(['A', 'b']);
+    });
+
 });

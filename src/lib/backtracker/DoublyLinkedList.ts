@@ -18,18 +18,16 @@ export class DoublyLinkedList<T>  {
     toArray(): T[] {
         var array: T[] = [];
         var currentHead: Node<T> | null = this.head;
-        if (currentHead !== null) {
-            do {
-                array.push(currentHead.data);
-                currentHead = currentHead.next;
-            }
-            while (currentHead.hasNext())
+        while (currentHead !== null) {
+            array.push(currentHead.data);
+            currentHead = currentHead.next;
         }
         return array;
     }
 
     push(data: T): void {
         const newNode = new Node(data);
+
         if (this.isEmpty()) {
             this.head = newNode;
             this.tail = newNode;
@@ -47,16 +45,16 @@ export class DoublyLinkedList<T>  {
 
 class Node<T> {
     data: T;
-    prev: Node<T>;
-    next: Node<T>;
+    prev: Node<T> | null;
+    next: Node<T> | null;
 
     constructor(data: T) {
         this.data = data;
-        this.next = this;
-        this.prev = this;
+        this.next = null;
+        this.prev = null;
     }
 
     hasNext(): boolean {
-        return this.next !== this;
+        return this.next !== null;
     }
 }
