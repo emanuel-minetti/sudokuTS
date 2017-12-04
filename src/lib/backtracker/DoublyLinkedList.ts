@@ -27,28 +27,36 @@ export class DoublyLinkedList<T>  implements Iterable<T> {
         this._length = 0;
     }
 
-    //TODO test!
     [Symbol.iterator]() {
-        let current = this.head;
-        return {
-            next: function() {
-                if (current !== null) {
+        if (this.head === null) {
+            return {
+                next: () => {return {done: true}},
+                hasNext: () => false
+            }
+        }
+        else {
+            let current = this.head;
+            let length = this._length;
+            let count = 0;
+            return {
+                next: function() {
                     let value = current.data;
                     let hasNext = current.hasNext();
-                    let isNull = current === null;
-                    current = current.next;
-                    return {
-                        value: value,
-                        done: hasNext
+                    if (++count <= length) {
+                        current = current.next;
+                        return {
+                            value: value,
+                            done: hasNext
+                        }
                     }
-                }
-                else {
-                    return {done: true};
-                }
-            }.bind(this),
-            hasNext: function () {
-                return current !== current!.next;
-            }.bind(this)
+                    else {
+                        return {
+                            done: true
+                        }
+                    }
+                }.bind(this),
+                hasNext: () => count < length
+            }
         }
     }
 
