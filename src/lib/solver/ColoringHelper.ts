@@ -140,7 +140,7 @@ export class ColoringHelper {
             let coloredSquares: Square[][] = [];
             coloredSquares[Color.Blue] = [];
             coloredSquares[Color.Green] = [];
-            let squaresToColor = _.flattenDeep(chain);
+            let squaresToColor: Square[] = _.flatten(chain);
             squaresToColor = _.uniq(squaresToColor);
             //color the first square
             coloredSquares[Color.Blue].push(squaresToColor[0]);
