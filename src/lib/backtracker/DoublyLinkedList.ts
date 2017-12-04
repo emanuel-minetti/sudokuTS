@@ -18,9 +18,12 @@ export class DoublyLinkedList<T>  {
     toArray(): T[] {
         var array: T[] = [];
         var currentHead: Node<T> | null = this.head;
-        while (currentHead !== null) {
+        if (currentHead !== null) {
             array.push(currentHead.data);
-            currentHead = currentHead.next;
+            while (currentHead!.hasNext()) {
+                array.push(currentHead!.next!.data)
+                currentHead = currentHead!.next;
+            }
         }
         return array;
     }

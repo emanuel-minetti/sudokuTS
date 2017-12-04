@@ -30,4 +30,11 @@ describe('A newly created Doubly Linked List' , () => {
         expect(stringList.toArray()).toEqual(['A', 'b']);
     });
 
+    it('should be able to push a third value and return an correct array',  () => {
+        intList.push(3);
+        stringList.push('C')
+        expect(intList.toArray()).toEqual([1, 2, 3]);
+        expect(stringList.toArray()).toEqual(['A', 'b', 'C']);
+    });
+
 });
