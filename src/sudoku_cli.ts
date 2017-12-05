@@ -27,11 +27,22 @@ try {
         }
         else {
             console.log('Start');
+            // let dlx = new DLX(
+            //     ['A', 'B', 'C'],
+            //     [[false, true, false],
+            //         [true, false, false],
+            //         [true, false, true]]);
             let dlx = new DLX(
-                ['A', 'B', 'C'],
-                [[false, true, false],
-                    [true, false, false],
-                    [true, false, true]]);
+                ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+                [
+                    [false, false, true, false, true, true, false],
+                    [true, false, false, true, false, false, true],
+                    [false, true, true, false, false, true, false],
+                    [true, false, false, true, false, false, false],
+                    [false, true, false, false, false, false, true],
+                    [false, false, false, true, true, false, true]
+                ]
+            );
             console.log('Created');
         }
     }
