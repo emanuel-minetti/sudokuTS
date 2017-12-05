@@ -23,7 +23,7 @@ class Representation {
         this.root = new DataObject();
 
         //create columns
-        this.columns = names.map((name, index) => new ColumnObject(name, index));
+        this.columns = names.map((name, index) => new ColumnObject(name, index + 1));
 
         //doubly link columns
         this.columns.forEach(column => {
@@ -56,10 +56,9 @@ class Representation {
     private addNewRow(row: boolean[], rowIndex: number) {
         let rowList = new DoublyLinkedList<DataObject>();
         row.forEach((filled, columnIndex) => {
-            rowList.clear();
             if (filled) {
                 let newDataObject = new DataObject();
-                newDataObject.rowIndex = rowIndex;
+                newDataObject.rowIndex = rowIndex + 1;
                 newDataObject.up = this.columns[columnIndex].up;
                 newDataObject.down = this.columns[columnIndex];
                 newDataObject.column = this.columns[columnIndex];
