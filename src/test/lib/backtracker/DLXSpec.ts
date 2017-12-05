@@ -7,7 +7,7 @@ describe('A newly created DLX' , () => {
             [[false, true, false],
             [true, false, false],
             [true, false, true]]);
-        console.log('halllo');
+        console.log('hello');
         expect(true).toBe(true);
     });
 })

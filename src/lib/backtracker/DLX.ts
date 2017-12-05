@@ -59,6 +59,7 @@ class Representation {
             rowList.clear();
             if (filled) {
                 let newDataObject = new DataObject();
+                newDataObject.rowIndex = rowIndex;
                 newDataObject.up = this.columns[columnIndex].up;
                 newDataObject.down = this.columns[columnIndex];
                 newDataObject.column = this.columns[columnIndex];
@@ -112,5 +113,6 @@ class ColumnObject extends DataObject{
         this.size = 0;
         this.name = name;
         this.index = index;
+        this.column = this;
     }
 }
