@@ -55,6 +55,16 @@ class Representation {
         }
     }
 
+    //TODO implement
+    public uncover(column: ColumnObject) {
+
+    }
+
+    //TODO implement
+    public print() {
+
+    }
+
     private addNewRow(row: boolean[], rowIndex: number) {
         let rowList = new DoublyLinkedList<DataObject>();
         row.forEach((filled, columnIndex) => {
