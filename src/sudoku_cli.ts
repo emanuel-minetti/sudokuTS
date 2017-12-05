@@ -43,6 +43,7 @@ try {
                     [false, false, false, true, true, false, true]
                 ]
             );
+            dlx.representation.cover(dlx.representation.columns[0]);
             console.log('Created');
         }
     }

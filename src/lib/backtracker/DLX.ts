@@ -45,11 +45,13 @@ class Representation {
         let currentRow = column.down;
         while (currentRow != column) {
             let currentColumn = currentRow.right;
-            while (currentColumn.column != column) {
+            while (currentColumn != currentRow) {
                 currentColumn.down.up = currentColumn.up;
                 currentColumn.up.down = currentColumn.down;
                 currentColumn.column.size--;
+                currentColumn = currentColumn.right;
             }
+            currentRow = currentRow.down;
         }
     }
 
