@@ -1,8 +1,12 @@
 import {DoublyLinkedList} from "./DoublyLinkedList";
 
 
-export class DLC {
-    
+export class DLX {
+    representation: Representation;
+
+    constructor( names: string[], rows: boolean[][]) {
+        this.representation = new Representation(names, rows);
+    }
 }
 
 class Representation {
@@ -23,10 +27,10 @@ class Representation {
 
         //doubly link columns
         this.columns.forEach(column => {
-            column.header.right = this.root;
-            column.header.left = this.root.left;
-            this.root.left.right = column.header;
-            this.root.left = column.header;
+            column.right = this.root;
+            column.left = this.root.left;
+            this.root.left.right = column;
+            this.root.left = column;
         });
 
         //add rows
@@ -35,17 +39,31 @@ class Representation {
         });
     }
 
+    public cover(column: ColumnObject) {
+        column.right.left = column.left;
+        column.left.right = column.right;
+        let currentRow = column.down;
+        while (currentRow != column) {
+            let currentColumn = currentRow.right;
+            while (currentColumn.column != column) {
+                currentColumn.down.up = currentColumn.up;
+                currentColumn.up.down = currentColumn.down;
+                currentColumn.column.size--;
+            }
+        }
+    }
+
     private addNewRow(row: boolean[], rowIndex: number) {
         let rowList = new DoublyLinkedList<DataObject>();
         row.forEach((filled, columnIndex) => {
             rowList.clear();
             if (filled) {
                 let newDataObject = new DataObject();
-                newDataObject.up = this.columns[columnIndex].header.up;
-                newDataObject.down = this.columns[columnIndex].header;
-                newDataObject.column = this.columns[columnIndex].header;
-                this.columns[columnIndex].header.up.down = newDataObject;
-                this.columns[columnIndex].header.up = newDataObject;
+                newDataObject.up = this.columns[columnIndex].up;
+                newDataObject.down = this.columns[columnIndex];
+                newDataObject.column = this.columns[columnIndex];
+                this.columns[columnIndex].up.down = newDataObject;
+                this.columns[columnIndex].up = newDataObject;
                 this.columns[columnIndex].size++;
                 rowList.push(newDataObject);
             }
@@ -71,7 +89,7 @@ class DataObject {
     right: DataObject;
     up: DataObject;
     down: DataObject;
-    column: DataObject;
+    column: ColumnObject;
     rowIndex: number;
 
     constructor() {
@@ -79,20 +97,18 @@ class DataObject {
         this.right = this;
         this.up = this;
         this.down = this;
-        this.column = this;
         this.rowIndex = 0;
     }
 }
 
-class ColumnObject {
-    header: DataObject;
+class ColumnObject extends DataObject{
     size: number;
     name: string;
     index: number;
 
 
     constructor(name: string, index: number) {
-        this.header = new DataObject();
+        super();
         this.size = 0;
         this.name = name;
         this.index = index;
