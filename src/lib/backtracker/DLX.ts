@@ -1,25 +1,18 @@
 import {DoublyLinkedList} from "./DoublyLinkedList";
 
-
 export class DLX {
-    representation: Representation;
-
-    constructor( names: string[], rows: boolean[][]) {
-        this.representation = new Representation(names, rows);
-    }
-}
-
-class Representation {
     root: DataObject;
     numberOfColumns: number;
     numberOfRows: number;
+    useSHeuristic: boolean;
 
     columns: ColumnObject[];
 
-    constructor( names: string[], rows: boolean[][]) {
+    constructor( names: string[], rows: boolean[][], useSHeuristic = false) {
         //TODO validate input?
         this.numberOfColumns = names.length;
         this.numberOfRows = rows.length;
+        this.useSHeuristic = useSHeuristic;
         this.root = new DataObject();
 
         //create columns
@@ -37,6 +30,69 @@ class Representation {
         rows.forEach((row, rowIndex) => {
             this.addNewRow(row, rowIndex);
         });
+    }
+
+    private addNewRow(row: boolean[], rowIndex: number) {
+        let rowList = new DoublyLinkedList<DataObject>();
+        row.forEach((filled, columnIndex) => {
+            if (filled) {
+                let newDataObject = new DataObject();
+                newDataObject.rowIndex = rowIndex + 1;
+                newDataObject.up = this.columns[columnIndex].up;
+                newDataObject.down = this.columns[columnIndex];
+                newDataObject.column = this.columns[columnIndex];
+                this.columns[columnIndex].up.down = newDataObject;
+                this.columns[columnIndex].up = newDataObject;
+                this.columns[columnIndex].size++;
+                rowList.push(newDataObject);
+            }
+        });
+
+        if (!rowList.isEmpty()) {
+            let rowIterator = rowList[Symbol.iterator]();
+            let firstInRow = rowIterator.next().value;
+            while (rowIterator.hasNext()) {
+                let thisDataObject = rowIterator.next().value;
+                thisDataObject.left = firstInRow.left;
+                thisDataObject.right = firstInRow;
+                firstInRow.left.right = thisDataObject;
+                firstInRow.left = thisDataObject;
+            }
+        }
+
+    }
+
+    public print(solution: DoublyLinkedList<DataObject>): string {
+        let resultString: string[] = [];
+        solution.toArray().forEach((row) => {
+            let resultRow: string[] = [];
+            let node = row;
+            do {
+                resultRow.push(node.column.name);
+                node = node.right;
+            } while (node != row)
+            resultString.push(resultRow.join(' '));
+        })
+        return resultString.join('\n');
+    }
+
+    public chooseColumn(): ColumnObject {
+        if (!this.useSHeuristic) {
+            return this.root.right.column;
+        } else {
+            let smallestSize = Number.MAX_VALUE;
+            let smallestColumn = this.root.right.column;
+            let currentColumn = this.root.right.column;
+            do {
+                if (currentColumn.size < smallestSize) {
+                    smallestColumn = currentColumn;
+                    smallestSize = currentColumn.size;
+                }
+                currentColumn = currentColumn.right.column;
+            } while (currentColumn.right != this.root)
+            return smallestColumn;
+        }
+
     }
 
     public cover(column: ColumnObject) {
@@ -69,41 +125,6 @@ class Representation {
         }
         column.right.left = column;
         column.left.right = column;
-    }
-
-    //TODO implement
-    public print() {
-
-    }
-
-    private addNewRow(row: boolean[], rowIndex: number) {
-        let rowList = new DoublyLinkedList<DataObject>();
-        row.forEach((filled, columnIndex) => {
-            if (filled) {
-                let newDataObject = new DataObject();
-                newDataObject.rowIndex = rowIndex + 1;
-                newDataObject.up = this.columns[columnIndex].up;
-                newDataObject.down = this.columns[columnIndex];
-                newDataObject.column = this.columns[columnIndex];
-                this.columns[columnIndex].up.down = newDataObject;
-                this.columns[columnIndex].up = newDataObject;
-                this.columns[columnIndex].size++;
-                rowList.push(newDataObject);
-            }
-        });
-
-        if (!rowList.isEmpty()) {
-            let rowIterator = rowList[Symbol.iterator]();
-            let firstInRow = rowIterator.next().value;
-            while (rowIterator.hasNext()) {
-                let thisDataObject = rowIterator.next().value;
-                thisDataObject.left = firstInRow.left;
-                thisDataObject.right = firstInRow;
-                firstInRow.left.right = thisDataObject;
-                firstInRow.left = thisDataObject;
-            }
-        }
-
     }
 }
 
