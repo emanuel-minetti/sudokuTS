@@ -1,6 +1,7 @@
 import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
+import {DLX} from "./lib/backtracker/DLX";
 
 try {
     let options = SudokuCli.parseArguments(process.argv);
@@ -17,11 +18,22 @@ try {
     ;
 
     if (sudokuString) {
-        let game = new SudokuGame(sudokuString);
-        let solver = new Solver(game);
-        solver.addStandardRules();
-        solver.solve();
-        console.log('Game:\n' + game.toString());
+        if (options.solver) {
+            let game = new SudokuGame(sudokuString);
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
+            console.log('Game:\n' + game.toString());
+        }
+        else {
+            console.log('Start');
+            let dlx = new DLX(
+                ['A', 'B', 'C'],
+                [[false, true, false],
+                    [true, false, false],
+                    [true, false, true]]);
+            console.log('Created');
+        }
     }
 }
 catch (e) {
