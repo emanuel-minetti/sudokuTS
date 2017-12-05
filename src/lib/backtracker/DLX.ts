@@ -55,9 +55,20 @@ class Representation {
         }
     }
 
-    //TODO implement
     public uncover(column: ColumnObject) {
-
+        let currentRow = column.up;
+        while (currentRow != column) {
+            let currentColumn = currentRow.left;
+            while (currentColumn != currentRow) {
+                currentColumn.column.size++;
+                currentColumn.down.up = currentColumn;
+                currentColumn.up.down = currentColumn;
+                currentColumn = currentColumn.left;
+            }
+            currentRow = currentRow.up;
+        }
+        column.right.left = column;
+        column.left.right = column;
     }
 
     //TODO implement

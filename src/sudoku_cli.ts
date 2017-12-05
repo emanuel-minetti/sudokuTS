@@ -44,6 +44,7 @@ try {
                 ]
             );
             dlx.representation.cover(dlx.representation.columns[0]);
+            dlx.representation.uncover(dlx.representation.columns[0]);
             console.log('Created');
         }
     }
