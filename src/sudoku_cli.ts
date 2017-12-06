@@ -41,11 +41,10 @@ try {
                     [true, false, false, true, false, false, false],
                     [false, true, false, false, false, false, true],
                     [false, false, false, true, true, false, true]
-                ]
+                ], false
             );
-            dlx.cover(dlx.columns[0]);
-            dlx.uncover(dlx.columns[0]);
             console.log('Created');
+            dlx.search(0);
         }
     }
 }

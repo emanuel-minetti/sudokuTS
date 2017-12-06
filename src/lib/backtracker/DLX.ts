@@ -1,11 +1,12 @@
 import {DoublyLinkedList} from "./DoublyLinkedList";
 
 export class DLX {
-    root: DataObject;
     numberOfColumns: number;
     numberOfRows: number;
     useSHeuristic: boolean;
 
+    root: DataObject;
+    currentSolution: DataObject[];
     columns: ColumnObject[];
 
     constructor( names: string[], rows: boolean[][], useSHeuristic = false) {
@@ -14,6 +15,7 @@ export class DLX {
         this.numberOfRows = rows.length;
         this.useSHeuristic = useSHeuristic;
         this.root = new DataObject();
+        this.currentSolution = [];
 
         //create columns
         this.columns = names.map((name, index) => new ColumnObject(name, index + 1));
@@ -62,9 +64,40 @@ export class DLX {
 
     }
 
-    public print(solution: DoublyLinkedList<DataObject>): string {
+    public search(depth: number) {
+        if (this.root.right = this.root) {
+            this.print(this.currentSolution);
+            return;
+        }
+        else {
+            let columnToCover = this.chooseColumn();
+            this.cover(columnToCover);
+            let rowToSearch = columnToCover.down;
+            while (rowToSearch != columnToCover) {
+                this.currentSolution[depth] = rowToSearch;
+                let innerColumnToCover = rowToSearch.right;
+                while (innerColumnToCover != rowToSearch) {
+                    this.cover(innerColumnToCover.column);
+                    innerColumnToCover = innerColumnToCover.right;
+                }
+                this.search(depth + 1);
+                rowToSearch = this.currentSolution[depth];
+                columnToCover = rowToSearch.column;
+                innerColumnToCover = rowToSearch.left;
+                while (innerColumnToCover != rowToSearch) {
+                    this.uncover(innerColumnToCover.column);
+                    innerColumnToCover = innerColumnToCover.left;
+                }
+                rowToSearch = rowToSearch.down;
+            }
+            this.uncover(columnToCover);
+            return;
+        }
+    }
+
+    public print(solution: DataObject[]) {
         let resultString: string[] = [];
-        solution.toArray().forEach((row) => {
+        solution.forEach((row) => {
             let resultRow: string[] = [];
             let node = row;
             do {
@@ -73,7 +106,7 @@ export class DLX {
             } while (node != row)
             resultString.push(resultRow.join(' '));
         })
-        return resultString.join('\n');
+        console.log(resultString.join('\n'));
     }
 
     public chooseColumn(): ColumnObject {
