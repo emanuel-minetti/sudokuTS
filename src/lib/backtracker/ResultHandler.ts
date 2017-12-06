@@ -20,8 +20,6 @@ export class SimpleResultHandler implements IResultHandler {
             resultStringArray.push(resultRow.join(' '));
         })
         this.resultString = resultStringArray.join('\n');
-        //TODO Remove logging to console
-        // console.log(this.resultString);
     }
 
     getResult = () => this.resultString;
