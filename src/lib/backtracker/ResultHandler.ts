@@ -7,6 +7,7 @@ export interface IResultHandler {
 
 export class SimpleResultHandler implements IResultHandler {
     private resultString: string;
+
     processResult = (root: DataObject, solution: DataObject[]) => {
         let resultStringArray: string[] = [];
         solution.forEach((row) => {
@@ -20,9 +21,8 @@ export class SimpleResultHandler implements IResultHandler {
         })
         this.resultString = resultStringArray.join('\n');
         //TODO Remove logging to console
-        console.log(this.resultString);
+        // console.log(this.resultString);
     }
-    getResult: () => any;
 
+    getResult = () => this.resultString;
 }
-

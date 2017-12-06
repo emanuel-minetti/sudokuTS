@@ -27,7 +27,7 @@ try {
             console.log('Game:\n' + game.toString());
         }
         else {
-            console.log('Start');
+            let resultHandler = new SimpleResultHandler();
             let dlx = new DLX(
                 ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
                 [
@@ -39,10 +39,10 @@ try {
                     [false, false, false, true, true, false, true]
                 ],
                 DLX.chooseColumnRight,
-                new SimpleResultHandler()
+                resultHandler
             );
-            console.log('Created');
             dlx.search(0);
+            console.log(resultHandler.getResult());
         }
     }
 }
