@@ -65,7 +65,7 @@ export class DLX {
     }
 
     public search(depth: number) {
-        if (this.root.right = this.root) {
+        if (this.root.right == this.root) {
             this.print(this.currentSolution);
             return;
         }
@@ -113,16 +113,16 @@ export class DLX {
         if (!this.useSHeuristic) {
             return this.root.right.column;
         } else {
-            let smallestSize = Number.MAX_VALUE;
             let smallestColumn = this.root.right.column;
+            let smallestSize = smallestColumn.size;
             let currentColumn = this.root.right.column;
-            do {
+            while (currentColumn.right != this.root) {
                 if (currentColumn.size < smallestSize) {
                     smallestColumn = currentColumn;
                     smallestSize = currentColumn.size;
                 }
                 currentColumn = currentColumn.right.column;
-            } while (currentColumn.right != this.root)
+            }
             return smallestColumn;
         }
 

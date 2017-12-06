@@ -41,7 +41,7 @@ try {
                     [true, false, false, true, false, false, false],
                     [false, true, false, false, false, false, true],
                     [false, false, false, true, true, false, true]
-                ], false
+                ], true
             );
             console.log('Created');
             dlx.search(0);
