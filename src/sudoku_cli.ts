@@ -27,11 +27,6 @@ try {
         }
         else {
             console.log('Start');
-            // let dlx = new DLX(
-            //     ['A', 'B', 'C'],
-            //     [[false, true, false],
-            //         [true, false, false],
-            //         [true, false, true]]);
             let dlx = new DLX(
                 ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
                 [

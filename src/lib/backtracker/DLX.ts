@@ -1,5 +1,7 @@
 import {DoublyLinkedList} from "./DoublyLinkedList";
 
+//TODO comment
+//TODO document
 export class DLX {
     numberOfColumns: number;
     numberOfRows: number;
@@ -10,7 +12,7 @@ export class DLX {
     columns: ColumnObject[];
 
     constructor( names: string[], rows: boolean[][], useSHeuristic = false) {
-        //TODO validate input?
+        //TODO validate input
         this.numberOfColumns = names.length;
         this.numberOfRows = rows.length;
         this.useSHeuristic = useSHeuristic;
@@ -106,10 +108,13 @@ export class DLX {
             } while (node != row)
             resultString.push(resultRow.join(' '));
         })
+        //TODO Remove logging to console
+        //TODO Introduce `ResultHandler`s
         console.log(resultString.join('\n'));
     }
 
     public chooseColumn(): ColumnObject {
+        //TODO Introduce `CooseHandler`s
         if (!this.useSHeuristic) {
             return this.root.right.column;
         } else {
@@ -182,7 +187,6 @@ class ColumnObject extends DataObject{
     size: number;
     name: string;
     index: number;
-
 
     constructor(name: string, index: number) {
         super();
