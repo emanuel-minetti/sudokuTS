@@ -33,10 +33,10 @@ class ColumnObject extends DataObject{
 
 type TChooseColumnFn = (root: DataObject) => ColumnObject;
 
-
-//TODO comment
 //TODO document
 export class DLX {
+
+    // Static Methods
 
     public static chooseColumnSmallest: TChooseColumnFn = (root => {
         let smallestColumn = root.right.column;
@@ -55,6 +55,8 @@ export class DLX {
     public static chooseColumnRight: TChooseColumnFn = (root => {
         return root.right.column;
     });
+
+    // Public Methods
 
     constructor( names: string[],
                  rows: boolean[][],
@@ -90,6 +92,8 @@ export class DLX {
         this.search(0);
     }
 
+    // Private Attributes
+
     private chooseColumn: TChooseColumnFn;
     private resultHandler: IResultHandler;
     private numberOfColumns: number;
@@ -98,27 +102,35 @@ export class DLX {
     private currentSolution: DataObject[];
     private columns: ColumnObject[];
 
+    // Private Methods
 
     private addNewRow(row: boolean[], rowIndex: number) {
         let rowDataArray: DataObject[] = [];
+        //for each row
         row.forEach((filled, columnIndex) => {
+            //create a data object for each entry, ...
             if (filled) {
                 let newDataObject = new DataObject();
                 newDataObject.rowIndex = rowIndex + 1;
+                //... link it to its column ...
                 newDataObject.up = this.columns[columnIndex].up;
                 newDataObject.down = this.columns[columnIndex];
                 newDataObject.column = this.columns[columnIndex];
                 this.columns[columnIndex].up.down = newDataObject;
                 this.columns[columnIndex].up = newDataObject;
                 this.columns[columnIndex].size++;
+                //... and store it
                 rowDataArray.push(newDataObject);
             }
         });
 
         if (rowDataArray.length !== 0) {
+            //for each stored row
             let firstInRow = rowDataArray[0];
+            //for each data object in it
             rowDataArray.forEach(node => {
                 if (node !== firstInRow) {
+                    //link it in its row
                     node.left = firstInRow.left;
                     node.right = firstInRow;
                     firstInRow.left.right = node;
