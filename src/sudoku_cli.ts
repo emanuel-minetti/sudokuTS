@@ -38,7 +38,7 @@ try {
                     [false, true, false, false, false, false, true],
                     [false, false, false, true, true, false, true]
                 ],
-                DLX.chooseColumnSmallest,
+                DLX.chooseColumnRight,
                 new SimpleResultHandler()
             );
             console.log('Created');

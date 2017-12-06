@@ -1,4 +1,3 @@
-import {DoublyLinkedList} from "./DoublyLinkedList";
 import {IResultHandler} from "./ResultHandler";
 
 export class DataObject {
@@ -97,7 +96,7 @@ export class DLX {
     }
 
     private addNewRow(row: boolean[], rowIndex: number) {
-        let rowList = new DoublyLinkedList<DataObject>();
+        let rowDataArray: DataObject[] = [];
         row.forEach((filled, columnIndex) => {
             if (filled) {
                 let newDataObject = new DataObject();
@@ -108,21 +107,33 @@ export class DLX {
                 this.columns[columnIndex].up.down = newDataObject;
                 this.columns[columnIndex].up = newDataObject;
                 this.columns[columnIndex].size++;
-                rowList.push(newDataObject);
+                rowDataArray.push(newDataObject);
             }
         });
 
-        if (!rowList.isEmpty()) {
-            let rowIterator = rowList[Symbol.iterator]();
-            let firstInRow = rowIterator.next().value;
-            while (rowIterator.hasNext()) {
-                let thisDataObject = rowIterator.next().value;
-                thisDataObject.left = firstInRow.left;
-                thisDataObject.right = firstInRow;
-                firstInRow.left.right = thisDataObject;
-                firstInRow.left = thisDataObject;
-            }
+        if (rowDataArray.length !== 0) {
+            let firstInRow = rowDataArray[0];
+            rowDataArray.forEach(node => {
+                if (node !== firstInRow) {
+                    node.left = firstInRow.left;
+                    node.right = firstInRow;
+                    firstInRow.left.right = node;
+                    firstInRow.left = node;
+                }
+            });
         }
+
+        // if (!rowList.isEmpty()) {
+        //     let rowIterator = rowList[Symbol.iterator]();
+        //     let firstInRow = rowIterator.next().value;
+        //     while (rowIterator.hasNext()) {
+        //         let thisDataObject = rowIterator.next().value;
+        //         thisDataObject.left = firstInRow.left;
+        //         thisDataObject.right = firstInRow;
+        //         firstInRow.left.right = thisDataObject;
+        //         firstInRow.left = thisDataObject;
+        //     }
+        // }
 
     }
 
