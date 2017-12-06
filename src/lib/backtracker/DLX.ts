@@ -56,15 +56,6 @@ export class DLX {
         return root.right.column;
     });
 
-    private chooseColumn: TChooseColumnFn;
-    private resultHandler: IResultHandler;
-    private numberOfColumns: number;
-    private numberOfRows: number;
-
-    private root: DataObject;
-    private currentSolution: DataObject[];
-    private columns: ColumnObject[];
-
     constructor( names: string[],
                  rows: boolean[][],
                  chooseColumnFn: TChooseColumnFn,
@@ -95,6 +86,19 @@ export class DLX {
         });
     }
 
+    public solve() {
+        this.search(0);
+    }
+
+    private chooseColumn: TChooseColumnFn;
+    private resultHandler: IResultHandler;
+    private numberOfColumns: number;
+    private numberOfRows: number;
+    private root: DataObject;
+    private currentSolution: DataObject[];
+    private columns: ColumnObject[];
+
+
     private addNewRow(row: boolean[], rowIndex: number) {
         let rowDataArray: DataObject[] = [];
         row.forEach((filled, columnIndex) => {
@@ -122,27 +126,9 @@ export class DLX {
                 }
             });
         }
-
-        // if (!rowList.isEmpty()) {
-        //     let rowIterator = rowList[Symbol.iterator]();
-        //     let firstInRow = rowIterator.next().value;
-        //     while (rowIterator.hasNext()) {
-        //         let thisDataObject = rowIterator.next().value;
-        //         thisDataObject.left = firstInRow.left;
-        //         thisDataObject.right = firstInRow;
-        //         firstInRow.left.right = thisDataObject;
-        //         firstInRow.left = thisDataObject;
-        //     }
-        // }
-
     }
 
-    //TODO implement
-    public solve() {
-
-    }
-
-    public search(depth: number) {
+    private search(depth: number) {
         if (this.root.right == this.root) {
             this.resultHandler.processResult(this.root, this.currentSolution);
             return;
@@ -173,7 +159,7 @@ export class DLX {
         }
     }
 
-    public cover(column: ColumnObject) {
+    private cover(column: ColumnObject) {
         column.right.left = column.left;
         column.left.right = column.right;
         let currentRow = column.down;
@@ -189,7 +175,7 @@ export class DLX {
         }
     }
 
-    public uncover(column: ColumnObject) {
+    private uncover(column: ColumnObject) {
         let currentRow = column.up;
         while (currentRow != column) {
             let currentColumn = currentRow.left;

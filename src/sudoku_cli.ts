@@ -38,10 +38,10 @@ try {
                     [false, true, false, false, false, false, true],
                     [false, false, false, true, true, false, true]
                 ],
-                DLX.chooseColumnRight,
+                DLX.chooseColumnSmallest,
                 resultHandler
             );
-            dlx.search(0);
+            dlx.solve();
             console.log(resultHandler.getResult());
         }
     }
