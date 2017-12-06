@@ -1,5 +1,6 @@
 import {DLX} from "../../../lib/backtracker/DLX";
 
+//TODO Implement real tests
 describe('A newly created DLX' , () => {
     it('should have a representation', () => {
         let dlx = new DLX(
@@ -7,7 +8,6 @@ describe('A newly created DLX' , () => {
             [[false, true, false],
             [true, false, false],
             [true, false, true]]);
-        console.log('hello');
         expect(true).toBe(true);
     });
 })
