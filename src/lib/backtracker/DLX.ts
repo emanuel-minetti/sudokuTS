@@ -1,23 +1,83 @@
 import {DoublyLinkedList} from "./DoublyLinkedList";
+import {IResultHandler} from "./ResultHandler";
+
+export class DataObject {
+    left: DataObject;
+    right: DataObject;
+    up: DataObject;
+    down: DataObject;
+    column: ColumnObject;
+    rowIndex: number;
+
+    constructor() {
+        this.left = this;
+        this.right = this;
+        this.up = this;
+        this.down = this;
+        this.rowIndex = 0;
+    }
+}
+
+class ColumnObject extends DataObject{
+    size: number;
+    name: string;
+    index: number;
+
+    constructor(name: string, index: number) {
+        super();
+        this.size = 0;
+        this.name = name;
+        this.index = index;
+        this.column = this;
+    }
+}
+
+type TChooseColumnFn = (root: DataObject) => ColumnObject;
+
 
 //TODO comment
 //TODO document
 export class DLX {
-    numberOfColumns: number;
-    numberOfRows: number;
-    useSHeuristic: boolean;
 
-    root: DataObject;
-    currentSolution: DataObject[];
-    columns: ColumnObject[];
+    public static chooseColumnSmallest: TChooseColumnFn = (root => {
+        let smallestColumn = root.right.column;
+        let smallestSize = smallestColumn.size;
+        let currentColumn = root.right.column;
+        while (currentColumn.right != root) {
+            if (currentColumn.size < smallestSize) {
+                smallestColumn = currentColumn;
+                smallestSize = currentColumn.size;
+            }
+            currentColumn = currentColumn.right.column;
+        }
+        return smallestColumn;
+    });
 
-    constructor( names: string[], rows: boolean[][], useSHeuristic = false) {
+    public static chooseColumnRight: TChooseColumnFn = (root => {
+        return root.right.column;
+    });
+
+    private chooseColumn: TChooseColumnFn;
+    private resultHandler: IResultHandler;
+    private numberOfColumns: number;
+    private numberOfRows: number;
+
+    private root: DataObject;
+    private currentSolution: DataObject[];
+    private columns: ColumnObject[];
+
+    constructor( names: string[],
+                 rows: boolean[][],
+                 chooseColumnFn: TChooseColumnFn,
+                 resultHandler: IResultHandler) {
         //TODO validate input
+        //initialize attributes
         this.numberOfColumns = names.length;
         this.numberOfRows = rows.length;
-        this.useSHeuristic = useSHeuristic;
         this.root = new DataObject();
         this.currentSolution = [];
+        this.chooseColumn = chooseColumnFn;
+        this.resultHandler = resultHandler;
 
         //create columns
         this.columns = names.map((name, index) => new ColumnObject(name, index + 1));
@@ -66,13 +126,18 @@ export class DLX {
 
     }
 
+    //TODO implement
+    public solve() {
+
+    }
+
     public search(depth: number) {
         if (this.root.right == this.root) {
-            this.print(this.currentSolution);
+            this.resultHandler.processResult(this.root, this.currentSolution);
             return;
         }
         else {
-            let columnToCover = this.chooseColumn();
+            let columnToCover = this.chooseColumn(this.root);
             this.cover(columnToCover);
             let rowToSearch = columnToCover.down;
             while (rowToSearch != columnToCover) {
@@ -95,42 +160,6 @@ export class DLX {
             this.uncover(columnToCover);
             return;
         }
-    }
-
-    public print(solution: DataObject[]) {
-        let resultString: string[] = [];
-        solution.forEach((row) => {
-            let resultRow: string[] = [];
-            let node = row;
-            do {
-                resultRow.push(node.column.name);
-                node = node.right;
-            } while (node != row)
-            resultString.push(resultRow.join(' '));
-        })
-        //TODO Remove logging to console
-        //TODO Introduce `ResultHandler`s
-        console.log(resultString.join('\n'));
-    }
-
-    public chooseColumn(): ColumnObject {
-        //TODO Introduce `CooseHandler`s
-        if (!this.useSHeuristic) {
-            return this.root.right.column;
-        } else {
-            let smallestColumn = this.root.right.column;
-            let smallestSize = smallestColumn.size;
-            let currentColumn = this.root.right.column;
-            while (currentColumn.right != this.root) {
-                if (currentColumn.size < smallestSize) {
-                    smallestColumn = currentColumn;
-                    smallestSize = currentColumn.size;
-                }
-                currentColumn = currentColumn.right.column;
-            }
-            return smallestColumn;
-        }
-
     }
 
     public cover(column: ColumnObject) {
@@ -163,36 +192,5 @@ export class DLX {
         }
         column.right.left = column;
         column.left.right = column;
-    }
-}
-
-class DataObject {
-    left: DataObject;
-    right: DataObject;
-    up: DataObject;
-    down: DataObject;
-    column: ColumnObject;
-    rowIndex: number;
-
-    constructor() {
-        this.left = this;
-        this.right = this;
-        this.up = this;
-        this.down = this;
-        this.rowIndex = 0;
-    }
-}
-
-class ColumnObject extends DataObject{
-    size: number;
-    name: string;
-    index: number;
-
-    constructor(name: string, index: number) {
-        super();
-        this.size = 0;
-        this.name = name;
-        this.index = index;
-        this.column = this;
     }
 }

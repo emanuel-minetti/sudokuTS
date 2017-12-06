@@ -2,6 +2,7 @@ import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
 import {DLX} from "./lib/backtracker/DLX";
+import {SimpleResultHandler} from "./lib/backtracker/ResultHandler";
 
 try {
     let options = SudokuCli.parseArguments(process.argv);
@@ -36,7 +37,9 @@ try {
                     [true, false, false, true, false, false, false],
                     [false, true, false, false, false, false, true],
                     [false, false, false, true, true, false, true]
-                ], true
+                ],
+                DLX.chooseColumnSmallest,
+                new SimpleResultHandler()
             );
             console.log('Created');
             dlx.search(0);
