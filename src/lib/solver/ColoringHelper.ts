@@ -47,7 +47,7 @@ export class Coloring {
      */
     colorSquares(squares: Square[], color: Color) {
         if (squares.reduce((res, square) =>
-                (res || this.coloredSquares[Color.Uncolored].indexOf(square) === -1) ,false)) {
+                (res || this.coloredSquares[Color.Uncolored].indexOf(square) === -1), false)) {
             throw new Error('Square already colored');
         }
         this.coloredSquares[color] = _.concat(this.coloredSquares[color], squares);
@@ -108,7 +108,7 @@ export class ColoringHelper {
         links.forEach(link => {
             //find chains that intersect with this link
             let neighbouringChains = chains.filter(chain => chain.reduce((neighbouring, neighbouringLink) =>
-                    (neighbouring || _.intersection(link, neighbouringLink).length !== 0), false));
+                (neighbouring || _.intersection(link, neighbouringLink).length !== 0), false));
             //if this link hasn't intersections, add a new chain
             if (neighbouringChains.length === 0) {
                 chains.push([link]);

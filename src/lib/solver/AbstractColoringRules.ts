@@ -2,7 +2,7 @@ import * as _ from "lodash";
 
 import {Sudoku} from "../game/Sudoku";
 import {SudokuStateChange} from "../game/SudokuStateChange";
-import {ColoringHelper, Coloring} from "./ColoringHelper";
+import {Coloring, ColoringHelper} from "./ColoringHelper";
 
 /**
  * A class with abstract coloring rules to help building tough solver rules.
