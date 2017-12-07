@@ -1,4 +1,4 @@
-import {IResultHandler} from "./ResultHandler";
+import {IResultHandler, SimpleResultHandler} from "./ResultHandler";
 
 export class DataObject {
     left: DataObject;
@@ -33,11 +33,22 @@ class ColumnObject extends DataObject{
 
 type TChooseColumnFn = (root: DataObject) => ColumnObject;
 
-//TODO document
+/**
+ * A class implementing the Dancing Links implementation of Algorithm X. Also called "DLX".
+ *
+ * This implementation is nearly wordily the same as in Donald Knuth's original paper (see
+ * http://lanl.arxiv.org/pdf/cs/0011047). The variable names are changed however for a little
+ * more verbosity.
+ */
 export class DLX {
 
     // Static Methods
 
+    /**
+     * An implementation of the shortest column choosing rule.
+     *
+     * @type {(root) => ColumnObject}
+     */
     public static chooseColumnSmallest: TChooseColumnFn = (root => {
         let smallestColumn = root.right.column;
         let smallestSize = smallestColumn.size;
@@ -52,16 +63,35 @@ export class DLX {
         return smallestColumn;
     });
 
+    /**
+     * An implementation of the simple column choosing rule.
+     *
+     * @type {(root) => ColumnObject}
+     */
     public static chooseColumnRight: TChooseColumnFn = (root => {
         return root.right.column;
     });
 
     // Public Methods
 
+    /**
+     * Constructs the representation of a Dancing Links problem.
+     *
+     * Expects the names of the columns and an array of rows, which are
+     * expected to have the same length as the names. It also expects an
+     * result handler, implementing `IResultHandler`, which is responsible
+     * for returning the result in the favored way. Optionally a rule for
+     * choosing the nest column to cover can be given.
+     *
+     * @param {string[]} names the names of the columns
+     * @param {boolean[][]} rows the rows of the problem
+     * @param {TChooseColumnFn} chooseColumnFn the rule for choosing a column
+     * @param {IResultHandler} resultHandler the result handler
+     */
     constructor( names: string[],
                  rows: boolean[][],
-                 chooseColumnFn: TChooseColumnFn,
-                 resultHandler: IResultHandler) {
+                 resultHandler: IResultHandler,
+                 chooseColumnFn: TChooseColumnFn = DLX.chooseColumnSmallest) {
         //validate input
         if (!rows.reduce((haveRightLength, currentRow) =>
                 haveRightLength && currentRow.length === names.length, true)) {
@@ -72,8 +102,8 @@ export class DLX {
         this.numberOfRows = rows.length;
         this.root = new DataObject();
         this.currentSolution = [];
-        this.chooseColumn = chooseColumnFn;
         this.resultHandler = resultHandler;
+        this.chooseColumn = chooseColumnFn;
 
         //create columns
         this.columns = names.map((name, index) => new ColumnObject(name, index + 1));
@@ -92,6 +122,11 @@ export class DLX {
         });
     }
 
+    /**
+     * Solve this problem.
+     *
+     * Results can be retrieved via the given `IResultHandler`.
+     */
     public solve() {
         this.search(0);
     }
