@@ -62,7 +62,11 @@ export class DLX {
                  rows: boolean[][],
                  chooseColumnFn: TChooseColumnFn,
                  resultHandler: IResultHandler) {
-        //TODO validate input
+        //validate input
+        if (!rows.reduce((haveRightLength, currentRow) =>
+                haveRightLength && currentRow.length === names.length, true)) {
+            throw new Error('At least one row has a wrong length');
+        }
         //initialize attributes
         this.numberOfColumns = names.length;
         this.numberOfRows = rows.length;
