@@ -39,6 +39,9 @@ class ColumnObject extends DataObject {
     }
 }
 
+/**
+ * Must be implemented by a column choosing strategy.
+ */
 type TChooseColumnFn = (root: DataObject) => ColumnObject;
 
 /**
@@ -57,7 +60,7 @@ export class DLX {
     // Static Methods
 
     /**
-     * An implementation of the shortest column choosing rule.
+     * An implementation of the shortest column choosing strategy.
      *
      * @type {(root) => ColumnObject}
      */
@@ -76,7 +79,7 @@ export class DLX {
     });
 
     /**
-     * An implementation of the simple column choosing rule.
+     * An implementation of the simple column choosing strategy.
      *
      * @type {(root) => ColumnObject}
      */
