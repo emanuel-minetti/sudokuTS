@@ -24,7 +24,7 @@ export interface IResultHandler {
 }
 
 /**
- * The result handler as Knuth's paper.
+ * The result handler as in Knuth's paper.
  */
 export class SimpleResultHandler implements IResultHandler {
     private resultString: string;
