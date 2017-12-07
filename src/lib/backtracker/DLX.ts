@@ -1,4 +1,4 @@
-import {IResultHandler, SimpleResultHandler} from "./ResultHandler";
+import {IResultHandler} from "./ResultHandler";
 
 /**
  * The "data object" of the Knuth paper.
@@ -25,7 +25,7 @@ export class DataObject {
  * The "column object" of the Knuth paper.
  * @see DLX
  */
-class ColumnObject extends DataObject{
+class ColumnObject extends DataObject {
     size: number;
     name: string;
     columnIndex: number;
@@ -100,10 +100,10 @@ export class DLX {
      * @param {TChooseColumnFn} chooseColumnFn the rule for choosing a column
      * @param {IResultHandler} resultHandler the result handler
      */
-    constructor( names: string[],
-                 rows: boolean[][],
-                 resultHandler: IResultHandler,
-                 chooseColumnFn: TChooseColumnFn = DLX.chooseColumnSmallest) {
+    constructor(names: string[],
+                rows: boolean[][],
+                resultHandler: IResultHandler,
+                chooseColumnFn: TChooseColumnFn = DLX.chooseColumnSmallest) {
         //validate input
         if (!rows.reduce((haveRightLength, currentRow) =>
                 haveRightLength && currentRow.length === names.length, true)) {

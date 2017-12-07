@@ -1,7 +1,7 @@
 import {DLX} from "../../../lib/backtracker/DLX";
 import {SimpleResultHandler} from "../../../lib/backtracker/ResultHandler";
 
-describe('A newly created DLX' , () => {
+describe('A newly created DLX', () => {
     it('should report an error if created with rows of false length', () => {
         let resultHandler = new SimpleResultHandler();
         expect(() => new DLX(
