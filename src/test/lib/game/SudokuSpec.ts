@@ -15,7 +15,7 @@ describe('A Square of an empty Sudoku ', () => {
         expect(square.getName()).toBe('C9');
     });
 
-    it('should report its Index', () => {
+    it('should report its index', () => {
         expect(square.getIndex()).toBe(26);
     });
 
