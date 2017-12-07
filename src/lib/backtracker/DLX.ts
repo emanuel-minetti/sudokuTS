@@ -21,16 +21,20 @@ export class DataObject {
     }
 }
 
+/**
+ * The "column object" of the Knuth paper.
+ * @see DLX
+ */
 class ColumnObject extends DataObject{
     size: number;
     name: string;
-    index: number;
+    columnIndex: number;
 
     constructor(name: string, index: number) {
         super();
         this.size = 0;
         this.name = name;
-        this.index = index;
+        this.columnIndex = index;
         this.column = this;
     }
 }
@@ -42,7 +46,11 @@ type TChooseColumnFn = (root: DataObject) => ColumnObject;
  *
  * This implementation is nearly wordily the same as in Donald Knuth's original paper (see
  * http://lanl.arxiv.org/pdf/cs/0011047). The variable names are changed however for a little
- * more verbosity.
+ * more verbosity. Other changes:
+ * - Added fields "rowIndex" to {@link DataObject} and "columnIndex" to {@link ColumnObject}
+ * - Made the functions "print" and "choose column" configurable
+ * - Added fields "numberOfColumns" and "numberOfRows"
+ * - Added field "columns" to store the {@link ColumnObject}s
  */
 export class DLX {
 

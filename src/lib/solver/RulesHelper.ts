@@ -44,9 +44,9 @@ export class RulesHelper {
     }
 
     /**
-     * Returns all tuples of a given length of an index set of a given length.
+     * Returns all tuples of a given length of an columnIndex set of a given length.
      *
-     * @param {number} setLength the length of the index set
+     * @param {number} setLength the length of the columnIndex set
      * @param {number} tupleLength the length of the tuples
      * @returns {number[][]} the tuples
      */
