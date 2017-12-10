@@ -33,7 +33,7 @@ export class Backtracker {
     }
 
     private createEmptyRepresentation():boolean[][] {
-        let rows:boolean[][] = [];
+        let rows: boolean[][] = [];
         let emptySudoku = new Sudoku();
         Sudoku.values.forEach(value => {
             emptySudoku.getSquares().forEach(square => {
@@ -42,6 +42,12 @@ export class Backtracker {
             })
         })
         return rows;
+    }
+
+    //TODO implement
+    private getRowIndices(valuesToRemove: number): number[] {
+        let rowIndices: number[] = [];
+        return rowIndices;
     }
 
     private getColumnsIndices(square: Square, value: number): number[] {
@@ -62,11 +68,5 @@ export class Backtracker {
                     this.getRowIndices(valuesToRemove).indexOf(rowIndex) !== -1);
             });
         });
-    }
-
-    //TODO implement
-    private getRowIndices(valuesToRemove: number): number[] {
-        let rowIndices: number[] = [];
-        return rowIndices;
     }
 }
