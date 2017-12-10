@@ -13,6 +13,8 @@ export class Backtracker {
         this.game = game;
         this.columnNames = this.createColumnNames();
         this.rows = this.createEmptyRepresentation();
+        game.getCurrentState().getSquares().filter(square => square.isSet()).forEach(square =>
+            this.setValue(square, square.getValue()!))
     }
 
     private createColumnNames(): string[] {
@@ -49,5 +51,9 @@ export class Backtracker {
         columnIndices.push(82 + (value - 1) * 3 + square.getRowIndex());
         columnIndices.push(83 + (value - 1) * 3 + square.getBoxIndex());
         return columnIndices;
+    }
+
+    //TODO implement
+    private setValue(square: Square, value: number) {
     }
 }

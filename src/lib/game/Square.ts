@@ -129,4 +129,8 @@ export class Square {
     getCandidateIntersection(values: number[]): number[] {
         return isNull(this.candidates) ? [] : _.intersection(this.candidates, values);
     }
+
+    isSet() {
+        return this.value !== null;
+    }
 }
