@@ -53,7 +53,20 @@ export class Backtracker {
         return columnIndices;
     }
 
-    //TODO implement
+    //TODO look at
     private setValue(square: Square, value: number) {
+        let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove === value);
+        valuesToRemove.forEach(valuesToRemove => {
+            this.getRowIndices(valuesToRemove).forEach(valueToRemove => {
+                this.rows = this.rows.filter((row, rowIndex) =>
+                    this.getRowIndices(valuesToRemove).indexOf(rowIndex) !== -1);
+            });
+        });
+    }
+
+    //TODO implement
+    private getRowIndices(valuesToRemove: number): number[] {
+        let rowIndices: number[] = [];
+        return rowIndices;
     }
 }
