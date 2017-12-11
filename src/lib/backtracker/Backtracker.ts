@@ -59,7 +59,6 @@ export class Backtracker {
         return columnIndices;
     }
 
-    //TODO look at
     private setValue(square: Square, value: number) {
         let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove === value);
         valuesToRemove.forEach(valueToRemove => {
