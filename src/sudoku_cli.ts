@@ -31,21 +31,6 @@ try {
             let game = new SudokuGame(sudokuString);
             let backtracker = new Backtracker(game);
             backtracker.solve();
-            // let resultHandler = new SimpleResultHandler();
-            // let dlx = new DLX(
-            //     ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
-            //     [
-            //         [false, false, true, false, true, true, false],
-            //         [true, false, false, true, false, false, true],
-            //         [false, true, true, false, false, true, false],
-            //         [true, false, false, true, false, false, false],
-            //         [false, true, false, false, false, false, true],
-            //         [false, false, false, true, true, false, true]
-            //     ],
-            //     resultHandler
-            // );
-            // dlx.solve();
-            // console.log(resultHandler.getResult());
         }
     }
 }
