@@ -3,6 +3,8 @@ import * as _ from "lodash";
 import {SudokuGame} from "../game/SudokuGame";
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
+import {ColumnChooser, SimpleResultHandler, TChooseColumnFn} from "./DLXHelpers";
+import {DLX} from "./DLX";
 
 export class Backtracker {
     private readonly game: SudokuGame;
@@ -17,8 +19,12 @@ export class Backtracker {
             this.setValue(square, square.getValue()!))
     }
 
-    public solve() {
-
+    //TODO implement sudoku result handler
+    public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
+        let srh = new SimpleResultHandler();
+        let dlx = new DLX(this.columnNames, this.rows, srh, strategy);
+        //TODO remove logging to console
+        console.log(srh.getResult());
     }
 
     private createColumnNames(): string[] {
