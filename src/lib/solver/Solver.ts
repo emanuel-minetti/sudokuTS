@@ -1,7 +1,8 @@
+import * as _ from "lodash";
+
 import {SudokuGame} from '../game/SudokuGame';
 import {SolverRule} from "./SolverRule";
 import {MostBasicRules} from "./MostBasicRules";
-import * as _ from "lodash";
 import {BasicRules} from "./BasicRules";
 import {ToughRules} from "./ToughRules";
 
