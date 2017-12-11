@@ -1,10 +1,6 @@
 import {DataObject, ColumnObject, IResultHandler, ColumnChooser, TChooseColumnFn} from "./DLXHelpers";
 
 /**
- * Must be implemented by a column choosing strategy.
- */
-
-/**
  * A class implementing the Dancing Links implementation of Algorithm X. Also called "DLX".
  *
  * This implementation is nearly wordily the same as in Donald Knuth's original paper (see
