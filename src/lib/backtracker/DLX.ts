@@ -1,48 +1,8 @@
-import {IResultHandler} from "./ResultHandler";
-
-/**
- * The "data object" of the Knuth paper.
- * @see DLX
- */
-export class DataObject {
-    left: DataObject;
-    right: DataObject;
-    up: DataObject;
-    down: DataObject;
-    column: ColumnObject;
-    rowIndex: number;
-
-    constructor() {
-        this.left = this;
-        this.right = this;
-        this.up = this;
-        this.down = this;
-        this.rowIndex = 0;
-    }
-}
-
-/**
- * The "column object" of the Knuth paper.
- * @see DLX
- */
-class ColumnObject extends DataObject {
-    size: number;
-    name: string;
-    columnIndex: number;
-
-    constructor(name: string, index: number) {
-        super();
-        this.size = 0;
-        this.name = name;
-        this.columnIndex = index;
-        this.column = this;
-    }
-}
+import {DataObject, ColumnObject, IResultHandler, ColumnChooser, TChooseColumnFn} from "./DLXHelpers";
 
 /**
  * Must be implemented by a column choosing strategy.
  */
-type TChooseColumnFn = (root: DataObject) => ColumnObject;
 
 /**
  * A class implementing the Dancing Links implementation of Algorithm X. Also called "DLX".
@@ -56,38 +16,13 @@ type TChooseColumnFn = (root: DataObject) => ColumnObject;
  * - Added field "columns" to store the {@link ColumnObject}s
  */
 export class DLX {
-
-    // Static Methods
-
-    /**
-     * An implementation of the shortest column choosing strategy.
-     *
-     * @type {(root) => ColumnObject}
-     */
-    public static chooseColumnSmallest: TChooseColumnFn = (root => {
-        let smallestColumn = root.right.column;
-        let smallestSize = smallestColumn.size;
-        let currentColumn = root.right.column;
-        while (currentColumn.right != root) {
-            if (currentColumn.size < smallestSize) {
-                smallestColumn = currentColumn;
-                smallestSize = currentColumn.size;
-            }
-            currentColumn = currentColumn.right.column;
-        }
-        return smallestColumn;
-    });
-
-    /**
-     * An implementation of the simple column choosing strategy.
-     *
-     * @type {(root) => ColumnObject}
-     */
-    public static chooseColumnRight: TChooseColumnFn = (root => {
-        return root.right.column;
-    });
-
-    // Public Methods
+    private chooseColumn: TChooseColumnFn;
+    private resultHandler: IResultHandler;
+    private numberOfColumns: number;
+    private numberOfRows: number;
+    private root: DataObject;
+    private currentSolution: DataObject[];
+    private columns: ColumnObject[];
 
     /**
      * Constructs the representation of a Dancing Links problem.
@@ -106,7 +41,7 @@ export class DLX {
     constructor(names: string[],
                 rows: boolean[][],
                 resultHandler: IResultHandler,
-                chooseColumnFn: TChooseColumnFn = DLX.chooseColumnSmallest) {
+                chooseColumnFn: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         //validate input
         if (!rows.reduce((haveRightLength, currentRow) =>
                 haveRightLength && currentRow.length === names.length, true)) {
@@ -145,18 +80,6 @@ export class DLX {
     public solve() {
         this.search(0);
     }
-
-    // Private Attributes
-
-    private chooseColumn: TChooseColumnFn;
-    private resultHandler: IResultHandler;
-    private numberOfColumns: number;
-    private numberOfRows: number;
-    private root: DataObject;
-    private currentSolution: DataObject[];
-    private columns: ColumnObject[];
-
-    // Private Methods
 
     private addNewRow(row: boolean[], rowIndex: number) {
         let rowDataArray: DataObject[] = [];

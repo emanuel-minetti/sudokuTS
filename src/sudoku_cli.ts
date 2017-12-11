@@ -2,7 +2,7 @@ import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
 import {DLX} from "./lib/backtracker/DLX";
-import {SimpleResultHandler} from "./lib/backtracker/ResultHandler";
+import {SimpleResultHandler} from "./lib/backtracker/DLXHelpers";
 
 try {
     let options = SudokuCli.parseArguments(process.argv);
