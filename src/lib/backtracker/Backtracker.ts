@@ -45,28 +45,26 @@ export class Backtracker {
     }
 
     //TODO implement
-    private getRowIndices(valuesToRemove: number): number[] {
-        let rowIndices: number[] = [];
-        return rowIndices;
+    private getRowIndex(square: Square, valueToRemove: number): number {
+        let rowIndex: number = 0;
+        return rowIndex;
     }
 
     private getColumnsIndices(square: Square, value: number): number[] {
         let columnIndices: number[] = [];
         columnIndices.push(square.getIndex());
-        columnIndices.push(81 + (value - 1) * 3 + square.getColumnIndex());
-        columnIndices.push(82 + (value - 1) * 3 + square.getRowIndex());
-        columnIndices.push(83 + (value - 1) * 3 + square.getBoxIndex());
+        columnIndices.push(80 + (value - 1) * 3 + square.getColumnIndex());
+        columnIndices.push(81 + (value - 1) * 3 + square.getRowIndex());
+        columnIndices.push(82 + (value - 1) * 3 + square.getBoxIndex());
         return columnIndices;
     }
 
     //TODO look at
     private setValue(square: Square, value: number) {
         let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove === value);
-        valuesToRemove.forEach(valuesToRemove => {
-            this.getRowIndices(valuesToRemove).forEach(valueToRemove => {
-                this.rows = this.rows.filter((row, rowIndex) =>
-                    this.getRowIndices(valuesToRemove).indexOf(rowIndex) !== -1);
-            });
+        valuesToRemove.forEach(valueToRemove => {
+            this.rows = this.rows.filter((row, rowIndex) =>
+                this.getRowIndex(square, valueToRemove) !== rowIndex);
         });
     }
 }
