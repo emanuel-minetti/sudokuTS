@@ -6,11 +6,13 @@ import {Square} from "../game/Square";
 import {ColumnChooser, SimpleResultHandler, TChooseColumnFn} from "./DLXHelpers";
 import {DLX} from "./DLX";
 
+//TODO document
 export class Backtracker {
     private readonly game: SudokuGame;
     private rows: boolean[][];
     private columnNames: string[];
 
+    //TODO Write tests for constructor
     constructor(game: SudokuGame) {
         this.game = game;
         this.columnNames = this.createColumnNames();
@@ -23,6 +25,7 @@ export class Backtracker {
     public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         let srh = new SimpleResultHandler();
         let dlx = new DLX(this.columnNames, this.rows, srh, strategy);
+        dlx.solve();
         //TODO remove logging to console
         console.log(srh.getResult());
     }
@@ -49,6 +52,7 @@ export class Backtracker {
             emptySudoku.getSquares().forEach(square => {
                 let row = this.columnNames.map(() => false);
                 this.getColumnsIndices(square, value).forEach(columnIndex => row[columnIndex] = true);
+                rows.push(row);
             })
         })
         return rows;
