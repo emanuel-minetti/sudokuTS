@@ -1,0 +1,28 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="sudoku_cli_Backtracker" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="-b --string='9** *** *6* **2 89* *** 1** **5 2** **1 **7 *96 *** 1*9 *** 35* 4** 8** **3 9** **2 *** *42 5** *6* *** **7'" path-to-js-file="sudoku_cli.js" working-dir="$PROJECT_DIR$/src">
+    <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
+      <option name="envVars">
+        <list />
+      </option>
+      <option name="extraHosts">
+        <list />
+      </option>
+      <option name="links">
+        <list />
+      </option>
+      <option name="networkDisabled" value="false" />
+      <option name="networkMode" value="bridge" />
+      <option name="portBindings">
+        <list />
+      </option>
+      <option name="publishAllPorts" value="false" />
+      <option name="version" value="1" />
+      <option name="volumeBindings">
+        <list />
+      </option>
+    </EXTENSION>
+    <method>
+      <option name="TypeScript.Before.Run" enabled="true" FAIL_ON_ERROR="true" CONFIG_PATH="$PROJECT_DIR$/tsconfig.json" />
+    </method>
+  </configuration>
+</component>

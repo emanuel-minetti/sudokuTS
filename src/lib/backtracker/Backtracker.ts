@@ -32,12 +32,12 @@ export class Backtracker {
         let emptySudoku = new Sudoku();
         columnNames = emptySudoku.getSquares().map(square => "Some number in square " + square.getName());
         Sudoku.values.forEach(value => {
-            _.concat(columnNames, Sudoku.columnNames.map(columnName =>
+            columnNames = _.concat(columnNames, Sudoku.columnNames.map(columnName =>
                 value + " must be present in column " + columnName));
-            _.concat(columnNames, Sudoku.rowNames.map(rowName =>
-                value + " must be present in column " + rowName));
-            _.concat(columnNames, Sudoku.boxNames.map(boxName =>
-                value + " must be present in column " + boxName));
+            columnNames = _.concat(columnNames, Sudoku.rowNames.map(rowName =>
+                value + " must be present in row " + rowName));
+            columnNames = _.concat(columnNames, Sudoku.boxNames.map(boxName =>
+                value + " must be present in box " + boxName));
         })
         return columnNames;
     }
