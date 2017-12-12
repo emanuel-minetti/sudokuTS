@@ -9,8 +9,8 @@ import {DLX} from "./DLX";
 //TODO document
 export class Backtracker {
     private readonly game: SudokuGame;
-    private rows: boolean[][];
-    private columnNames: string[];
+    rows: boolean[][];
+    columnNames: string[];
 
     //TODO Write tests for constructor
     constructor(game: SudokuGame) {
