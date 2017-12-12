@@ -26,7 +26,7 @@ describe('A newly created empty Backtracker', () => {
         expect(backtracker.columnNames[90]).toEqual("1 must be present in row A");
         expect(backtracker.columnNames[203]).toEqual("5 must be present in row F");
         expect(backtracker.columnNames[99]).toEqual("1 must be present in box I");
-        expect(backtracker.columnNames[208]).toEqual("5 must be present in box II");
+        expect(backtracker.columnNames[210]).toEqual("5 must be present in box IV");
         expect(backtracker.columnNames[107]).toEqual("1 must be present in box IX");
         expect(backtracker.columnNames[108]).toEqual("2 must be present in column 1");
         expect(backtracker.columnNames[323]).toEqual("9 must be present in box IX");
@@ -51,7 +51,7 @@ describe('A newly created empty Backtracker', () => {
         fiveInF5[47] = true;
         fiveInF5[191] = true;
         fiveInF5[203] = true;
-        fiveInF5[208] = true;
+        fiveInF5[210] = true;
         expect(backtracker.rows[371]).toEqual(fiveInF5);
     });
 });
