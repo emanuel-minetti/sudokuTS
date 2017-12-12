@@ -9,14 +9,14 @@ import {DLX} from "./DLX";
 //TODO document
 export class Backtracker {
     private readonly game: SudokuGame;
-    rows: boolean[][];
-    columnNames: string[];
+    private _rows: boolean[][];
+    private _columnNames: string[];
 
     //TODO Write tests for constructor
     constructor(game: SudokuGame) {
         this.game = game;
-        this.columnNames = this.createColumnNames();
-        this.rows = this.createEmptyRepresentation();
+        this._columnNames = this.createColumnNames();
+        this._rows = this.createEmptyRepresentation();
         game.getCurrentState().getSquares().filter(square => square.isSet()).forEach(square =>
             this.setValue(square, square.getValue()!))
     }
@@ -24,10 +24,18 @@ export class Backtracker {
     //TODO implement sudoku result handler
     public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         let srh = new SimpleResultHandler();
-        let dlx = new DLX(this.columnNames, this.rows, srh, strategy);
+        let dlx = new DLX(this._columnNames, this._rows, srh, strategy);
         dlx.solve();
         //TODO remove logging to console
         console.log(srh.getResult());
+    }
+
+    public get rows(): boolean[][] {
+        return this._rows;
+    }
+
+    public get columnNames(): string[] {
+        return this._columnNames;
     }
 
     private createColumnNames(): string[] {
@@ -50,7 +58,7 @@ export class Backtracker {
         let emptySudoku = new Sudoku();
         Sudoku.values.forEach(value => {
             emptySudoku.getSquares().forEach(square => {
-                let row = this.columnNames.map(() => false);
+                let row = this._columnNames.map(() => false);
                 this.getColumnsIndices(square, value).forEach(columnIndex => row[columnIndex] = true);
                 rows.push(row);
             })
@@ -70,7 +78,7 @@ export class Backtracker {
     private setValue(square: Square, value: number) {
         let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove === value);
         valuesToRemove.forEach(valueToRemove => {
-            this.rows = this.rows.filter((row, rowIndex) =>
+            this._rows = this._rows.filter((row, rowIndex) =>
                 this.getRowIndex(square, valueToRemove) !== rowIndex);
         });
     }
