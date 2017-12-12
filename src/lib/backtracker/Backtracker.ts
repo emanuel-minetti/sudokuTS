@@ -12,7 +12,6 @@ export class Backtracker {
     private _rows: boolean[][];
     private _columnNames: string[];
 
-    //TODO Write tests for constructor
     constructor(game: SudokuGame) {
         this.game = game;
         this._columnNames = this.createColumnNames();
