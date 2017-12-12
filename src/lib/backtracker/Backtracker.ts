@@ -68,9 +68,9 @@ export class Backtracker {
     private getColumnsIndices(square: Square, value: number): number[] {
         let columnIndices: number[] = [];
         columnIndices.push(square.getIndex());
-        columnIndices.push(80 + (value - 1) * 3 + square.getColumnIndex());
-        columnIndices.push(81 + (value - 1) * 3 + square.getRowIndex());
-        columnIndices.push(82 + (value - 1) * 3 + square.getBoxIndex());
+        columnIndices.push(80 + (value - 1) * 27 + square.getColumnIndex());
+        columnIndices.push(81 + (value - 1) * 27 + square.getRowIndex());
+        columnIndices.push(82 + (value - 1) * 27 + square.getBoxIndex());
         return columnIndices;
     }
 

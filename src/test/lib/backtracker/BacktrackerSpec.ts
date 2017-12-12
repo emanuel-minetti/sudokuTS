@@ -52,6 +52,6 @@ describe('A newly created empty Backtracker', () => {
         fiveInF5[191] = true;
         fiveInF5[203] = true;
         fiveInF5[208] = true;
-        expect(backtracker.rows[0]).toEqual(fiveInF5);
+        expect(backtracker.rows[371]).toEqual(fiveInF5);
     });
 });
