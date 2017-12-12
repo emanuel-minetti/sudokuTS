@@ -28,9 +28,18 @@ describe('A newly created empty Backtracker', () => {
         expect(backtracker.columnNames[323]).toEqual("9 must be present in box IX");
     });
 
-    //TODO add more tests
-    it('should report correct rows', () => {
+    it('should report correct row length', () => {
         expect(backtracker.rows.length).toBe(729);
         expect(backtracker.rows[0].length).toBe(324);
+    });
+
+    it('should report correct row for "1 in A1"', () => {
+        // 1 in A1
+        let oneInA1 = backtracker.columnNames.map(columnName => false);
+        oneInA1[0] = true;
+        oneInA1[81] = true;
+        oneInA1[90] = true;
+        oneInA1[99] = true;
+        expect(backtracker.rows[0]).toEqual(oneInA1);
     });
 });
