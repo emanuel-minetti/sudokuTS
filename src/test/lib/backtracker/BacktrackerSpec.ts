@@ -16,19 +16,29 @@ describe('A newly created empty Backtracker', () => {
     *** *** ***
     `);
     let backtracker = new Backtracker(game);
-    it('should report correct column names', () => {
+
+    it('should report correct column names for "a number in square"', () => {
         expect(backtracker.columnNames[5]).toEqual("Some number in square A6");
         expect(backtracker.columnNames[47]).toEqual("Some number in square F3");
         expect(backtracker.columnNames[80]).toEqual("Some number in square J9");
+    });
+
+    it('should report correct column names for "present in column"', () => {
         expect(backtracker.columnNames[81]).toEqual("1 must be present in column 1");
         expect(backtracker.columnNames[82]).toEqual("1 must be present in column 2");
         expect(backtracker.columnNames[191]).toEqual("5 must be present in column 3");
+        expect(backtracker.columnNames[108]).toEqual("2 must be present in column 1");
+    });
+
+    it('should report correct column names for "present in row"', () => {
         expect(backtracker.columnNames[90]).toEqual("1 must be present in row A");
         expect(backtracker.columnNames[203]).toEqual("5 must be present in row F");
+    });
+
+    it('should report correct column names for "present in box"', () => {
         expect(backtracker.columnNames[99]).toEqual("1 must be present in box I");
         expect(backtracker.columnNames[210]).toEqual("5 must be present in box IV");
         expect(backtracker.columnNames[107]).toEqual("1 must be present in box IX");
-        expect(backtracker.columnNames[108]).toEqual("2 must be present in column 1");
         expect(backtracker.columnNames[323]).toEqual("9 must be present in box IX");
     });
 
