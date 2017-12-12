@@ -25,7 +25,6 @@ export class Backtracker {
         let srh = new SimpleResultHandler();
         let dlx = new DLX(this._columnNames, this._rows, srh, strategy);
         dlx.solve();
-        //TODO remove logging to console
         console.log(srh.getResult());
     }
 
@@ -75,14 +74,15 @@ export class Backtracker {
     }
 
     private setValue(square: Square, value: number) {
-        let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove === value);
+        let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove !== value);
         valuesToRemove.forEach(valueToRemove => {
             this._rows = this._rows.filter((row, rowIndex) =>
                 this.getRowIndex(square, valueToRemove) !== rowIndex);
         });
     }
 
+    //TODO rename
     private getRowIndex(square: Square, valueToRemove: number): number {
-        return (valueToRemove - 1) + square.getIndex();
+        return (((valueToRemove - 1) * 81) + square.getIndex());
     }
 }
