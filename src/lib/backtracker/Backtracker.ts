@@ -73,6 +73,7 @@ export class Backtracker {
         return columnIndices;
     }
 
+    //TODO write test for setting values
     private setValue(square: Square, value: number) {
         let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove !== value);
         valuesToRemove.forEach(valueToRemove => {
