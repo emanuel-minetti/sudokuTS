@@ -49,6 +49,12 @@ export class Backtracker {
         return this._columnNames;
     }
 
+    private getEmptyRow(): boolean[] {
+        let emptyRow = Array(this.columnNames.length);
+        _.fill(emptyRow, false);
+        return emptyRow;
+    }
+
     private createColumnNames(): string[] {
         let columnNames: string[];
         let emptySudoku = new Sudoku();
@@ -69,7 +75,7 @@ export class Backtracker {
         let emptySudoku = new Sudoku();
         Sudoku.values.forEach(value => {
             emptySudoku.getSquares().forEach(square => {
-                let row = this._columnNames.map(() => false);
+                let row = this.getEmptyRow();
                 this.getColumnsIndices(square, value).forEach(columnIndex => row[columnIndex] = true);
                 rows.push(row);
             })
@@ -89,11 +95,11 @@ export class Backtracker {
     private setValue(square: Square, value: number) {
         let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove !== value);
         valuesToRemove.forEach(valueToRemove => {
-            this._rows[this.getRow(square, valueToRemove)] = this.columnNames.map(columnName => false);
+            this._rows[this.getRowIndex(square, valueToRemove)] = this.getEmptyRow();
         });
     }
 
-    private getRow(square: Square, value: number): number {
+    private getRowIndex(square: Square, value: number): number {
         return (((value - 1) * 81) + square.getIndex());
     }
 }
