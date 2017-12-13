@@ -7,7 +7,9 @@ import {ColumnChooser, DataObject, IResultHandler, SimpleResultHandler, TChooseC
 import {DLX} from "./DLX";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 
-//TODO document and comment
+/**
+ * Solves sudoku puzzles with a backtracking Algorithm.
+ */
 export class Backtracker {
     private readonly game: SudokuGame;
     private _rows: boolean[][];
@@ -15,12 +17,20 @@ export class Backtracker {
 
     constructor(game: SudokuGame) {
         this.game = game;
+        //create a representation of an empty sudoku
         this._columnNames = this.createColumnNames();
         this._rows = this.createRows();
+        //set the given values from the given puzzle
         game.getCurrentState().getSquares().filter(square => square.isSet()).forEach(square =>
             this.setValue(square, square.getValue()!))
     }
 
+    /**
+     * Solves a sudoku puzzle with backtracking.
+     *
+     * @param {boolean} findAll whether to find all solutions to the puzzle
+     * @param {TChooseColumnFn} strategy the column choosing strategy
+     */
     public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
         let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy);
@@ -88,7 +98,9 @@ export class Backtracker {
     }
 }
 
-//TODO document and comment
+/**
+ * A result handler specified for solutions of a sudoku puzzle.
+ */
 class SudokuResultHandler implements IResultHandler {
     private moves: SudokuStateChange[] = [];
     private sudoku: Sudoku;
@@ -110,6 +122,7 @@ class SudokuResultHandler implements IResultHandler {
             node = row;
             square = null;
             value = null;
+            //traverse the row and find the square and the value to set
             do {
                 columnName = node.column.name;
                 matchResultSquare = columnName.match(squareMatcher);
@@ -129,7 +142,7 @@ class SudokuResultHandler implements IResultHandler {
             if (square && value) {
                 if (!square.isSet()) {
                     this.moves.push(new SudokuStateChange(square.getIndex(), value,
-                        "Square " + square.getName() + " set to " + value + " by backtracking"));
+                        "Square " + square.getName() + " set to " + value + " by backtracking", 0));
                 }
             }
             else {
