@@ -15,7 +15,7 @@ export class Backtracker {
     constructor(game: SudokuGame) {
         this.game = game;
         this._columnNames = this.createColumnNames();
-        this._rows = this.createEmptyRepresentation();
+        this._rows = this.createRows();
         game.getCurrentState().getSquares().filter(square => square.isSet()).forEach(square =>
             this.setValue(square, square.getValue()!))
     }
@@ -51,7 +51,7 @@ export class Backtracker {
         return columnNames;
     }
 
-    private createEmptyRepresentation():boolean[][] {
+    private createRows():boolean[][] {
         let rows: boolean[][] = [];
         let emptySudoku = new Sudoku();
         Sudoku.values.forEach(value => {
@@ -73,17 +73,16 @@ export class Backtracker {
         return columnIndices;
     }
 
-    //TODO write test for setting values
     private setValue(square: Square, value: number) {
         let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove !== value);
         valuesToRemove.forEach(valueToRemove => {
-            this._rows = this._rows.filter((row, rowIndex) =>
-                this.getRowIndex(square, valueToRemove) !== rowIndex);
+            // this._rows = this._rows.filter((row, rowIndex) =>
+            //     this.getRow(square, valueToRemove) !== rowIndex);
+            this._rows[this.getRow(square, valueToRemove)] = this.columnNames.map(columnName => false);
         });
     }
 
-    //TODO rename
-    private getRowIndex(square: Square, valueToRemove: number): number {
-        return (((valueToRemove - 1) * 81) + square.getIndex());
+    private getRow(square: Square, value: number): number {
+        return (((value - 1) * 81) + square.getIndex());
     }
 }

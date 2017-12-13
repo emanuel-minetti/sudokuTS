@@ -64,4 +64,25 @@ describe('A newly created empty Backtracker', () => {
         fiveInF5[210] = true;
         expect(backtracker.rows[371]).toEqual(fiveInF5);
     });
+
+    describe('A newly created Backtracker', () => {
+        it('should report correct row for "6 in F3"', () => {
+            let game = new SudokuGame(`
+    *** *** ***
+    *** *** ***
+    *** *** ***
+    
+    *** *** ***
+    *** *** ***
+    **5 *** ***
+    
+    *** *** ***
+    *** *** ***
+    *** *** ***
+    `);
+            let backtracker = new Backtracker(game);
+            let sixInF3 = backtracker.columnNames.map(columnName => false);
+            expect(backtracker.rows[452]).toEqual(sixInF3);
+        });
+    });
 });
