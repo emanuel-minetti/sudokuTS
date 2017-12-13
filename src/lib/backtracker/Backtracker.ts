@@ -3,10 +3,11 @@ import * as _ from "lodash";
 import {SudokuGame} from "../game/SudokuGame";
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
-import {ColumnChooser, SimpleResultHandler, TChooseColumnFn} from "./DLXHelpers";
+import {ColumnChooser, DataObject, IResultHandler, SimpleResultHandler, TChooseColumnFn} from "./DLXHelpers";
 import {DLX} from "./DLX";
+import {SudokuStateChange} from "../game/SudokuStateChange";
 
-//TODO document
+//TODO document and comment
 export class Backtracker {
     private readonly game: SudokuGame;
     private _rows: boolean[][];
@@ -20,12 +21,14 @@ export class Backtracker {
             this.setValue(square, square.getValue()!))
     }
 
-    //TODO implement sudoku result handler
     public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
-        let srh = new SimpleResultHandler();
-        let dlx = new DLX(this._columnNames, this._rows, srh, strategy);
+        let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
+        let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy);
         dlx.solve();
-        console.log(srh.getResult());
+        let moves = sudokuResultHandler.getResult();
+        moves.forEach(move => {
+           this.game.changeState(move);
+        });
     }
 
     public get rows(): boolean[][] {
@@ -76,8 +79,6 @@ export class Backtracker {
     private setValue(square: Square, value: number) {
         let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove !== value);
         valuesToRemove.forEach(valueToRemove => {
-            // this._rows = this._rows.filter((row, rowIndex) =>
-            //     this.getRow(square, valueToRemove) !== rowIndex);
             this._rows[this.getRow(square, valueToRemove)] = this.columnNames.map(columnName => false);
         });
     }
@@ -85,4 +86,57 @@ export class Backtracker {
     private getRow(square: Square, value: number): number {
         return (((value - 1) * 81) + square.getIndex());
     }
+}
+
+//TODO document and comment
+class SudokuResultHandler implements IResultHandler {
+    private moves: SudokuStateChange[] = [];
+    private sudoku: Sudoku;
+
+    constructor(sudoku: Sudoku) {
+        this.sudoku = sudoku;
+    }
+
+    processResult = (root: DataObject, solution: DataObject[]) => {
+        let node: DataObject;
+        let columnName: string;
+        let matchResultSquare: RegExpMatchArray | null;
+        let matchResultValue: RegExpMatchArray | null;
+        let squareMatcher = /square ([ABCDEFGHJ]\d$)/;
+        let valueMatcher = /^(\d) must be present in /;
+        let square: Square | null;
+        let value: number | null;
+        solution.forEach((row) => {
+            node = row;
+            square = null;
+            value = null;
+            do {
+                columnName = node.column.name;
+                matchResultSquare = columnName.match(squareMatcher);
+                matchResultValue = columnName.match(valueMatcher);
+                if (matchResultSquare) {
+                    square = this.sudoku.getSquareByName(matchResultSquare[1]);
+                }
+                else if (matchResultValue) {
+                    value = Number.parseInt(matchResultValue[1]);
+                }
+                else {
+                    throw new Error("Unexpected column name");
+                }
+                node = node.right;
+            }
+            while (node != row && !(square && value))
+            if (square && value) {
+                if (!square.isSet()) {
+                    this.moves.push(new SudokuStateChange(square.getIndex(), value,
+                        "Square " + square.getName() + " set to " + value + " by backtracking"));
+                }
+            }
+            else {
+                throw new Error("Unexpected row in result")
+            }
+        });
+    }
+
+    getResult = () => this.moves;
 }

@@ -31,6 +31,7 @@ try {
             let game = new SudokuGame(sudokuString);
             let backtracker = new Backtracker(game);
             backtracker.solve();
+            console.log('Game:\n' + game.toString());
         }
     }
 }

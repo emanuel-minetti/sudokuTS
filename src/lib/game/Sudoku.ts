@@ -298,4 +298,15 @@ export class Sudoku {
     getColumns() {
         return this.columns;
     }
+
+    getSquareByName(name: string) {
+        //let foundSquares = this.squares.filter(square => square.getName().localeCompare(name));
+        let foundSquares = this.squares.filter(square => square.getName() ==name);
+        if(foundSquares.length !== 1) {
+            throw new Error("No square found for this name");
+        }
+        else {
+            return foundSquares[0];
+        }
+    }
 }
