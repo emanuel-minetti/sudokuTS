@@ -1,5 +1,5 @@
 import {DLX} from "../../../lib/backtracker/DLX";
-import {SimpleResultHandler} from "../../../lib/backtracker/ResultHandler";
+import {ColumnChooser, SimpleResultHandler} from "../../../lib/backtracker/DLXHelpers";
 
 describe('A newly created DLX', () => {
     it('should report an error if created with rows of false length', () => {
@@ -15,7 +15,7 @@ describe('A newly created DLX', () => {
                 [false, false, false, true, true, false, true]
             ],
             resultHandler,
-            DLX.chooseColumnRight
+            ColumnChooser.chooseColumnSmallest
         )).toThrowError('At least one row has a wrong length');
     });
 
@@ -32,7 +32,7 @@ describe('A newly created DLX', () => {
                 [false, false, false, true, true, false, true]
             ],
             resultHandler,
-            DLX.chooseColumnRight
+            ColumnChooser.chooseColumnRight
         );
         dlx.solve();
         expect(resultHandler.getResult()).toEqual(
@@ -55,7 +55,7 @@ describe('A newly created DLX', () => {
                 [false, false, false, true, true, false, true]
             ],
             resultHandler,
-            DLX.chooseColumnSmallest
+            ColumnChooser.chooseColumnSmallest
         );
         dlx.solve();
         expect(resultHandler.getResult()).toEqual(

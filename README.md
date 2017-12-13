@@ -2,11 +2,13 @@
 SudokuTS is a [TypeScript](https://www.typescriptlang.org/) implementation of the well-known
 [Sudoku](https://en.wikipedia.org/wiki/Sudoku) game. It includes  a fully functional solver,
 that is a solver that tries to solve a sudoku puzzle
-like a human would do it. The Solver is heavily based on the strategies described
+like an human would do it. The Solver is heavily based on the strategies described
  by Andrew Stuart in his [SudokuWiki](http://www.sudokuwiki.org/sudoku.htm).
- Then a backtracker that finds every possible solution
-of a potential puzzle will be implemented. And eventually a generator of sudoku puzzles will follow.
-The generator will be able to categorize puzzles in difficulty rates.
+Also a backtracking solver, called "Backtracker" is implemented. A modification to
+ this backtracker, that finds every possible solution
+of a potential puzzle will be implemented soon.
+And eventually a generator of sudoku puzzles will follow.
+The generator will be able to categorize puzzles in difficulty levels.
 It is also planned to add a Browser-based GUI.
 
 ## Building
@@ -49,7 +51,7 @@ If you like to get involved in coding, it would be best to write an [e-mail](mai
 
 
 ## ToDo List
-- Implement the backtracker
+- Improve the backtracker
 - Implement the generator
 - Implement the GUI
 - Improve the solver

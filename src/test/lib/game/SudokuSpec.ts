@@ -142,12 +142,14 @@ describe('A sudoku', () => {
     })
 
     it('should report a correct row', () => {
-        expect(sudoku.getRows()[1].map((square) => square.getValue())).toEqual([null, null, 2, 8, 9, null, null, null, null]);
+        expect(sudoku.getRows()[1].map((square) =>
+            square.getValue())).toEqual([null, null, 2, 8, 9, null, null, null, null]);
     });
 
     it('should report a correct unit', () => {
         //unit[22] is unit V
-        expect(sudoku.getUnits()[22].map((square) => square.getValue())).toEqual([null, null, 7, 1, null, 9, 4, null, null]);
+        expect(sudoku.getUnits()[22].map((square) =>
+            square.getValue())).toEqual([null, null, 7, 1, null, 9, 4, null, null]);
     });
 
     it('should not remove values from the candidates of a square that aren\'t candidates', () => {
@@ -174,6 +176,14 @@ describe('A sudoku', () => {
             sudoku.getSquares()[0],
             sudoku.getSquares()[1],
             sudoku.getSquares()[9]]).length).toBe(1);
+    });
+
+    it('should be able to find a square by name', () => {
+        expect(sudoku.getSquareByName('F3').getIndex()).toBe(47);
+    });
+
+    it('should not be able to find a square by a not existing name', () => {
+        expect(() => sudoku.getSquareByName('T3').getIndex()).toThrowError('No square found for this name');
     });
 
 })

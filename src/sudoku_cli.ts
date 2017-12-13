@@ -1,8 +1,7 @@
 import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
-import {DLX} from "./lib/backtracker/DLX";
-import {SimpleResultHandler} from "./lib/backtracker/ResultHandler";
+import {Backtracker} from "./lib/backtracker/Backtracker";
 
 try {
     let options = SudokuCli.parseArguments(process.argv);
@@ -27,21 +26,10 @@ try {
             console.log('Game:\n' + game.toString());
         }
         else {
-            let resultHandler = new SimpleResultHandler();
-            let dlx = new DLX(
-                ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
-                [
-                    [false, false, true, false, true, true, false],
-                    [true, false, false, true, false, false, true],
-                    [false, true, true, false, false, true, false],
-                    [true, false, false, true, false, false, false],
-                    [false, true, false, false, false, false, true],
-                    [false, false, false, true, true, false, true]
-                ],
-                resultHandler
-            );
-            dlx.solve();
-            console.log(resultHandler.getResult());
+            let game = new SudokuGame(sudokuString);
+            let backtracker = new Backtracker(game);
+            backtracker.solve();
+            console.log('Game:\n' + game.toString());
         }
     }
 }
