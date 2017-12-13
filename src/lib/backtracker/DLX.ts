@@ -1,4 +1,4 @@
-import {DataObject, ColumnObject, IResultHandler, ColumnChooser, TChooseColumnFn} from "./DLXHelpers";
+import {ColumnChooser, ColumnObject, DataObject, IResultHandler, TChooseColumnFn} from "./DLXHelpers";
 
 /**
  * A class implementing the Dancing Links implementation of Algorithm X. Also called "DLX".

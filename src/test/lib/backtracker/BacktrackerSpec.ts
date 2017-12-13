@@ -66,9 +66,9 @@ describe('A newly created empty Backtracker', () => {
     });
 });
 
-    describe('A newly created Backtracker', () => {
-        it('should report correct row for "6 in F3"', () => {
-            let game = new SudokuGame(`
+describe('A newly created Backtracker', () => {
+    it('should report correct row for "6 in F3"', () => {
+        let game = new SudokuGame(`
     *** *** ***
     *** *** ***
     *** *** ***
@@ -81,13 +81,13 @@ describe('A newly created empty Backtracker', () => {
     *** *** ***
     *** *** ***
     `);
-            let backtracker = new Backtracker(game);
-            let sixInF3 = backtracker.columnNames.map(columnName => false);
-            expect(backtracker.rows[452]).toEqual(sixInF3);
-        });
+        let backtracker = new Backtracker(game);
+        let sixInF3 = backtracker.columnNames.map(columnName => false);
+        expect(backtracker.rows[452]).toEqual(sixInF3);
+    });
 
-        it('should be able to solve an easy puzzle', () => {
-            let game = new SudokuGame(`
+    it('should be able to solve an easy puzzle', () => {
+        let game = new SudokuGame(`
     9** *** *6*
     **2 89* ***
     1** **5 2**
@@ -100,13 +100,13 @@ describe('A newly created empty Backtracker', () => {
     *** *42 5**
     *6* *** **7
     `);
-            let backtracker = new Backtracker(game);
-            backtracker.solve();
-            expect(game.isSolved()).toBe(true);
-        });
+        let backtracker = new Backtracker(game);
+        backtracker.solve();
+        expect(game.isSolved()).toBe(true);
+    });
 
-        it('should be able to solve a diabolical puzzle', () => {
-            let game = new SudokuGame(`
+    it('should be able to solve a diabolical puzzle', () => {
+        let game = new SudokuGame(`
     *** 7*4 **5
     *2* *1* *7*
     *** *8* **2
@@ -119,8 +119,8 @@ describe('A newly created empty Backtracker', () => {
     *3* *6* *9*
     2** 4*7 ***
     `);
-            let backtracker = new Backtracker(game);
-            backtracker.solve();
-            expect(game.isSolved()).toBe(true);
-        });
+        let backtracker = new Backtracker(game);
+        backtracker.solve();
+        expect(game.isSolved()).toBe(true);
+    });
 });

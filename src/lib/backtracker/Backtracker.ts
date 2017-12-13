@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import {SudokuGame} from "../game/SudokuGame";
 import {Sudoku} from "../game/Sudoku";
 import {Square} from "../game/Square";
-import {ColumnChooser, DataObject, IResultHandler, SimpleResultHandler, TChooseColumnFn} from "./DLXHelpers";
+import {ColumnChooser, DataObject, IResultHandler, TChooseColumnFn} from "./DLXHelpers";
 import {DLX} from "./DLX";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 
@@ -37,7 +37,7 @@ export class Backtracker {
         dlx.solve();
         let moves = sudokuResultHandler.getResult();
         moves.forEach(move => {
-           this.game.changeState(move);
+            this.game.changeState(move);
         });
     }
 
@@ -64,7 +64,7 @@ export class Backtracker {
         return columnNames;
     }
 
-    private createRows():boolean[][] {
+    private createRows(): boolean[][] {
         let rows: boolean[][] = [];
         let emptySudoku = new Sudoku();
         Sudoku.values.forEach(value => {

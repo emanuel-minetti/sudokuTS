@@ -1,8 +1,6 @@
 import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
-import {DLX} from "./lib/backtracker/DLX";
-import {SimpleResultHandler} from "./lib/backtracker/DLXHelpers";
 import {Backtracker} from "./lib/backtracker/Backtracker";
 
 try {
