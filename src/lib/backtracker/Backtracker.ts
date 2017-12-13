@@ -118,17 +118,18 @@ class SudokuResultHandler implements IResultHandler {
     processResult = (root: DataObject, solution: DataObject[]) => {
         let node: DataObject;
         let columnName: string;
-        let matchResultSquare: RegExpMatchArray | null;
-        let matchResultValue: RegExpMatchArray | null;
         let squareMatcher = /square ([ABCDEFGHJ]\d$)/;
         let valueMatcher = /^(\d) must be present in /;
+        let matchResultSquare: RegExpMatchArray | null;
+        let matchResultValue: RegExpMatchArray | null;
         let square: Square | null;
         let value: number | null;
+        //for each row of the solution
         solution.forEach((row) => {
             node = row;
             square = null;
             value = null;
-            //traverse the row and find the square and the value to set
+            //traverse the row and find the square and value to set
             do {
                 columnName = node.column.name;
                 matchResultSquare = columnName.match(squareMatcher);
