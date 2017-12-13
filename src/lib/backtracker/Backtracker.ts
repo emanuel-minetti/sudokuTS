@@ -20,7 +20,7 @@ export class Backtracker {
         //create a representation of an empty sudoku
         this._columnNames = this.createColumnNames();
         this._rows = this.createRows();
-        //set the given values from the given puzzle
+        //set the given values from the given game
         game.getCurrentState().getSquares().filter(square => square.isSet()).forEach(square =>
             this.setValue(square, square.getValue()!))
     }
