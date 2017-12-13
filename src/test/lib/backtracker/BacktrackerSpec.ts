@@ -64,6 +64,7 @@ describe('A newly created empty Backtracker', () => {
         fiveInF5[210] = true;
         expect(backtracker.rows[371]).toEqual(fiveInF5);
     });
+});
 
     describe('A newly created Backtracker', () => {
         it('should report correct row for "6 in F3"', () => {
@@ -84,10 +85,9 @@ describe('A newly created empty Backtracker', () => {
             let sixInF3 = backtracker.columnNames.map(columnName => false);
             expect(backtracker.rows[452]).toEqual(sixInF3);
         });
-    });
 
-    it('should be able to solve an easy puzzle', () => {
-        let game = new SudokuGame(`
+        it('should be able to solve an easy puzzle', () => {
+            let game = new SudokuGame(`
     9** *** *6*
     **2 89* ***
     1** **5 2**
@@ -100,8 +100,8 @@ describe('A newly created empty Backtracker', () => {
     *** *42 5**
     *6* *** **7
     `);
-        let backtracker = new Backtracker(game);
-        backtracker.solve();
-        expect(game.isSolved()).toBe(true);
-    });
+            let backtracker = new Backtracker(game);
+            backtracker.solve();
+            expect(game.isSolved()).toBe(true);
+        });
 });
