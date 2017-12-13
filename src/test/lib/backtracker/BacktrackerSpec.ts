@@ -85,4 +85,23 @@ describe('A newly created empty Backtracker', () => {
             expect(backtracker.rows[452]).toEqual(sixInF3);
         });
     });
+
+    it('should be able to solve an easy puzzle', () => {
+        let game = new SudokuGame(`
+    9** *** *6*
+    **2 89* ***
+    1** **5 2**
+
+    **1 **7 *96
+    *** 1*9 ***
+    35* 4** 8**
+
+    **3 9** **2
+    *** *42 5**
+    *6* *** **7
+    `);
+        let backtracker = new Backtracker(game);
+        backtracker.solve();
+        expect(game.isSolved()).toBe(true);
+    });
 });
