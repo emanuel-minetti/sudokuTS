@@ -71,31 +71,32 @@ describe('A newly created DLX', () => {
         let resultHandler = new SimpleResultHandler();
         let columnNames: string[] = [];
         let names: string[] =['1', '2'];
-        let columnSquareNames: string[] = names.map(name => "column" + name);
-        let rowSquareNames: string[] = names.map(name => "row" + name);
+        let columnSquareNames: string[] = names.map(name => "column " + name);
+        let rowSquareNames: string[] = names.map(name => "row " + name);
         columnSquareNames.forEach(columnName => {
-            rowSquareNames.forEach(rowNme => {
-                columnNames.push("Some number in " + columnName + " in " + rowNme);
+            rowSquareNames.forEach(rowName => {
+                columnNames.push("Some number in " + columnName + " and " + rowName);
             });
         });
         names.forEach(numberName => {
             rowSquareNames.forEach(rowName =>{
-               columnNames.push("Number " + numberName + "must appear in " + rowName);
+               columnNames.push("Number " + numberName + " must appear in " + rowName);
             });
         });
         names.forEach(numberName => {
             columnSquareNames.forEach(columnName =>{
-                columnNames.push("Number " + numberName + "must appear in " + columnName);
+                columnNames.push("Number " + numberName + " must appear in " + columnName);
             });
         });
-        let emptyRow: boolean[] = Array(columnNames.length)
+        let emptyRow: boolean[] = Array(columnNames.length);
+        _.fill(emptyRow, false);
         let dlx = new DLX(
             columnNames,
             [
                 emptyRow.map((entry, columnIndex) => [0, 4, 8].indexOf(columnIndex) !== -1),
                 emptyRow.map((entry, columnIndex) => [0, 6, 10].indexOf(columnIndex) !== -1),
                 emptyRow.map((entry, columnIndex) => [1, 5, 8].indexOf(columnIndex) !== -1),
-                emptyRow.map((entry, columnIndex) => [1, 7, 8].indexOf(columnIndex) !== -1),
+                emptyRow.map((entry, columnIndex) => [1, 7, 10].indexOf(columnIndex) !== -1),
                 emptyRow.map((entry, columnIndex) => [2, 4, 9].indexOf(columnIndex) !== -1),
                 emptyRow.map((entry, columnIndex) => [2, 6, 11].indexOf(columnIndex) !== -1),
                 emptyRow.map((entry, columnIndex) => [3, 5, 9].indexOf(columnIndex) !== -1),
@@ -106,9 +107,10 @@ describe('A newly created DLX', () => {
         );
         dlx.solve();
         expect(resultHandler.getResult()).toEqual(
-            'A D\n' +
-            'E F C\n' +
-            'B G'
+            "Some number in column 1 and row 1 Number 2 must appear in row 1 Number 2 must appear in column 1\n" +
+            "Some number in column 1 and row 2 Number 1 must appear in row 2 Number 1 must appear in column 1\n" +
+            "Some number in column 2 and row 1 Number 1 must appear in row 1 Number 1 must appear in column 2\n" +
+            "Some number in column 2 and row 2 Number 2 must appear in row 2 Number 2 must appear in column 2"
         );
     });
-})
+});
