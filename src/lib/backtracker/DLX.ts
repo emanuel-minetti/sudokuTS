@@ -73,7 +73,8 @@ export class DLX {
      *
      * Results can be retrieved via the given `IResultHandler`.
      */
-    public solve() {
+    public solve(findAll: boolean = false) {
+        //TODO implement 'find all'
         this.search(0);
     }
 

@@ -152,7 +152,7 @@ describe('A newly created DLX', () => {
             resultHandler,
             ColumnChooser.chooseColumnSmallest
         );
-        dlx.solve();
+        dlx.solve(true);
         expect(resultHandler.getResult()).toEqual(
             "Some number in column 1 and row 1 Number 2 must appear in row 1 Number 2 must appear in column 1\n" +
             "Some number in column 1 and row 2 Number 1 must appear in row 2 Number 1 must appear in column 1\n" +
