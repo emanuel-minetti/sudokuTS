@@ -1,5 +1,6 @@
 import {ColumnChooser, ColumnObject, DataObject, IResultHandler, TChooseColumnFn} from "./DLXHelpers";
 
+//TODO document changes!
 /**
  * A class implementing the Dancing Links implementation of Algorithm X. Also called "DLX".
  *
@@ -21,6 +22,9 @@ export class DLX {
     private columns: ColumnObject[];
 
     private findAll: boolean;
+    private depthToAvoidRow: number | undefined;
+    private columnToAvoid: number | undefined; //TODO needed?
+    private rowToAvoid: number | undefined;
 
     /**
      * Constructs the representation of a Dancing Links problem.
@@ -80,6 +84,15 @@ export class DLX {
     public solve() {
         //TODO implement 'find all'
         this.search(0);
+        //TODO adjust result handlers to multiple solutions
+        if (this.findAll) {
+            if (this.depthToAvoidRow) {
+                this.search(0);
+                this.depthToAvoidRow = undefined;
+                this.columnToAvoid = undefined;
+                this.rowToAvoid = undefined;
+            }
+        }
     }
 
     private addNewRow(row: boolean[], rowIndex: number) {
@@ -136,6 +149,9 @@ export class DLX {
                 if (rowCount > 1) {
                     rowCounter = columnToCover.down;
                     console.log("Depth: " + depth);
+                    this.depthToAvoidRow = depth;
+                    this.columnToAvoid = rowCounter.column.columnIndex;
+                    this.rowToAvoid = rowCounter.rowIndex;
                     console.log("Multiple rows possible in Column '" + rowCounter.column.name + "'");
                     console.log("Row chosen: " + rowCounter.rowIndex);
                     rowCounter = rowCounter.down;
@@ -147,7 +163,10 @@ export class DLX {
                 }
             }
             let rowToSearch = columnToCover.down;
-            while (rowToSearch != columnToCover) {
+            while (rowToSearch != columnToCover &&
+            (this.depthToAvoidRow != depth &&
+                this.columnToAvoid != columnToCover.columnIndex &&
+                this.rowToAvoid != rowToSearch.rowIndex)) {
                 this.currentSolution[depth] = rowToSearch;
                 let innerColumnToCover = rowToSearch.right;
                 while (innerColumnToCover != rowToSearch) {
