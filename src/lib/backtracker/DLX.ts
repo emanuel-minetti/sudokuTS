@@ -143,7 +143,7 @@ export class DLX {
                 let rowCount = 0;
                 let rowCounter = columnToCover.down;
                 while (rowCounter != columnToCover) {
-                    //TODO This is the bug! Count only if not to be avoided!
+                    //count only if not to be avoided!
                     if (!(this.depthToAvoidRow === depth && columnToCover.columnIndex === this.columnToAvoid
                             && this.rowToAvoid === rowCounter.rowIndex)) {
                         rowCount++;
