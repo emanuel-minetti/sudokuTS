@@ -143,7 +143,11 @@ export class DLX {
                 let rowCount = 0;
                 let rowCounter = columnToCover.down;
                 while (rowCounter != columnToCover) {
-                    rowCount++;
+                    //TODO This is the bug! Count only if not to be avoided!
+                    if (!(this.depthToAvoidRow === depth && columnToCover.columnIndex === this.columnToAvoid
+                            && this.rowToAvoid === rowCounter.rowIndex)) {
+                        rowCount++;
+                    }
                     rowCounter = rowCounter.down;
                 }
                 if (rowCount > 1) {
@@ -163,10 +167,12 @@ export class DLX {
                 }
             }
             let rowToSearch = columnToCover.down;
-            while (rowToSearch != columnToCover &&
-            (this.depthToAvoidRow != depth &&
-                this.columnToAvoid != columnToCover.columnIndex &&
-                this.rowToAvoid != rowToSearch.rowIndex)) {
+            while (rowToSearch != columnToCover
+            //TODO This reveals the bug
+            // && (!this.findAll || !(this.depthToAvoidRow == depth &&
+            //     this.columnToAvoid == columnToCover.columnIndex &&
+            //     this.rowToAvoid == rowToSearch.rowIndex))
+                ) {
                 this.currentSolution[depth] = rowToSearch;
                 let innerColumnToCover = rowToSearch.right;
                 while (innerColumnToCover != rowToSearch) {
