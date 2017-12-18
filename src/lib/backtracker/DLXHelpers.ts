@@ -86,9 +86,7 @@ export interface IResultHandler {
      * @param {DataObject} root the root of {@link DLX}
      * @param {DataObject[]} solution the solution of the {@link DLX} given to.
      */
-    processResult: (
-        //root: DataObject,
-        solution: DataObject[]) => void;
+    processResult: (solution: DataObject[]) => void;
 
     getCount: () => number;
 

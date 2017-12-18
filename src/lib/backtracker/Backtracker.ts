@@ -135,46 +135,6 @@ class SudokuResultHandler implements IResultHandler {
             }
         });
         this.solutions.push(moves);
-        // let node: DataObject;
-        // let columnName: string;
-        // let squareMatcher = /square ([ABCDEFGHJ]\d$)/;
-        // let valueMatcher = /^(\d) must be present in /;
-        // let matchResultSquare: RegExpMatchArray | null;
-        // let matchResultValue: RegExpMatchArray | null;
-        // let square: Square | null;
-        // let value: number | null;
-        // //for each row of the solution
-        // solution.forEach((row) => {
-        //     node = row;
-        //     square = null;
-        //     value = null;
-        //     //traverse the row and find the square and value to set
-        //     do {
-        //         columnName = node.column.name;
-        //         matchResultSquare = columnName.match(squareMatcher);
-        //         matchResultValue = columnName.match(valueMatcher);
-        //         if (matchResultSquare) {
-        //             square = this.sudoku.getSquareByName(matchResultSquare[1]);
-        //         }
-        //         else if (matchResultValue) {
-        //             value = Number.parseInt(matchResultValue[1]);
-        //         }
-        //         else {
-        //             throw new Error("Unexpected column name");
-        //         }
-        //         node = node.right;
-        //     }
-        //     while (node != row && !(square && value))
-        //     if (square && value) {
-        //         if (!square.isSet()) {
-        //             this.solutions.push(new SudokuStateChange(square.getIndex(), value,
-        //                 "Square " + square.getName() + " set to " + value + " by backtracking", 0));
-        //         }
-        //     }
-        //     else {
-        //         throw new Error("Unexpected row in result")
-        //     }
-        // });
     }
 
     getResult = () => this.solutions;
