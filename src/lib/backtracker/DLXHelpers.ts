@@ -99,7 +99,7 @@ export interface IResultHandler {
  * The result handler as in Knuth's paper.
  */
 export class SimpleResultHandler implements IResultHandler {
-    private resultString: string;
+    private resultString: string = '';
 
     processResult = (root: DataObject, solution: DataObject[]) => {
         let resultStringArray: string[] = [];
@@ -112,7 +112,7 @@ export class SimpleResultHandler implements IResultHandler {
             } while (node != row)
             resultStringArray.push(resultRow.join(' '));
         })
-        this.resultString = resultStringArray.join('\n');
+        this.resultString += resultStringArray.join('\n') + '\n\n';
     }
 
     getResult = () => this.resultString;
