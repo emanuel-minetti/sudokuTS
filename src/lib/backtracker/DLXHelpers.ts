@@ -72,6 +72,7 @@ export class ColumnChooser {
     });
 }
 
+//TODO adjust documentation
 /**
  * Must be implemented by any result handler given to {@link DLX}.
  */
@@ -85,7 +86,11 @@ export interface IResultHandler {
      * @param {DataObject} root the root of {@link DLX}
      * @param {DataObject[]} solution the solution of the {@link DLX} given to.
      */
-    processResult: (root: DataObject, solution: DataObject[]) => void;
+    processResult: (
+        //root: DataObject,
+        solution: DataObject[]) => void;
+
+    getCount: () => number;
 
     /**
      * Returns the result in an expected manner.
@@ -100,8 +105,10 @@ export interface IResultHandler {
  */
 export class SimpleResultHandler implements IResultHandler {
     private resultString: string = '';
+    private count: number = 0;
 
-    processResult = (root: DataObject, solution: DataObject[]) => {
+    processResult = (solution: DataObject[]) => {
+        this.count++;
         let resultStringArray: string[] = [];
         solution.forEach((row) => {
             let resultRow: string[] = [];
@@ -116,4 +123,6 @@ export class SimpleResultHandler implements IResultHandler {
     }
 
     getResult = () => this.resultString;
+
+    getCount= () => this.count;
 }

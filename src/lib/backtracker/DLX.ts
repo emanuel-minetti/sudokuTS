@@ -115,7 +115,7 @@ export class DLX {
 
     private search(depth: number) {
         if (this.root.right == this.root) {
-            this.resultHandler.processResult(this.root, this.currentSolution);
+            this.resultHandler.processResult(this.currentSolution);
             return;
         }
         else {
