@@ -103,8 +103,7 @@ describe('A newly created DLX', () => {
                 emptyRow.map((entry, columnIndex) => [3, 7, 11].indexOf(columnIndex) !== -1)
             ],
             resultHandler,
-            ColumnChooser.chooseColumnSmallest,
-            true
+            ColumnChooser.chooseColumnSmallest
         );
         dlx.solve();
         expect(resultHandler.getResult()).toEqual(

@@ -43,8 +43,7 @@ export class DLX {
     constructor(names: string[],
                 rows: boolean[][],
                 resultHandler: IResultHandler,
-                chooseColumnFn: TChooseColumnFn = ColumnChooser.chooseColumnSmallest,
-                findAll: boolean = false) {
+                chooseColumnFn: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         //validate input
         if (!rows.reduce((haveRightLength, currentRow) =>
                 haveRightLength && currentRow.length === names.length, true)) {
@@ -57,7 +56,6 @@ export class DLX {
         this.currentSolution = [];
         this.resultHandler = resultHandler;
         this.chooseColumn = chooseColumnFn;
-        this.findAll = findAll;
 
         //create columns
         this.columns = names.map((name, index) => new ColumnObject(name, index + 1));
@@ -82,17 +80,7 @@ export class DLX {
      * Results can be retrieved via the given `IResultHandler`.
      */
     public solve() {
-        //TODO implement 'find all'
         this.search(0);
-        //TODO adjust result handlers to multiple solutions
-        if (this.findAll) {
-            if (this.depthToAvoidRow) {
-                this.search(0);
-                this.depthToAvoidRow = undefined;
-                this.columnToAvoid = undefined;
-                this.rowToAvoid = undefined;
-            }
-        }
     }
 
     private addNewRow(row: boolean[], rowIndex: number) {
@@ -139,40 +127,8 @@ export class DLX {
         else {
             let columnToCover = this.chooseColumn(this.root);
             this.cover(columnToCover);
-            if (this.findAll) {
-                let rowCount = 0;
-                let rowCounter = columnToCover.down;
-                while (rowCounter != columnToCover) {
-                    //count only if not to be avoided!
-                    if (!(this.depthToAvoidRow === depth && columnToCover.columnIndex === this.columnToAvoid
-                            && this.rowToAvoid === rowCounter.rowIndex)) {
-                        rowCount++;
-                    }
-                    rowCounter = rowCounter.down;
-                }
-                if (rowCount > 1) {
-                    rowCounter = columnToCover.down;
-                    console.log("Depth: " + depth);
-                    this.depthToAvoidRow = depth;
-                    this.columnToAvoid = rowCounter.column.columnIndex;
-                    this.rowToAvoid = rowCounter.rowIndex;
-                    console.log("Multiple rows possible in Column '" + rowCounter.column.name + "'");
-                    console.log("Row chosen: " + rowCounter.rowIndex);
-                    rowCounter = rowCounter.down;
-                    console.log("Other possibilities were: ")
-                    while (rowCounter != columnToCover) {
-                        console.log(rowCounter.rowIndex);
-                        rowCounter = rowCounter.down;
-                    }
-                }
-            }
             let rowToSearch = columnToCover.down;
-            while (rowToSearch != columnToCover
-            //TODO This reveals the bug
-            // && (!this.findAll || !(this.depthToAvoidRow == depth &&
-            //     this.columnToAvoid == columnToCover.columnIndex &&
-            //     this.rowToAvoid == rowToSearch.rowIndex))
-                ) {
+            while (rowToSearch != columnToCover) {
                 this.currentSolution[depth] = rowToSearch;
                 let innerColumnToCover = rowToSearch.right;
                 while (innerColumnToCover != rowToSearch) {
