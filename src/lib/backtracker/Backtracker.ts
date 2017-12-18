@@ -33,7 +33,7 @@ export class Backtracker {
      */
     public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
-        let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy);
+        let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy, findAll);
         dlx.solve();
         let moves = sudokuResultHandler.getResult();
         moves.forEach(move => {
