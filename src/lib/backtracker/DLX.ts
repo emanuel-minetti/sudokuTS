@@ -1,6 +1,5 @@
 import {ColumnChooser, ColumnObject, DataObject, IResultHandler, TChooseColumnFn} from "./DLXHelpers";
 
-//TODO document changes!
 /**
  * A class implementing the Dancing Links implementation of Algorithm X. Also called "DLX".
  *
@@ -20,11 +19,6 @@ export class DLX {
     private root: DataObject;
     private currentSolution: DataObject[];
     private columns: ColumnObject[];
-
-    private findAll: boolean;
-    private depthToAvoidRow: number | undefined;
-    private columnToAvoid: number | undefined; //TODO needed?
-    private rowToAvoid: number | undefined;
 
     /**
      * Constructs the representation of a Dancing Links problem.
