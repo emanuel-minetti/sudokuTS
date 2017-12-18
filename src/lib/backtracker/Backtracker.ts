@@ -31,7 +31,7 @@ export class Backtracker {
      * @param {boolean} findAll whether to find all solutions to the puzzle
      * @param {TChooseColumnFn} strategy the column choosing strategy
      */
-    public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
+    public solve(findAll: boolean = true, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
         let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy);
         dlx.solve();
