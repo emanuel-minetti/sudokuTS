@@ -68,6 +68,7 @@ export class DLX {
         });
     }
 
+    //TODO implement: solveAll === false
     /**
      * Solve this problem.
      *
