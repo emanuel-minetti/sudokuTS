@@ -123,4 +123,23 @@ describe('A newly created Backtracker', () => {
         backtracker.solve();
         expect(game.isSolved()).toBe(true);
     });
+
+    it('should be able to find all solutions to a puzzle candidate', () => {
+        let game = new SudokuGame(`
+    *** 7*4 **5
+    *2* *1* *7*
+    *** *8* **2
+    
+    *9* **6 25*
+    6** *7* **8
+    *53 2** *1*
+
+    4** *9* ***
+    *3* *6* *9*
+    *** 4*7 ***
+    `);
+        let backtracker = new Backtracker(game);
+        backtracker.solve(true);
+        expect(backtracker.solvedGames.length).toBe(18);
+    });
 });
