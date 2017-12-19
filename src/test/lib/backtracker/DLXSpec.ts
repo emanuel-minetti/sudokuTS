@@ -70,7 +70,7 @@ describe('A newly created DLX', () => {
     it('should be able to find all solutions of the 2 x 2 Latin Square', () => {
         let resultHandler = new SimpleResultHandler();
         let columnNames: string[] = [];
-        let names: string[] =['1', '2'];
+        let names: string[] = ['1', '2'];
         let columnSquareNames: string[] = names.map(name => "column " + name);
         let rowSquareNames: string[] = names.map(name => "row " + name);
         columnSquareNames.forEach(columnName => {
@@ -79,12 +79,12 @@ describe('A newly created DLX', () => {
             });
         });
         names.forEach(numberName => {
-            rowSquareNames.forEach(rowName =>{
+            rowSquareNames.forEach(rowName => {
                 columnNames.push("Number " + numberName + " must appear in " + rowName);
             });
         });
         names.forEach(numberName => {
-            columnSquareNames.forEach(columnName =>{
+            columnSquareNames.forEach(columnName => {
                 columnNames.push("Number " + numberName + " must appear in " + columnName);
             });
         });

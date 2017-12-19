@@ -191,7 +191,7 @@ class SudokuResultHandler implements IResultHandler {
             square = this.sudoku.getSquares()[rowIndex % 81];
             if (!square.isSet()) {
                 moves.push(new SudokuStateChange(square.getIndex(), value, "Set " + square.getName() + " to " +
-                value + " by backtracking", 0));
+                    value + " by backtracking", 0));
             }
         });
         this.solutions.push(moves);

@@ -126,5 +126,5 @@ export class SimpleResultHandler implements IResultHandler {
 
     getResult = () => this.resultString;
 
-    getCount= () => this.count;
+    getCount = () => this.count;
 }

@@ -32,8 +32,8 @@ try {
             if (backtracker.solvedGames.length !== 1) {
                 console.log("!!!!!!!!!!!!!!!!!!!!1MULTIPLE SOLUTIONS FOUND!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 backtracker.solvedGames.forEach((game, index) => {
-                   console.log("SOLUTION NUMBER " + index + '\n');
-                   console.log(game.toString());
+                    console.log("SOLUTION NUMBER " + index + '\n');
+                    console.log(game.toString());
                 });
             }
             else {
