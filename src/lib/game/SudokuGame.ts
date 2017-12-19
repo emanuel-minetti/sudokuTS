@@ -19,6 +19,11 @@ export class SudokuGame {
     private solvedState: Sudoku | null;
     private rating?: number;
 
+    /**
+     * Creates a sudoku game. It takes a `string` representing a sudoku or an instance of `Sudoku`.
+     *
+     * @param {string | Sudoku} input the sudoku or an representation of it
+     */
     constructor(input: string | Sudoku) {
         if (typeof input == 'string') {
             this.originalState = Sudoku.createSudokuByString(input);
