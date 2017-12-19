@@ -14,6 +14,7 @@ export class Backtracker {
     private readonly game: SudokuGame;
     private _rows: boolean[][];
     private _columnNames: string[];
+    private _solvedGames: SudokuGame[];
 
     constructor(game: SudokuGame) {
         this.game = game;
@@ -23,6 +24,7 @@ export class Backtracker {
         //set the given values from the given game
         game.getCurrentState().getSquares().filter(square => square.isSet()).forEach(square =>
             this.setValue(square, square.getValue()!))
+        this._solvedGames = [];
     }
 
     /**
@@ -31,14 +33,25 @@ export class Backtracker {
      * @param {boolean} findAll whether to find all solutions to the puzzle
      * @param {TChooseColumnFn} strategy the column choosing strategy
      */
-    public solve(findAll: boolean = true, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
+    public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
         let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy);
         dlx.solve();
         let solutions = sudokuResultHandler.getResult();
-        if (sudokuResultHandler.getCount() === 1) {
+            if (findAll) {
+                let newSolvedGame: SudokuGame;
+                solutions.forEach(solution => {
+                    let currentStateCopy = Sudoku.copy(this.game.getCurrentState());
+                    newSolvedGame = new SudokuGame(currentStateCopy);
+                    solution.forEach(move => {
+                       newSolvedGame.changeState(move);
+                    });
+                    this._solvedGames.push(newSolvedGame);
+                });
+            }
+        if (sudokuResultHandler.getCount() >= 1) {
             solutions[0].forEach(move => {
-                 this.game.changeState(move);
+                this.game.changeState(move);
             });
         }
     }
@@ -49,6 +62,10 @@ export class Backtracker {
 
     public get columnNames(): string[] {
         return this._columnNames;
+    }
+
+    public get solvedGames(): SudokuGame[] {
+        return this._solvedGames;
     }
 
     private getEmptyRow(): boolean[] {

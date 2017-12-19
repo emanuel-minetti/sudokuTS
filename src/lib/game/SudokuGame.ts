@@ -19,8 +19,12 @@ export class SudokuGame {
     private solvedState: Sudoku | null;
     private rating?: number;
 
-    constructor(sudokuString: string) {
-        this.originalState = Sudoku.createSudokuByString(sudokuString);
+    constructor(input: string | Sudoku) {
+        if (typeof input == 'string') {
+            this.originalState = Sudoku.createSudokuByString(input);
+        } else {
+            this.originalState = input;
+        }
         this.changes = [];
         this.currentState = Sudoku.copy(this.originalState);
         this.solvedState = null;
