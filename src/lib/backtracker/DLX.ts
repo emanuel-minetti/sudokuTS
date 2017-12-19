@@ -72,8 +72,10 @@ export class DLX {
      * Solve this problem.
      *
      * Results can be retrieved via the given `IResultHandler`.
+     *
+     * @param {boolean} findAll whether to to find all solutions to a given puzzle candidate
      */
-    public solve() {
+    public solve(findAll: boolean = false) {
         this.search(0);
     }
 

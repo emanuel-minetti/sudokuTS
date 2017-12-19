@@ -72,7 +72,6 @@ export class ColumnChooser {
     });
 }
 
-//TODO adjust documentation
 /**
  * Must be implemented by any result handler given to {@link DLX}.
  */
@@ -83,11 +82,16 @@ export interface IResultHandler {
      *
      * To be called by {@link DLX}
      *
-     * @param {DataObject} root the root of {@link DLX}
      * @param {DataObject[]} solution the solution of the {@link DLX} given to.
      */
     processResult: (solution: DataObject[]) => void;
 
+    /**
+     * Returns the number of solutions to the current puzzle candidate.
+     *
+     * Meaningful only if 'findAll' of {@link DLX.solve} is set.
+     * @returns {number}
+     */
     getCount: () => number;
 
     /**
