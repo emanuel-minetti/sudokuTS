@@ -34,21 +34,24 @@ export class Backtracker {
      * @param {TChooseColumnFn} strategy the column choosing strategy
      */
     public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
+        //get a result handler, a dlx and solve it.
         let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
         let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy);
         dlx.solve();
         let solutions = sudokuResultHandler.getResult();
-            if (findAll) {
-                let newSolvedGame: SudokuGame;
-                solutions.forEach(solution => {
-                    let currentStateCopy = Sudoku.copy(this.game.getCurrentState());
-                    newSolvedGame = new SudokuGame(currentStateCopy);
-                    solution.forEach(move => {
-                       newSolvedGame.changeState(move);
-                    });
-                    this._solvedGames.push(newSolvedGame);
+        //if findAll is set remember solutions
+        if (findAll) {
+            let newSolvedGame: SudokuGame;
+            solutions.forEach(solution => {
+                let currentStateCopy = Sudoku.copy(this.game.getCurrentState());
+                newSolvedGame = new SudokuGame(currentStateCopy);
+                solution.forEach(move => {
+                    newSolvedGame.changeState(move);
                 });
-            }
+                this._solvedGames.push(newSolvedGame);
+            });
+        }
+        //set game to a current state if there was a solution
         if (sudokuResultHandler.getCount() >= 1) {
             solutions[0].forEach(move => {
                 this.game.changeState(move);
@@ -74,6 +77,11 @@ export class Backtracker {
         return emptyRow;
     }
 
+    /**
+     * Creates the column names for a Suduku as DLX.
+     *
+     * @returns {string[]} the column names
+     */
     private createColumnNames(): string[] {
         let columnNames: string[];
         let emptySudoku = new Sudoku();
@@ -89,6 +97,11 @@ export class Backtracker {
         return columnNames;
     }
 
+    /**
+     * Create the rows of a DLX-representation of this game.
+     *
+     * @returns {boolean[][]} the rows of the representation
+     */
     private createRows(): boolean[][] {
         let rows: boolean[][] = [];
         let emptySudoku = new Sudoku();
@@ -102,6 +115,13 @@ export class Backtracker {
         return rows;
     }
 
+    /**
+     * Gets the indices of a row to set, if the corresponding square of this game is set.
+     *
+     * @param {Square} square the square to set in the representation
+     * @param {number} value the value to set in the representation
+     * @returns {number[]} the indeces to set in the corresponding row
+     */
     private getColumnsIndices(square: Square, value: number): number[] {
         let columnIndices: number[] = [];
         columnIndices.push(square.getIndex());
@@ -111,6 +131,12 @@ export class Backtracker {
         return columnIndices;
     }
 
+    /**
+     * Sets a value in the DLX representation of this game.
+     *
+     * @param {Square} square the square to set
+     * @param {number} value the value to set
+     */
     private setValue(square: Square, value: number) {
         let valuesToRemove = Sudoku.values.filter(valueToRemove => valueToRemove !== value);
         valuesToRemove.forEach(valueToRemove => {
@@ -118,24 +144,41 @@ export class Backtracker {
         });
     }
 
+    /**
+     * Gets the index of a row for a given square and value.
+     *
+     * @param {Square} square the given square
+     * @param {number} value the given value
+     * @returns {number} the index of the row
+     */
     private getRowIndex(square: Square, value: number): number {
         return (((value - 1) * 81) + square.getIndex());
     }
 }
 
 /**
- * A result handler specified for solutions of a sudoku puzzle.
+ * A result handler specific to solutions of a sudoku puzzle.
  */
 class SudokuResultHandler implements IResultHandler {
     private solutions: SudokuStateChange[][] = [];
     private count: number;
     private sudoku: Sudoku;
 
+    /**
+     * Parameter 'sudoku' is needed for determining squares already set.
+     *
+     * @param {Sudoku} sudoku the sudoku to solve
+     */
     constructor(sudoku: Sudoku) {
         this.sudoku = sudoku;
         this.count = 0;
     }
 
+    /**
+     * Turns a solution of DLX into an array of valid {@code SudokuStateChange}s.
+     *
+     * @param {DataObject[]} solution the DLX solution
+     */
     processResult = (solution: DataObject[]) => {
         this.count++;
         let moves: SudokuStateChange[] = [];
