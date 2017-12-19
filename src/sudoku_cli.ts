@@ -28,8 +28,18 @@ try {
         else {
             let game = new SudokuGame(sudokuString);
             let backtracker = new Backtracker(game);
-            backtracker.solve();
-            console.log('Game:\n' + game.toString());
+            backtracker.solve(true);
+            if (backtracker.solvedGames.length !== 1) {
+                console.log("!!!!!!!!!!!!!!!!!!!!1MULTIPLE SOLUTIONS FOUND!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                backtracker.solvedGames.forEach((game, index) => {
+                    console.log("SOLUTION NUMBER " + index + '\n');
+                    console.log(game.toString());
+                });
+            }
+            else {
+                console.log('Game:\n' + game.toString());
+            }
+
         }
     }
 }

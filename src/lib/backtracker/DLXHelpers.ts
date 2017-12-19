@@ -82,10 +82,17 @@ export interface IResultHandler {
      *
      * To be called by {@link DLX}
      *
-     * @param {DataObject} root the root of {@link DLX}
      * @param {DataObject[]} solution the solution of the {@link DLX} given to.
      */
-    processResult: (root: DataObject, solution: DataObject[]) => void;
+    processResult: (solution: DataObject[]) => void;
+
+    /**
+     * Returns the number of solutions to the current puzzle candidate.
+     *
+     * Meaningful only if 'findAll' of {@link DLX.solve} is set.
+     * @returns {number}
+     */
+    getCount: () => number;
 
     /**
      * Returns the result in an expected manner.
@@ -100,8 +107,10 @@ export interface IResultHandler {
  */
 export class SimpleResultHandler implements IResultHandler {
     private resultString: string = '';
+    private count: number = 0;
 
-    processResult = (root: DataObject, solution: DataObject[]) => {
+    processResult = (solution: DataObject[]) => {
+        this.count++;
         let resultStringArray: string[] = [];
         solution.forEach((row) => {
             let resultRow: string[] = [];
@@ -116,4 +125,6 @@ export class SimpleResultHandler implements IResultHandler {
     }
 
     getResult = () => this.resultString;
+
+    getCount = () => this.count;
 }
