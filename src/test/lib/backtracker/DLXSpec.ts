@@ -103,7 +103,8 @@ describe('A newly created DLX', () => {
                 emptyRow.map((entry, columnIndex) => [3, 7, 11].indexOf(columnIndex) !== -1)
             ],
             resultHandler,
-            ColumnChooser.chooseColumnSmallest
+            ColumnChooser.chooseColumnSmallest,
+            true
         );
         dlx.solve();
         expect(resultHandler.getResult()).toEqual(
@@ -156,9 +157,10 @@ describe('A newly created DLX', () => {
                 emptyRow.map((entry, columnIndex) => [3, 7, 11].indexOf(columnIndex) !== -1)
             ],
             resultHandler,
-            ColumnChooser.chooseColumnSmallest
+            ColumnChooser.chooseColumnSmallest,
+            false
         );
-        dlx.solve(false);
+        dlx.solve();
         expect(resultHandler.getResult()).toEqual(
             "Some number in column 1 and row 1 Number 1 must appear in row 1 Number 1 must appear in column 1\n" +
             "Some number in column 1 and row 2 Number 2 must appear in row 2 Number 2 must appear in column 1\n" +

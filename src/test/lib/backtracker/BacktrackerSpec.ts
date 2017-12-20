@@ -143,7 +143,6 @@ describe('A newly created Backtracker', () => {
         expect(backtracker.solvedGames.length).toBe(18);
     });
 
-    //TODO irrelevant?
     it('should be able to find one solution to a puzzle candidate', () => {
         let game = new SudokuGame(`
     *** 7*4 **5
@@ -161,5 +160,6 @@ describe('A newly created Backtracker', () => {
         let backtracker = new Backtracker(game);
         backtracker.solve(false);
         expect(backtracker.solvedGames.length).toBe(0);
+        expect(game.isSolved()).toBe(true);
     });
 });

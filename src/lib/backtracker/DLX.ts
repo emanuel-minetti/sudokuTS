@@ -1,5 +1,6 @@
 import {ColumnChooser, ColumnObject, DataObject, IResultHandler, TChooseColumnFn} from "./DLXHelpers";
 
+//TODO adjust documentation
 /**
  * A class implementing the Dancing Links implementation of Algorithm X. Also called "DLX".
  *
@@ -19,6 +20,8 @@ export class DLX {
     private root: DataObject;
     private currentSolution: DataObject[];
     private columns: ColumnObject[];
+    private findAll: boolean;
+    private running: boolean;
 
     /**
      * Constructs the representation of a Dancing Links problem.
@@ -37,7 +40,8 @@ export class DLX {
     constructor(names: string[],
                 rows: boolean[][],
                 resultHandler: IResultHandler,
-                chooseColumnFn: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
+                chooseColumnFn: TChooseColumnFn = ColumnChooser.chooseColumnSmallest,
+                findAll: boolean = true) {
         //validate input
         if (!rows.reduce((haveRightLength, currentRow) =>
                 haveRightLength && currentRow.length === names.length, true)) {
@@ -50,6 +54,8 @@ export class DLX {
         this.currentSolution = [];
         this.resultHandler = resultHandler;
         this.chooseColumn = chooseColumnFn;
+        this.findAll = findAll;
+        this.running = false;
 
         //create columns
         this.columns = names.map((name, index) => new ColumnObject(name, index + 1));
@@ -68,7 +74,6 @@ export class DLX {
         });
     }
 
-    //TODO implement: solveAll === false
     /**
      * Solve this problem.
      *
@@ -76,7 +81,9 @@ export class DLX {
      *
      * @param {boolean} findAll whether to to find all solutions to a given puzzle candidate
      */
-    public solve(findAll: boolean = false) {
+    public solve() {
+
+        this.running = true;
         this.search(0);
     }
 
@@ -119,6 +126,8 @@ export class DLX {
     private search(depth: number) {
         if (this.root.right == this.root) {
             this.resultHandler.processResult(this.currentSolution);
+            if (!this.findAll)
+                this.running = false;
             return;
         }
         else {
@@ -132,7 +141,9 @@ export class DLX {
                     this.cover(innerColumnToCover.column);
                     innerColumnToCover = innerColumnToCover.right;
                 }
-                this.search(depth + 1);
+                if (this.running) {
+                    this.search(depth + 1);
+                }
                 rowToSearch = this.currentSolution[depth];
                 columnToCover = rowToSearch.column;
                 innerColumnToCover = rowToSearch.left;
