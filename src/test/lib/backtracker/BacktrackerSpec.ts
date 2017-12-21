@@ -1,5 +1,6 @@
 import {SudokuGame} from "../../../lib/game/SudokuGame";
 import {Backtracker} from "../../../lib/backtracker/Backtracker";
+import {ColumnChooser} from "../../../lib/backtracker/DLXHelpers";
 
 describe('A newly created empty Backtracker', () => {
     let game = new SudokuGame(`
@@ -178,7 +179,7 @@ describe('A newly created Backtracker', () => {
     *** *** ***
     `);
         let backtracker = new Backtracker(game);
-        backtracker.solve(false);
+        backtracker.solve(false, ColumnChooser.chooseColumnRandom);
         expect(backtracker.solvedGames.length).toBe(0);
         expect(game.isSolved()).toBe(true);
     });
