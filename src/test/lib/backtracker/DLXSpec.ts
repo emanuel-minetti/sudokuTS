@@ -67,6 +67,25 @@ describe('A newly created DLX', () => {
         );
     });
 
+    it('should be able to solve Knuth\'s Example choosing a random column', () => {
+        let resultHandler = new SimpleResultHandler();
+        let dlx = new DLX(
+            ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+            [
+                [false, false, true, false, true, true, false],
+                [true, false, false, true, false, false, true],
+                [false, true, true, false, false, true, false],
+                [true, false, false, true, false, false, false],
+                [false, true, false, false, false, false, true],
+                [false, false, false, true, true, false, true]
+            ],
+            resultHandler,
+            ColumnChooser.chooseColumnRandom
+        );
+        dlx.solve();
+        expect(resultHandler.getResult()).toEqual(jasmine.any(String));
+    });
+
     it('should be able to find all solutions of the 2 x 2 Latin Square', () => {
         let resultHandler = new SimpleResultHandler();
         let columnNames: string[] = [];

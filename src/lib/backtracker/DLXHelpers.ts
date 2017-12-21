@@ -2,6 +2,7 @@
  * The "data object" of the Knuth paper.
  * @see DLX
  */
+
 export class DataObject {
     left: DataObject;
     right: DataObject;
@@ -69,6 +70,31 @@ export class ColumnChooser {
      */
     public static chooseColumnRight: TChooseColumnFn = (root => {
         return root.right.column;
+    });
+
+    /**
+     * An implementation of the choosing a random column strategy.
+     *
+     * @type {(root) => ColumnObject}
+     */
+    public static chooseColumnRandom: TChooseColumnFn = (root => {
+        let currentColumn = root.right.column;
+        let randomColumn = currentColumn;
+        let length = 0;
+        while (currentColumn.right != root) {
+            length++;
+            currentColumn = currentColumn.right.column;
+        }
+        let columnIndexToChoose = Math.floor((Math.random() * length) + 1);
+        currentColumn = root.right.column;
+        while (currentColumn.right != root) {
+            if (currentColumn.columnIndex == columnIndexToChoose) {
+                randomColumn = currentColumn;
+                break;
+            }
+            currentColumn = currentColumn.right.column;
+        }
+        return randomColumn;
     });
 }
 
