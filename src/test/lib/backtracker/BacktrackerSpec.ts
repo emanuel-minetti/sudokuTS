@@ -162,4 +162,24 @@ describe('A newly created Backtracker', () => {
         expect(backtracker.solvedGames.length).toBe(0);
         expect(game.isSolved()).toBe(true);
     });
+
+    xit('should be able to find one solution to a puzzle candidate using random choice', () => {
+        let game = new SudokuGame(`
+    123 456 789
+    *** *** ***
+    *** *** ***
+    
+    *** *** ***
+    *** *** ***
+    *** *** ***
+    
+    *** *** ***
+    *** *** ***
+    *** *** ***
+    `);
+        let backtracker = new Backtracker(game);
+        backtracker.solve(false);
+        expect(backtracker.solvedGames.length).toBe(0);
+        expect(game.isSolved()).toBe(true);
+    });
 });
