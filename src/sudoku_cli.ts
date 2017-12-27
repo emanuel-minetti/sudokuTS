@@ -25,7 +25,7 @@ try {
             solver.solve();
             console.log('Game:\n' + game.toString());
         }
-        else {
+        else if (options.backtrack) {
             let game = new SudokuGame(sudokuString);
             let backtracker = new Backtracker(game);
             backtracker.solve(true);
@@ -39,7 +39,11 @@ try {
             else {
                 console.log('Game:\n' + game.toString());
             }
-
+        }
+        else if (options.generate) {
+            console.log('Generate chosen!');
+            let game = new SudokuGame(sudokuString);
+            let backtracker = new Backtracker(game);
         }
     }
 }

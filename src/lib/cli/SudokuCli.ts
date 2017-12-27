@@ -14,7 +14,6 @@ export interface SudokuCliOptions {
     sudokuString: string;
 }
 
-//TODO test!!
 /**
  * A class with some static methods to handle command line options.
  */
