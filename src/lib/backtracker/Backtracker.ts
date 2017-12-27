@@ -40,7 +40,7 @@ export class Backtracker {
         dlx.solve();
         let solutions = sudokuResultHandler.getResult();
         //if findAll is set remember solutions
-        if (findAll) {
+        //if (findAll) {
             let newSolvedGame: SudokuGame;
             solutions.forEach(solution => {
                 let currentStateCopy = Sudoku.copy(this.game.getCurrentState());
@@ -50,7 +50,7 @@ export class Backtracker {
                 });
                 this._solvedGames.push(newSolvedGame);
             });
-        }
+        //}
         //set game to a current state if there was a solution
         if (sudokuResultHandler.getCount() >= 1) {
             solutions[0].forEach(move => {

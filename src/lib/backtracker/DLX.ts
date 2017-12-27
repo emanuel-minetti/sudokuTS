@@ -126,8 +126,9 @@ export class DLX {
     private search(depth: number) {
         if (this.root.right == this.root) {
             this.resultHandler.processResult(this.currentSolution);
-            if (!this.findAll)
+            if (!this.findAll) {
                 this.running = false;
+            }
             return;
         }
         else {

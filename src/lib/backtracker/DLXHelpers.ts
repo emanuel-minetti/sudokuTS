@@ -72,6 +72,7 @@ export class ColumnChooser {
         return root.right.column;
     });
 
+    //TODO Here the bug sits!
     /**
      * An implementation of the choosing a random column strategy.
      *
