@@ -72,7 +72,7 @@ export class ColumnChooser {
         return root.right.column;
     });
 
-    //TODO Here the bug sits!
+    //TODO Must be drastically faster and is still buggy!
     /**
      * An implementation of the choosing a random column strategy.
      *
@@ -80,22 +80,20 @@ export class ColumnChooser {
      */
     public static chooseColumnRandom: TChooseColumnFn = (root => {
         let currentColumn = root.right.column;
-        let randomColumn = currentColumn;
-        let length = 0;
+        let length = 1;
+        let index = 0;
+        //TODO maintain count of columns in dlx object
         while (currentColumn.right != root) {
             length++;
             currentColumn = currentColumn.right.column;
         }
-        let columnIndexToChoose = Math.floor((Math.random() * length) + 1);
+        let columnIndexToChoose = Math.floor(Math.random() * length);
         currentColumn = root.right.column;
-        while (currentColumn.right != root) {
-            if (currentColumn.columnIndex == columnIndexToChoose) {
-                randomColumn = currentColumn;
-                break;
-            }
+        while (index < columnIndexToChoose) {
             currentColumn = currentColumn.right.column;
+            index++;
         }
-        return randomColumn;
+        return currentColumn;
     });
 }
 
