@@ -5,7 +5,7 @@ that is a solver that tries to solve a sudoku puzzle like an human being would. 
 is heavily based on the strategies described
 in Andrew Stuart's [SudokuWiki](http://www.sudokuwiki.org/sudoku.htm).
 Also a backtracking solver, called "Backtracker", is implemented. This backtracker is implemented
-via ['Dancing Links'](http://lanl.arxiv.org/pdf/cs/0011047) as described by Donaald Knuth.
+via ['Dancing Links'](http://lanl.arxiv.org/pdf/cs/0011047) as described by Donald Knuth.
 A modification to this backtracker, that'll find a single solution to a potential puzzle
 will be implemented soon. And eventually a generator of sudoku puzzles will follow.
 The generator will be able to categorize puzzles into different difficulty levels.
