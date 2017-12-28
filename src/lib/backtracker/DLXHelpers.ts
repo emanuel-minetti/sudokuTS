@@ -87,12 +87,15 @@ export class ColumnChooser {
             length++;
             currentColumn = currentColumn.right.column;
         }
-        let columnIndexToChoose = Math.floor(Math.random() * length);
+        let indexToChoose = Math.floor(Math.random() * length);
         currentColumn = root.right.column;
-        while (index < columnIndexToChoose) {
+        while (index < indexToChoose) {
             currentColumn = currentColumn.right.column;
             index++;
         }
+        console.log("Current length:       " + length);
+        console.log("Column chosen:        " + indexToChoose);
+        console.log("Column index chosen:  " + currentColumn.columnIndex + '\n');
         return currentColumn;
     });
 }
