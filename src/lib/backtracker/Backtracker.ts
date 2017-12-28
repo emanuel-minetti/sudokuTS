@@ -7,6 +7,7 @@ import {ColumnChooser, DataObject, IResultHandler, TChooseColumnFn} from "./DLXH
 import {DLX} from "./DLX";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 
+//TODO review documentation
 /**
  * Solves sudoku puzzles with a backtracking Algorithm.
  */
@@ -78,7 +79,7 @@ export class Backtracker {
     }
 
     /**
-     * Creates the column names for a Suduku as DLX.
+     * Creates the column names for a Sudoku as DLX.
      *
      * @returns {string[]} the column names
      */
@@ -116,7 +117,7 @@ export class Backtracker {
     }
 
     /**
-     * Gets the indices of a row to set, if the corresponding square of this game is set.
+     * Gets the indices of a row to set when the corresponding square of this game is set.
      *
      * @param {Square} square the square to set in the representation
      * @param {number} value the value to set in the representation
