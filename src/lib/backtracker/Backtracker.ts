@@ -121,7 +121,7 @@ export class Backtracker {
      *
      * @param {Square} square the square to set in the representation
      * @param {number} value the value to set in the representation
-     * @returns {number[]} the indeces to set in the corresponding row
+     * @returns {number[]} the indices to set in the corresponding row
      */
     private getColumnsIndices(square: Square, value: number): number[] {
         let columnIndices: number[] = [];
