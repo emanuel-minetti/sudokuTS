@@ -41,7 +41,7 @@ export class ColumnObject extends DataObject {
 /**
  * Must be implemented by a column choosing strategy.
  */
-export type TChooseColumnFn = (root: DataObject) => ColumnObject;
+export type TChooseColumnFn = (root: ColumnObject) => ColumnObject;
 
 export class ColumnChooser {
     /**
@@ -80,16 +80,12 @@ export class ColumnChooser {
      */
     public static chooseColumnRandom: TChooseColumnFn = (root => {
         let currentColumn = root.right.column;
-        let length = 1;
+        let length = root.size;
         let index = 0;
-        //TODO maintain count of columns in dlx object
-        while (currentColumn.right != root) {
-            length++;
-            currentColumn = currentColumn.right.column;
-        }
         let indexToChoose = Math.floor(Math.random() * length);
         currentColumn = root.right.column;
         while (index < indexToChoose) {
+            //TODO What about columns of size < 2?
             currentColumn = currentColumn.right.column;
             index++;
         }
