@@ -1,4 +1,4 @@
-import {ColumnChooser, ColumnObject, DataObject, IResultHandler, TChooseColumnFn} from "./DLXHelpers";
+import {ColumnChooser, DataObject, ColumnObject, IResultHandler, TChooseColumnFn} from "./DLXHelpers";
 
 //TODO adjust documentation
 /**

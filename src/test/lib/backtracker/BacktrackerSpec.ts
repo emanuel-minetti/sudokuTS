@@ -183,7 +183,7 @@ describe('A newly created Backtracker', () => {
         expect(game.isSolved()).toBe(true);
     });
 
-    xit('should be able to find one solution to a puzzle candidate using random choice', () => {
+    it('should be able to find one solution to a puzzle candidate using random choice', () => {
         let game = new SudokuGame(`
     123 456 789
     *** *** ***
@@ -199,7 +199,7 @@ describe('A newly created Backtracker', () => {
     `);
         let backtracker = new Backtracker(game);
         backtracker.solve(false, ColumnChooser.chooseColumnRandom);
-        expect(backtracker.solvedGames.length).toBe(0);
+        expect(backtracker.solvedGames.length).toBe(1);
         expect(game.isSolved()).toBe(true);
     });
 });

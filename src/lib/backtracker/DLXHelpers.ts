@@ -72,27 +72,23 @@ export class ColumnChooser {
         return root.right.column;
     });
 
-    //TODO Must be drastically faster and is still buggy!
     /**
      * An implementation of the choosing a random column strategy.
      *
      * @type {(root) => ColumnObject}
      */
     public static chooseColumnRandom: TChooseColumnFn = (root => {
+        let randomColumn = root.right.column;
+        let smallestSize = randomColumn.size;
         let currentColumn = root.right.column;
-        let length = root.size;
-        let index = 0;
-        let indexToChoose = Math.floor(Math.random() * length);
-        currentColumn = root.right.column;
-        while (index < indexToChoose) {
-            //TODO What about columns of size < 2?
+        while (currentColumn.right != root) {
+            if (currentColumn.size <= smallestSize && Math.random() < 0.5) {
+                randomColumn = currentColumn;
+                smallestSize = currentColumn.size;
+            }
             currentColumn = currentColumn.right.column;
-            index++;
         }
-        console.log("Current length:       " + length);
-        console.log("Column chosen:        " + indexToChoose);
-        console.log("Column index chosen:  " + currentColumn.columnIndex + '\n');
-        return currentColumn;
+        return randomColumn;
     });
 }
 
