@@ -41,7 +41,7 @@ export class ColumnObject extends DataObject {
 /**
  * Must be implemented by a column choosing strategy.
  */
-export type TChooseColumnFn = (root: ColumnObject) => ColumnObject;
+export type TChooseColumnFn = (root: DataObject) => ColumnObject;
 
 export class ColumnChooser {
     /**

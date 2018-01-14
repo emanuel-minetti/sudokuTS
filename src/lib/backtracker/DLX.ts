@@ -17,7 +17,7 @@ export class DLX {
     private resultHandler: IResultHandler;
     private numberOfColumns: number;
     private numberOfRows: number;
-    private root: ColumnObject;
+    private root: DataObject;
     private currentSolution: DataObject[];
     private columns: ColumnObject[];
     private findAll: boolean;
@@ -50,7 +50,7 @@ export class DLX {
         //initialize attributes
         this.numberOfColumns = names.length;
         this.numberOfRows = rows.length;
-        this.root = new ColumnObject('root', 0);
+        this.root = new DataObject();
         this.currentSolution = [];
         this.resultHandler = resultHandler;
         this.chooseColumn = chooseColumnFn;
@@ -66,7 +66,6 @@ export class DLX {
             column.left = this.root.left;
             this.root.left.right = column;
             this.root.left = column;
-            this.root.size++;
         });
 
         //add rows
@@ -163,7 +162,6 @@ export class DLX {
     private cover(column: ColumnObject) {
         column.right.left = column.left;
         column.left.right = column.right;
-        this.root.size--;
         let currentRow = column.down;
         while (currentRow != column) {
             let currentColumn = currentRow.right;
@@ -191,6 +189,5 @@ export class DLX {
         }
         column.right.left = column;
         column.left.right = column;
-        this.root.size++;
     }
 }
