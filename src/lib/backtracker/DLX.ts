@@ -1,6 +1,5 @@
 import {ColumnChooser, DataObject, ColumnObject, IResultHandler, TChooseColumnFn} from "./DLXHelpers";
 
-//TODO adjust documentation
 /**
  * A class implementing the Dancing Links implementation of Algorithm X. Also called "DLX".
  *
@@ -11,6 +10,8 @@ import {ColumnChooser, DataObject, ColumnObject, IResultHandler, TChooseColumnFn
  * - Made the functions "print" and "choose column" configurable
  * - Added fields "numberOfColumns" and "numberOfRows"
  * - Added field "columns" to store the {@link ColumnObject}s
+ * - Added a boolean parameter "findAll" to chose whether to find all solutions to a problem or just one.
+ * - Added a boolean field "running" that is evaluated if "findAll" is set to false.
  */
 export class DLX {
     private chooseColumn: TChooseColumnFn;
@@ -34,8 +35,10 @@ export class DLX {
      *
      * @param {string[]} names the names of the columns
      * @param {boolean[][]} rows the rows of the problem
-     * @param {TChooseColumnFn} chooseColumnFn the rule for choosing a column
      * @param {IResultHandler} resultHandler the result handler
+     * @param {TChooseColumnFn} chooseColumnFn the rule for choosing a column.
+     *      Optional, defaults to {@code ColumnChooser.chooseColumnSmallest}.
+     * @param {boolean} findAll whether to find all ore one solution. Optional, defauts to {@code true}
      */
     constructor(names: string[],
                 rows: boolean[][],
@@ -82,7 +85,6 @@ export class DLX {
      * @param {boolean} findAll whether to to find all solutions to a given puzzle candidate
      */
     public solve() {
-
         this.running = true;
         this.search(0);
     }

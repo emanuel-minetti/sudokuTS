@@ -7,7 +7,6 @@ import {ColumnChooser, DataObject, IResultHandler, TChooseColumnFn} from "./DLXH
 import {DLX} from "./DLX";
 import {SudokuStateChange} from "../game/SudokuStateChange";
 
-//TODO review documentation
 /**
  * Solves sudoku puzzles with a backtracking Algorithm.
  */
@@ -31,8 +30,9 @@ export class Backtracker {
     /**
      * Solves a sudoku puzzle with backtracking.
      *
-     * @param {boolean} findAll whether to find all solutions to the puzzle
-     * @param {TChooseColumnFn} strategy the column choosing strategy
+     * @param {boolean} findAll whether to find all solutions to the puzzle. Optional, defaults to {@code true}.
+     * @param {TChooseColumnFn} strategy the column choosing strategy. Defaults to
+     *      {@code ColumnChooser.chooseColumnSmallest}
      */
     public solve(findAll: boolean = true, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         //get a result handler, a dlx and solve it.

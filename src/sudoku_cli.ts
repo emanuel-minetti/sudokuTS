@@ -45,7 +45,6 @@ try {
             console.log('Generate chosen!');
             let game = new SudokuGame(sudokuString);
             let backtracker = new Backtracker(game);
-            //TODO implement Generator class.
             backtracker.solve(false, ColumnChooser.chooseColumnRandom);
             console.log('Game:\n' + game.toString());
         }
