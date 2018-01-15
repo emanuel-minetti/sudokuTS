@@ -2,6 +2,7 @@ import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
 import {Backtracker} from "./lib/backtracker/Backtracker";
+import {ColumnChooser} from "./lib/backtracker/DLXHelpers";
 
 try {
     let options = SudokuCli.parseArguments(process.argv);
@@ -25,7 +26,7 @@ try {
             solver.solve();
             console.log('Game:\n' + game.toString());
         }
-        else {
+        else if (options.backtrack) {
             let game = new SudokuGame(sudokuString);
             let backtracker = new Backtracker(game);
             backtracker.solve(true);
@@ -39,7 +40,13 @@ try {
             else {
                 console.log('Game:\n' + game.toString());
             }
-
+        }
+        else if (options.generate) {
+            console.log('Generate chosen!');
+            let game = new SudokuGame(sudokuString);
+            let backtracker = new Backtracker(game);
+            backtracker.solve(false, ColumnChooser.chooseColumnRandom);
+            console.log('Game:\n' + game.toString());
         }
     }
 }

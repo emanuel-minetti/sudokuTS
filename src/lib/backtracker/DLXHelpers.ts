@@ -70,6 +70,25 @@ export class ColumnChooser {
     public static chooseColumnRight: TChooseColumnFn = (root => {
         return root.right.column;
     });
+
+    /**
+     * An implementation of the choosing a random column strategy.
+     *
+     * @type {(root) => ColumnObject}
+     */
+    public static chooseColumnRandom: TChooseColumnFn = (root => {
+        let randomColumn = root.right.column;
+        let smallestSize = randomColumn.size;
+        let currentColumn = root.right.column;
+        while (currentColumn.right != root) {
+            if (currentColumn.size <= smallestSize && Math.random() < 0.5) {
+                randomColumn = currentColumn;
+                smallestSize = currentColumn.size;
+            }
+            currentColumn = currentColumn.right.column;
+        }
+        return randomColumn;
+    });
 }
 
 /**

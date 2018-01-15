@@ -10,6 +10,7 @@ export interface SudokuCliOptions {
     help: boolean;
     solver: boolean;
     backtrack: boolean;
+    generate: boolean;
     sudokuString: string;
 }
 
@@ -70,7 +71,7 @@ export class SudokuCli {
         //Use 'minimist' to parse the arguments
         let parsedArgs = minimist(cliArray, {
             string: ['string', 'file'],
-            boolean: ['version', 's', 'b', 'h'],
+            boolean: ['version', 's', 'b', 'h', 'g'],
             // handle unknown options
             unknown: (option) => {
                 throw new Error('Unknown option: ' + option);
@@ -83,14 +84,14 @@ export class SudokuCli {
             throw new Error('Only one solver may be chosen!')
         }
         if ((!(parsedArgs['h'] || parsedArgs['version'])) &&
-            (!(parsedArgs['s'] || parsedArgs['b']))) {
+            (!(parsedArgs['s'] || parsedArgs['b'] || parsedArgs['g']))) {
             throw new Error('No solver chosen!')
         }
         // one initializer chosen
         if (parsedArgs['string'] && parsedArgs['file']) {
             throw new Error('Only one input may be given!')
         }
-        if ((!(parsedArgs['h'] || parsedArgs['version'])) &&
+        if ((!(parsedArgs['h'] || parsedArgs['version'] || parsedArgs['g'])) &&
             (!(parsedArgs['string'] || parsedArgs['file']))) {
             throw new Error('No input given')
         }
@@ -109,7 +110,8 @@ export class SudokuCli {
             solver: parsedArgs['s'] ? true : false,
             backtrack: parsedArgs['b'] ? true : false,
             help: parsedArgs['h'] ? true : false,
-            version: parsedArgs['version'] ? true : false
+            version: parsedArgs['version'] ? true : false,
+            generate: parsedArgs['g'] ? true : false
         }
         return result;
     }
@@ -125,8 +127,9 @@ export class SudokuCli {
         USAGE: node sudoku_cli [-[s|b]] [-h] [--version[=true]] [--string=SUDOKU_STRING | --file=SUDOKU_FILE]
         
         OPTIONS:
-            -s: solve with solver. Only solver can be chosen.
-            -b: solve with backtracker. Only one solver can be chosen.
+            -s: solve with solver. Only one of the options 's', 'b' or 'g' may be chosen.
+            -b: solve with backtracker. Only one of the options 's', 'b' or 'g' may be chosen.
+            -g: generate a new puzzle. Only one of the options 's', 'b' or 'g' may be chosen.
             --string: The string to initialize the sudoku game. You may give either a string
                 or a file.
             --file: The filename to initialize the sudoku game. You may give either a file
