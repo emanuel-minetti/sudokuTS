@@ -6,8 +6,8 @@ is heavily based on the strategies described
 in Andrew Stuart's [SudokuWiki](http://www.sudokuwiki.org/sudoku.htm).
 Also a backtracking solver, called "Backtracker", is implemented. This backtracker is implemented
 via ['Dancing Links'](http://lanl.arxiv.org/pdf/cs/0011047) as described by Donald Knuth.
-A modification to this backtracker, that'll find a single solution to a potential puzzle
-will be implemented soon. And eventually a generator of sudoku puzzles will follow.
+A modification to this backtracker, that finds a single solution to a potential puzzle
+is also implemented. Eventually a generator of sudoku puzzles will follow.
 The generator will be able to categorize puzzles into different difficulty levels.
 
 Finally it's planned to add a Browser-based GUI.
@@ -50,9 +50,7 @@ Fell free to report any found bugs, problems or feature requests on the
 
 If you like to get involved in coding, it would be best you'll write an [e-mail](mailto:e.minetti@posteo.de). 
 
-
 ## ToDo List
-- Improve the backtracker
 - Implement the generator
 - Implement the GUI
 - Improve the solver
