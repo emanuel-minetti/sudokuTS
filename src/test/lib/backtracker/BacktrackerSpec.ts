@@ -179,7 +179,7 @@ describe('A newly created Backtracker', () => {
     `);
         let backtracker = new Backtracker(game);
         backtracker.solve(false);
-        expect(backtracker.solvedGames.length).toBe(1);
+        expect(backtracker.solvedGames.length).toBe(0);
         expect(game.isSolved()).toBe(true);
     });
 
@@ -199,7 +199,7 @@ describe('A newly created Backtracker', () => {
     `);
         let backtracker = new Backtracker(game);
         backtracker.solve(false, ColumnChooser.chooseColumnRandom);
-        expect(backtracker.solvedGames.length).toBe(1);
+        expect(backtracker.solvedGames.length).toBe(0);
         expect(game.isSolved()).toBe(true);
     });
 });
