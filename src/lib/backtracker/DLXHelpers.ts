@@ -2,7 +2,6 @@
  * The "data object" of the Knuth paper.
  * @see DLX
  */
-
 export class DataObject {
     left: DataObject;
     right: DataObject;
