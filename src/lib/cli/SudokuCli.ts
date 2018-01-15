@@ -111,7 +111,7 @@ export class SudokuCli {
             backtrack: parsedArgs['b'] ? true : false,
             help: parsedArgs['h'] ? true : false,
             version: parsedArgs['version'] ? true : false,
-            generate: parsedArgs['g'] ? true :false
+            generate: parsedArgs['g'] ? true : false
         }
         return result;
     }
