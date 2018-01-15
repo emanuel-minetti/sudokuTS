@@ -30,13 +30,14 @@ export class Backtracker {
     /**
      * Solves a sudoku puzzle with backtracking.
      *
-     * @param {boolean} findAll whether to find all solutions to the puzzle
-     * @param {TChooseColumnFn} strategy the column choosing strategy
+     * @param {boolean} findAll whether to find all solutions to the puzzle. Optional, defaults to {@code true}.
+     * @param {TChooseColumnFn} strategy the column choosing strategy. Defaults to
+     *      {@code ColumnChooser.chooseColumnSmallest}
      */
-    public solve(findAll: boolean = false, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
+    public solve(findAll: boolean = true, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         //get a result handler, a dlx and solve it.
         let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
-        let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy);
+        let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy, findAll);
         dlx.solve();
         let solutions = sudokuResultHandler.getResult();
         //if findAll is set remember solutions
@@ -78,7 +79,7 @@ export class Backtracker {
     }
 
     /**
-     * Creates the column names for a Suduku as DLX.
+     * Creates the column names for a Sudoku as DLX.
      *
      * @returns {string[]} the column names
      */
@@ -116,11 +117,11 @@ export class Backtracker {
     }
 
     /**
-     * Gets the indices of a row to set, if the corresponding square of this game is set.
+     * Gets the indices of a row to set when the corresponding square of this game is set.
      *
      * @param {Square} square the square to set in the representation
      * @param {number} value the value to set in the representation
-     * @returns {number[]} the indeces to set in the corresponding row
+     * @returns {number[]} the indices to set in the corresponding row
      */
     private getColumnsIndices(square: Square, value: number): number[] {
         let columnIndices: number[] = [];

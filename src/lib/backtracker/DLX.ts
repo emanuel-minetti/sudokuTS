@@ -10,6 +10,8 @@ import {ColumnChooser, ColumnObject, DataObject, IResultHandler, TChooseColumnFn
  * - Made the functions "print" and "choose column" configurable
  * - Added fields "numberOfColumns" and "numberOfRows"
  * - Added field "columns" to store the {@link ColumnObject}s
+ * - Added a boolean parameter "findAll" to chose whether to find all solutions to a problem or just one.
+ * - Added a boolean field "running" that is evaluated if "findAll" is set to false.
  */
 export class DLX {
     private chooseColumn: TChooseColumnFn;
@@ -19,6 +21,8 @@ export class DLX {
     private root: DataObject;
     private currentSolution: DataObject[];
     private columns: ColumnObject[];
+    private findAll: boolean;
+    private running: boolean;
 
     /**
      * Constructs the representation of a Dancing Links problem.
@@ -31,13 +35,16 @@ export class DLX {
      *
      * @param {string[]} names the names of the columns
      * @param {boolean[][]} rows the rows of the problem
-     * @param {TChooseColumnFn} chooseColumnFn the rule for choosing a column
      * @param {IResultHandler} resultHandler the result handler
+     * @param {TChooseColumnFn} chooseColumnFn the rule for choosing a column.
+     *      Optional, defaults to {@code ColumnChooser.chooseColumnSmallest}.
+     * @param {boolean} findAll whether to find all ore one solution. Optional, defauts to {@code true}
      */
     constructor(names: string[],
                 rows: boolean[][],
                 resultHandler: IResultHandler,
-                chooseColumnFn: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
+                chooseColumnFn: TChooseColumnFn = ColumnChooser.chooseColumnSmallest,
+                findAll: boolean = true) {
         //validate input
         if (!rows.reduce((haveRightLength, currentRow) =>
                 haveRightLength && currentRow.length === names.length, true)) {
@@ -50,6 +57,8 @@ export class DLX {
         this.currentSolution = [];
         this.resultHandler = resultHandler;
         this.chooseColumn = chooseColumnFn;
+        this.findAll = findAll;
+        this.running = false;
 
         //create columns
         this.columns = names.map((name, index) => new ColumnObject(name, index + 1));
@@ -75,7 +84,8 @@ export class DLX {
      *
      * @param {boolean} findAll whether to to find all solutions to a given puzzle candidate
      */
-    public solve(findAll: boolean = false) {
+    public solve() {
+        this.running = true;
         this.search(0);
     }
 
@@ -118,6 +128,9 @@ export class DLX {
     private search(depth: number) {
         if (this.root.right == this.root) {
             this.resultHandler.processResult(this.currentSolution);
+            if (!this.findAll) {
+                this.running = false;
+            }
             return;
         }
         else {
@@ -131,7 +144,9 @@ export class DLX {
                     this.cover(innerColumnToCover.column);
                     innerColumnToCover = innerColumnToCover.right;
                 }
-                this.search(depth + 1);
+                if (this.running) {
+                    this.search(depth + 1);
+                }
                 rowToSearch = this.currentSolution[depth];
                 columnToCover = rowToSearch.column;
                 innerColumnToCover = rowToSearch.left;
