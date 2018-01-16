@@ -37,7 +37,19 @@ export class Generator {
             console.log("Game: " + index);
             console.log(game.toString());
         });
+        let uniquelySolvableGames: SudokuGame[] = [];
+        solvedGames.forEach(game => {
+            uniquelySolvableGames = _.concat(uniquelySolvableGames,
+                Generator.getUniquelySolvableGames(game, maxTries, symmetry));
+        });
+        //TODO remove fake return
         return new SudokuGame(new Sudoku());
+    }
+
+    private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
+        let uniquelySolvableGames: SudokuGame[] = [];
+        //TODO implement
+        return uniquelySolvableGames;
     }
 
     /**
