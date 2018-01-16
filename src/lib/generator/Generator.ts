@@ -46,12 +46,6 @@ export class Generator {
         return new SudokuGame(new Sudoku());
     }
 
-    private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
-        let uniquelySolvableGames: SudokuGame[] = [];
-        //TODO implement
-        return uniquelySolvableGames;
-    }
-
     /**
      * Gets a given number of random solved games.
      *
@@ -95,5 +89,19 @@ export class Generator {
             solvedGames.push(solvedGame);
         });
         return solvedGames;
+    }
+
+    private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
+        let uniquelySolvableGames: SudokuGame[] = [];
+        //TODO implement
+        return uniquelySolvableGames;
+    }
+
+    private static findCentralSymmetryPartner(index: number) {
+        return 80 - index;
+    }
+
+    private static getRandomIndex() {
+        return Math.floor(Math.random() * 81);
     }
 }
