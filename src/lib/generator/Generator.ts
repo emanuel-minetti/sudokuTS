@@ -6,9 +6,30 @@ import {Sudoku} from "../game/Sudoku";
 import {Backtracker} from "../backtracker/Backtracker";
 import {ColumnChooser} from "../backtracker/DLXHelpers";
 
+enum Symmetry {
+    central = "central",
+    diagonal = "diagonal",
+    noSymmetry = "noSymmetry"
+}
 
 export class Generator {
-    static generate = (minRating: number, maxRating: number, maxTries: number) => {
+
+    /**
+     * Returns a single random unsolved uniquely solvable rated {@code SudokuGame} which has a rating
+     * as near as possible to the middle of 'minRating' and 'maxRating'. If after 'maxTries' no sudoku
+     * with a rating between 'minRating' and 'maxRating' is found {@code null} is returned. If an optional
+     * parameter 'symmetry' is given the given symmetry is observed.
+     *
+     * @param {number} minRating the minimum rating of the returned sudoku
+     * @param {number} maxRating the maximum rating of the returned sudoku
+     * @param {number} maxTries the maximum number of tries to find a sudoku
+     * @param {Symmetry} symmetry the symmetry to observe
+     * @returns {SudokuGame | null} the generated sudoku if any
+     */
+    static generate = (minRating: number,
+                       maxRating: number,
+                       maxTries: number,
+                       symmetry: Symmetry = Symmetry.central) => {
         let solvedGames: SudokuGame[];
         solvedGames = Generator.getSolvedGames(maxTries);
         //TODO remove debugging
@@ -16,25 +37,37 @@ export class Generator {
             console.log("Game: " + index);
             console.log(game.toString());
         });
+        return new SudokuGame(new Sudoku());
     }
 
-    private static getSolvedGames(maxTries: number) {
+    /**
+     * Gets a given number of random solved games.
+     *
+     * @param {number} numberOfGames how many solved games to return
+     * @returns {SudokuGame[]} the solved games
+     */
+    private static getSolvedGames(numberOfGames: number) {
+        //declare some variables
         let solvedGames: SudokuGame[] = [];
         let solvedGame: SudokuGame;
         let sudoku: Sudoku;
         let backtracker: Backtracker;
-        let tuples = RulesHelper.getTuples(9, 9);
-        let tuplesLength = tuples.length;
         let columnsToValues: number[];
         let rowToColumns: number[];
         let rowIndex: number;
         let index: number;
+
+        //get all permutations of length 9
+        const tuples = RulesHelper.getTuples(9, 9);
+        const tuplesLength = tuples.length;
+
+        //get a random int between 0 included and max excluded
         function getRandomInt(max: number) {
             return Math.floor(Math.random() * max);
         }
 
         //for each game
-        _.range(maxTries).map(() => {
+        _.range(numberOfGames).map(() => {
             sudoku = new Sudoku();
             //initialize game randomly
             columnsToValues = tuples[getRandomInt(tuplesLength)];
