@@ -3,6 +3,7 @@ import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
 import {Backtracker} from "./lib/backtracker/Backtracker";
 import {ColumnChooser} from "./lib/backtracker/DLXHelpers";
+import {Generator} from "./lib/generator/Generator";
 
 try {
     let options = SudokuCli.parseArguments(process.argv);
@@ -41,13 +42,9 @@ try {
                 console.log('Game:\n' + game.toString());
             }
         }
-        else if (options.generate) {
-            console.log('Generate chosen!');
-            let game = new SudokuGame(sudokuString);
-            let backtracker = new Backtracker(game);
-            backtracker.solve(false, ColumnChooser.chooseColumnRandom);
-            console.log('Game:\n' + game.toString());
-        }
+    }
+    else if (options.generate) {
+        Generator.generate(0, 100, 20);
     }
 }
 catch (e) {

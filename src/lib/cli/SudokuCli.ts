@@ -79,6 +79,7 @@ export class SudokuCli {
         });
 
         //Handle conflicting options!
+        //TODO test '-g' option and adapt description!
         // one solver chosen
         if (parsedArgs['s'] && parsedArgs['b']) {
             throw new Error('Only one solver may be chosen!')

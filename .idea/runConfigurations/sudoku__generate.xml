@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="sudoku _generate" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" application-parameters="-g --version --file=../examples/generate.txt" path-to-js-file="sudoku_cli.js" working-dir="$PROJECT_DIR$/src">
+  <configuration default="false" name="sudoku _generate" type="NodeJSConfigurationType" factoryName="Node.js" singleton="false" application-parameters="-g --version" path-to-js-file="sudoku_cli.js" working-dir="$PROJECT_DIR$/src">
     <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">
       <option name="envVars">
         <list />
