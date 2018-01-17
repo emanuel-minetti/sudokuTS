@@ -93,15 +93,25 @@ export class Generator {
 
     private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
         let uniquelySolvableGames: SudokuGame[] = [];
-        //TODO implement
+        //TODO implement loop for max tries
         return uniquelySolvableGames;
+    }
+
+    private static getRandomIndex() {
+        return Math.floor(Math.random() * 81);
     }
 
     private static findCentralSymmetryPartner(index: number) {
         return 80 - index;
     }
 
-    private static getRandomIndex() {
-        return Math.floor(Math.random() * 81);
+    private static findDiagonalSymmetryPartner(index: number) {
+        let row = Math.floor(index / 9);
+        let column = index % 9;
+        return column * 9 + row;
+    }
+
+    private static findNoSymmetryPartner(index: number) {
+        return this.getRandomIndex();
     }
 }
