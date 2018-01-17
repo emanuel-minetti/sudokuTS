@@ -125,11 +125,17 @@ describe('A sudoku', () => {
         '**3 9** **2 \n' +
         '*** *42 5** \n' +
         '*6* *** **7 \n';
+    let simpleSudokuString =
+        '9******6***289****1****52****1**7*96***1*9***35*4**8****39****2****425***6******7\n';
     let sudoku = Sudoku.createSudokuByString(sudokuString);
     let squareOne = sudoku.getSquares()[0];
 
     it('should give a nicely formatted string representation', () => {
         expect(sudoku.toString()).toEqual(sudokuString);
+    });
+
+    it('should give a single line string representation', () => {
+        expect(sudoku.toSimpleString()).toEqual(simpleSudokuString);
     });
 
     it('should not set an already set Value', () => {

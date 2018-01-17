@@ -141,6 +141,22 @@ export class Sudoku {
     }
 
     /**
+     * Returns a string representation of a sudoku in one line
+     *
+     * @returns {string} the string representation of the sudoku
+     */
+    toSimpleString(): string {
+        let resultArray: string[] = [];
+        let values: (number | null)[] = this.squares.map(
+            square => square.getValue());
+        values.forEach((value, index) => {
+            resultArray.push(value ? value.toString() : '*');
+        })
+        resultArray.push('\n');
+        return resultArray.join('');
+    }
+
+    /**
      * Sets a value of a square or throws an error.
      *
      * Sets the given value of the {@code Square} with the given
