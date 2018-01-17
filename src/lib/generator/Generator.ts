@@ -91,6 +91,7 @@ export class Generator {
         return solvedGames;
     }
 
+    //TODO document and comment
     private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
         let uniquelySolvableGames: SudokuGame[] = [];
         let findSymmetryPartner;
