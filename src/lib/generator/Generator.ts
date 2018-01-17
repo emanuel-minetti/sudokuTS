@@ -93,6 +93,20 @@ export class Generator {
 
     private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
         let uniquelySolvableGames: SudokuGame[] = [];
+        let findSymmetryPartner;
+        switch (symmetry) {
+            case Symmetry.central:
+                findSymmetryPartner = this.findCentralSymmetryPartner;
+                break;
+            case Symmetry.diagonal:
+                findSymmetryPartner = this.findDiagonalSymmetryPartner;
+                break;
+            case Symmetry.noSymmetry:
+                findSymmetryPartner = this.findNoSymmetryPartner;
+                break;
+        }
+        let gameString = game.getCurrentState().toSimpleString();
+        let gameStringArray = gameString.split('');
         //TODO implement loop for max tries
         return uniquelySolvableGames;
     }
