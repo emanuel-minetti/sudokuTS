@@ -32,15 +32,15 @@ export class Generator {
                        symmetry: Symmetry = Symmetry.central) => {
         let solvedGames: SudokuGame[];
         solvedGames = Generator.getSolvedGames(maxTries);
-        //TODO remove debugging
-        solvedGames.forEach((game, index) => {
-            console.log("Game: " + index);
-            console.log(game.toString());
-        });
         let uniquelySolvableGames: SudokuGame[] = [];
         solvedGames.forEach(game => {
             uniquelySolvableGames = _.concat(uniquelySolvableGames,
                 Generator.getUniquelySolvableGames(game, maxTries, symmetry));
+        });
+        //TODO remove debugging
+        uniquelySolvableGames.forEach((game, index) => {
+            console.log("Game: " + index);
+            console.log(game.toString());
         });
         //TODO remove fake return
         return new SudokuGame(new Sudoku());
@@ -94,26 +94,16 @@ export class Generator {
     //TODO document and comment
     private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
         let uniquelySolvableGames: SudokuGame[] = [];
-        let findSymmetryPartner;
-        switch (symmetry) {
-            case Symmetry.central:
-                findSymmetryPartner = this.findCentralSymmetryPartner;
-                break;
-            case Symmetry.diagonal:
-                findSymmetryPartner = this.findDiagonalSymmetryPartner;
-                break;
-            case Symmetry.noSymmetry:
-                findSymmetryPartner = this.findNoSymmetryPartner;
-                break;
-        }
-        let gameString = game.getCurrentState().toSimpleString();
-        let gameStringArray = gameString.split('');
         //TODO implement loop for max tries
+        let oldGame = game;
+        let newGame = this.removeIndicesFromGame(oldGame, symmetry);
+        while (this.isUniquelySolvable(newGame)) {
+            oldGame = newGame;
+            newGame = this.removeIndicesFromGame(oldGame, symmetry);
+        }
+        //TODO try to add one index
+        uniquelySolvableGames.push(oldGame);
         return uniquelySolvableGames;
-    }
-
-    private static getRandomIndex() {
-        return Math.floor(Math.random() * 81);
     }
 
     private static findCentralSymmetryPartner(index: number) {
@@ -128,5 +118,39 @@ export class Generator {
 
     private static findNoSymmetryPartner(index: number) {
         return this.getRandomIndex();
+    }
+
+    private static getRandomIndex() {
+        return Math.floor(Math.random() * 81);
+    }
+
+    private static removeIndicesFromGame(game: SudokuGame, symmetry: Symmetry) {
+        let findSymmetryPartner = this.findCentralSymmetryPartner;
+        switch (symmetry) {
+            case Symmetry.central:
+                findSymmetryPartner = this.findCentralSymmetryPartner;
+                break;
+            case Symmetry.diagonal:
+                findSymmetryPartner = this.findDiagonalSymmetryPartner;
+                break;
+            case Symmetry.noSymmetry:
+                findSymmetryPartner = this.findNoSymmetryPartner;
+                break;
+        }
+        let oldString = game.getCurrentState().toSimpleString();
+        let oldStringArray = oldString.split('');
+        let newStringArray = oldStringArray.slice();
+        let indexToRemove = this.getRandomIndex();
+        let partnerToRemove = findSymmetryPartner(indexToRemove);
+        newStringArray[indexToRemove] = '*';
+        newStringArray[partnerToRemove] = '*';
+        let newString = newStringArray.join('');
+        return new SudokuGame(newString);
+    }
+
+    private static isUniquelySolvable(game: SudokuGame) {
+        let backtracker = new Backtracker(game);
+        backtracker.solve();
+        return backtracker.solvedGames.length === 1;
     }
 }

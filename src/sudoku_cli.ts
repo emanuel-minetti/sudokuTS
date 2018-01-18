@@ -44,7 +44,7 @@ try {
         }
     }
     else if (options.generate) {
-        Generator.generate(0, 100, 20);
+        Generator.generate(0, 100, 1);
     }
 }
 catch (e) {
