@@ -149,7 +149,8 @@ export class Generator {
     }
 
     private static isUniquelySolvable(game: SudokuGame) {
-        let backtracker = new Backtracker(game);
+        let gameCopy = new SudokuGame(game.getCurrentState().toSimpleString())
+        let backtracker = new Backtracker(gameCopy);
         backtracker.solve();
         return backtracker.solvedGames.length === 1;
     }
