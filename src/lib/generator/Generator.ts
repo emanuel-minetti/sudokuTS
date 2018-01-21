@@ -95,11 +95,13 @@ export class Generator {
     private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
         let uniquelySolvableGames: SudokuGame[] = [];
         //TODO implement loop for max tries
+        let indices = this.getRandomIndices(symmetry);
         let oldGame = game;
-        let newGame = this.removeIndicesFromGame(oldGame, symmetry);
+        let newGame = this.removeIndicesFromGame(oldGame, indices);
         while (this.isUniquelySolvable(newGame)) {
             oldGame = newGame;
-            newGame = this.removeIndicesFromGame(oldGame, symmetry);
+            indices = this.getRandomIndices(symmetry);
+            newGame = this.removeIndicesFromGame(oldGame, indices);
         }
         //TODO try to add one index
         uniquelySolvableGames.push(oldGame);
@@ -124,7 +126,7 @@ export class Generator {
         return Math.floor(Math.random() * 81);
     }
 
-    private static removeIndicesFromGame(game: SudokuGame, symmetry: Symmetry) {
+    private static getRandomIndices(symmetry: Symmetry) {
         let findSymmetryPartner = this.findCentralSymmetryPartner;
         switch (symmetry) {
             case Symmetry.central:
@@ -137,13 +139,18 @@ export class Generator {
                 findSymmetryPartner = this.findNoSymmetryPartner;
                 break;
         }
+        let indexToRemove = this.getRandomIndex();
+        let partnerToRemove = findSymmetryPartner(indexToRemove);
+        return [indexToRemove, partnerToRemove];
+    }
+
+    private static removeIndicesFromGame(game: SudokuGame, indices: number[]) {
         let oldString = game.getCurrentState().toSimpleString();
         let oldStringArray = oldString.split('');
         let newStringArray = oldStringArray.slice();
-        let indexToRemove = this.getRandomIndex();
-        let partnerToRemove = findSymmetryPartner(indexToRemove);
-        newStringArray[indexToRemove] = '*';
-        newStringArray[partnerToRemove] = '*';
+        indices.forEach(index => {
+            newStringArray[index] = '*';
+        });
         let newString = newStringArray.join('');
         return new SudokuGame(newString);
     }
