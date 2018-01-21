@@ -95,14 +95,14 @@ export class Generator {
     private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
         let uniquelySolvableGames: SudokuGame[] = [];
         //TODO implement loop for max tries
-        let indices = this.getRandomIndices(symmetry);
-        let oldGame = game;
-        let newGame = this.removeIndicesFromGame(oldGame, indices);
-        while (this.isUniquelySolvable(newGame)) {
+        let oldGame: SudokuGame;
+        let indices: number[];
+        let newGame = game;
+        do {
             oldGame = newGame;
             indices = this.getRandomIndices(symmetry);
             newGame = this.removeIndicesFromGame(oldGame, indices);
-        }
+        } while (this.isUniquelySolvable(newGame));
         //TODO try to add one index
         uniquelySolvableGames.push(oldGame);
         return uniquelySolvableGames;
