@@ -2,8 +2,7 @@ import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
 import {Backtracker} from "./lib/backtracker/Backtracker";
-import {ColumnChooser} from "./lib/backtracker/DLXHelpers";
-import {Generator} from "./lib/generator/Generator";
+import {Generator, Symmetry} from "./lib/generator/Generator";
 
 try {
     let options = SudokuCli.parseArguments(process.argv);
@@ -44,7 +43,7 @@ try {
         }
     }
     else if (options.generate) {
-        Generator.generate(0, 100, 10);
+        Generator.generate(0, 100, 10, Symmetry.diagonal);
     }
 }
 catch (e) {

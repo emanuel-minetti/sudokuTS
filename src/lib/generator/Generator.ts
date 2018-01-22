@@ -6,7 +6,7 @@ import {Sudoku} from "../game/Sudoku";
 import {Backtracker} from "../backtracker/Backtracker";
 import {ColumnChooser} from "../backtracker/DLXHelpers";
 
-enum Symmetry {
+export enum Symmetry {
     central = "central",
     diagonal = "diagonal",
     noSymmetry = "noSymmetry"
@@ -42,8 +42,7 @@ export class Generator {
             console.log("Game: " + index);
             console.log(game.toString());
         });
-        //TODO remove fake return
-        return new SudokuGame(new Sudoku());
+        return uniquelySolvableGames;
     }
 
     /**
@@ -94,17 +93,33 @@ export class Generator {
     //TODO document and comment
     private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
         let uniquelySolvableGames: SudokuGame[] = [];
-        //TODO implement loop for max tries
-        let oldGame: SudokuGame;
+        let oldGame, newGame, otherNewGame: SudokuGame;
         let indices: number[];
-        let newGame = game;
-        do {
-            oldGame = newGame;
-            indices = this.getRandomIndices(symmetry);
-            newGame = this.removeIndicesFromGame(oldGame, indices);
-        } while (this.isUniquelySolvable(newGame));
-        //TODO try to add one index
-        uniquelySolvableGames.push(oldGame);
+        let newGameSolvable, otherNewGameSolvable: boolean;
+
+        _.range(maxTries).forEach(() => {
+            newGame = game;
+            do {
+                oldGame = newGame;
+                indices = this.getRandomIndices(symmetry);
+                newGame = this.removeIndicesFromGame(oldGame, indices);
+            } while (this.isUniquelySolvable(newGame));
+
+            newGame = this.removeIndicesFromGame(oldGame, [indices[0]]);
+            otherNewGame = this.removeIndicesFromGame(oldGame, [indices[1]]);
+            newGameSolvable = this.isUniquelySolvable(newGame);
+            otherNewGameSolvable = this.isUniquelySolvable(otherNewGame);
+            if (newGameSolvable) {
+                uniquelySolvableGames.push(newGame);
+            }
+            if (otherNewGameSolvable) {
+                uniquelySolvableGames.push(otherNewGame);
+            }
+            if (!(newGameSolvable || otherNewGameSolvable)) {
+                uniquelySolvableGames.push(oldGame);
+            }
+        });
+
         return uniquelySolvableGames;
     }
 
@@ -112,6 +127,7 @@ export class Generator {
         return 80 - index;
     }
 
+    //TODO Doesn't work!!
     private static findDiagonalSymmetryPartner(index: number) {
         let row = Math.floor(index / 9);
         let column = index % 9;
