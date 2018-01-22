@@ -37,11 +37,7 @@ export class Generator {
             uniquelySolvableGames = _.concat(uniquelySolvableGames,
                 Generator.getUniquelySolvableGames(game, maxTries, symmetry));
         });
-        //TODO remove debugging
-        uniquelySolvableGames.forEach((game, index) => {
-            console.log("Game: " + index);
-            console.log(game.toString());
-        });
+
         return uniquelySolvableGames;
     }
 

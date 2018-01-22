@@ -43,7 +43,11 @@ try {
         }
     }
     else if (options.generate) {
-        Generator.generate(0, 100, 10, Symmetry.diagonal);
+        let uniquelySolvableGames = Generator.generate(0, 100, 5, Symmetry.central);
+        uniquelySolvableGames.forEach((game, index) => {
+            console.log("Game: " + index);
+            console.log(game.toString());
+        });
     }
 }
 catch (e) {
