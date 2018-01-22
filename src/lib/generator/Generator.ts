@@ -123,7 +123,6 @@ export class Generator {
         return 80 - index;
     }
 
-    //TODO Doesn't work!!
     private static findDiagonalSymmetryPartner(index: number) {
         let row = Math.floor(index / 9);
         let column = index % 9;
