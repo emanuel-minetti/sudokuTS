@@ -14,6 +14,7 @@ export enum Symmetry {
 
 export class Generator {
 
+    //TODO adjust documentation
     /**
      * Returns a single random unsolved uniquely solvable rated {@code SudokuGame} which has a rating
      * as near as possible to the middle of 'minRating' and 'maxRating'. If after 'maxTries' no sudoku
