@@ -14,7 +14,6 @@ export enum Symmetry {
 
 export class Generator {
 
-    //TODO adjust documentation
     /**
      * Returns a single random unsolved uniquely solvable rated {@code SudokuGame} which has a rating
      * as near as possible to the middle of 'minRating' and 'maxRating'. If after 'maxTries' no sudoku
@@ -134,10 +133,21 @@ export class Generator {
         return this.getRandomIndex();
     }
 
+    /**
+     * Gets a random index of a sudoku's square.
+     *
+     * @returns {number} the index
+     */
     private static getRandomIndex() {
         return Math.floor(Math.random() * 81);
     }
 
+    /**
+     * Gets two indices with the given symmetry.
+     *
+     * @param {Symmetry} symmetry the given symmetry
+     * @returns {number[]} the two indices
+     */
     private static getRandomIndices(symmetry: Symmetry) {
         let findSymmetryPartner = this.findCentralSymmetryPartner;
         switch (symmetry) {
@@ -156,6 +166,13 @@ export class Generator {
         return [indexToRemove, partnerToRemove];
     }
 
+    /**
+     * Returns a new {@code SudokuGame} with removed set squares at given indices.
+     *
+     * @param {SudokuGame} game the (unmodified) game to remove indices from
+     * @param {number[]} indices the indices to remove
+     * @returns {SudokuGame} the new game
+     */
     private static removeIndicesFromGame(game: SudokuGame, indices: number[]) {
         let oldString = game.getCurrentState().toSimpleString();
         let oldStringArray = oldString.split('');
@@ -167,6 +184,11 @@ export class Generator {
         return new SudokuGame(newString);
     }
 
+    /**
+     * @deprecated
+     * @param {SudokuGame} game
+     * @returns {boolean}
+     */
     private static isUniquelySolvable(game: SudokuGame) {
         let gameCopy = new SudokuGame(game.getCurrentState().toSimpleString())
         let backtracker = new Backtracker(gameCopy);
