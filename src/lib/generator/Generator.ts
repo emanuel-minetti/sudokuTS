@@ -27,7 +27,10 @@ export class Generator {
      * @param {Symmetry} symmetry the symmetry to observe
      * @returns {SudokuGame | null} the generated sudoku if any
      */
-    static generate = (maxTries: number, symmetry: Symmetry = Symmetry.central) => {
+    static generate = (minRating: number,
+                       maxRating: number,
+                       maxTries: number,
+                       symmetry: Symmetry = Symmetry.central) => {
         let solvedGames: SudokuGame[];
         solvedGames = Generator.getSolvedGames(maxTries);
         let uniquelySolvableGames: SudokuGame[] = [];
