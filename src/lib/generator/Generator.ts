@@ -6,22 +6,24 @@ import {Sudoku} from "../game/Sudoku";
 import {Backtracker} from "../backtracker/Backtracker";
 import {ColumnChooser} from "../backtracker/DLXHelpers";
 
-//TODO implement type 'SymmetryFunction'!
+export type SymmetryFunction = (index: number) =>  number;
 
+//TODO document!
 export class Symmetry  {
 
-    static central = (index: number) =>  {
+    static central: SymmetryFunction = (index: number) =>  {
         return 80 - index;
     }
 
-    static diagonal = function findDiagonalSymmetryPartner(index: number) {
+    static diagonal = (index: number) => {
         let row = Math.floor(index / 9);
         let column = index % 9;
         return column * 9 + row;
     }
-    noSymmetry = function findNoSymmetryPartner(index: number) {
+
+    static noSymmetry = (index: number) => {
         return Generator.getRandomIndex();
-}
+    }
 }
 
 export class Generator {
@@ -41,7 +43,7 @@ export class Generator {
     static generate = (minRating: number,
                        maxRating: number,
                        maxTries: number,
-                       symmetry = Symmetry.central) => {
+                       symmetry: SymmetryFunction = Symmetry.central) => {
         let solvedGames: SudokuGame[];
         solvedGames = Generator.getSolvedGames(maxTries);
         let uniquelySolvableGames: SudokuGame[] = [];
@@ -108,7 +110,7 @@ export class Generator {
     }
 
     //TODO document and comment
-    private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry) {
+    private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: SymmetryFunction) {
         let uniquelySolvableGames: SudokuGame[] = [];
         let oldGame, newGame, otherNewGame: SudokuGame;
         let indices: number[];
@@ -146,21 +148,9 @@ export class Generator {
      * @param {Symmetry} symmetry the given symmetry
      * @returns {number[]} the two indices
      */
-    private static getRandomIndices(symmetry: Symmetry) {
-        let findSymmetryPartner = this.findCentralSymmetryPartner;
-        switch (symmetry) {
-            case Symmetry.central:
-                findSymmetryPartner = this.findCentralSymmetryPartner;
-                break;
-            case Symmetry.diagonal:
-                findSymmetryPartner = this.findDiagonalSymmetryPartner;
-                break;
-            case Symmetry.noSymmetry:
-                findSymmetryPartner = this.findNoSymmetryPartner;
-                break;
-        }
+    private static getRandomIndices(symmetry: SymmetryFunction) {
         let indexToRemove = this.getRandomIndex();
-        let partnerToRemove = findSymmetryPartner(indexToRemove);
+        let partnerToRemove = symmetry(indexToRemove);
         return [indexToRemove, partnerToRemove];
     }
 
