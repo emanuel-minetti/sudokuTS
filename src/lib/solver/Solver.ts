@@ -14,6 +14,11 @@ export class Solver {
     private readonly game: SudokuGame;
     private rules: SolverRule[];
 
+    /**
+     * Gets a {@code Solver} for the given game.
+     *
+     * @param {SudokuGame} game the given game
+     */
     constructor(game: SudokuGame) {
         this.game = game;
         this.rules = [];
@@ -48,6 +53,9 @@ export class Solver {
      * @returns {boolean} whether the game was solved
      */
     solve(): boolean {
+        if (this.rules.length === 0) {
+            throw new Error('No rules added!');
+        }
         let allTried = false;
         let solved = false;
         let ruleApplied: boolean;

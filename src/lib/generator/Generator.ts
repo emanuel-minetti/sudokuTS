@@ -5,6 +5,7 @@ import {RulesHelper} from "../solver/RulesHelper";
 import {Sudoku} from "../game/Sudoku";
 import {Backtracker} from "../backtracker/Backtracker";
 import {ColumnChooser} from "../backtracker/DLXHelpers";
+import {Solver} from "../solver/Solver";
 
 /**
  * Returns the index of a symmetry partner for the given index.
@@ -61,15 +62,22 @@ export class Generator {
                        maxRating: number,
                        maxTries: number,
                        symmetry: SymmetryFunction = Symmetry.central) => {
+        //generate solved games
         let solvedGames: SudokuGame[];
         solvedGames = Generator.getSolvedGames(maxTries);
+        //turn solved games into uniquely solvable games ( = puzzles)
         let uniquelySolvableGames: SudokuGame[] = [];
         solvedGames.forEach(game => {
             uniquelySolvableGames = _.concat(uniquelySolvableGames,
                 Generator.getUniquelySolvableGames(game, maxTries, symmetry));
         });
+        //rate puzzles
+        uniquelySolvableGames.forEach(game => {
+           let solver = new Solver(game);
+           solver.addStandardRules();
+           solver.solve();
+        });
 
-        //TODO rate and chose game
         return uniquelySolvableGames;
     }
 

@@ -43,7 +43,7 @@ try {
         }
     }
     else if (options.generate) {
-        let uniquelySolvableGames = Generator.generate(0, 100, 1, Symmetry.diagonal);
+        let uniquelySolvableGames = Generator.generate(0, 100, 2, Symmetry.central);
         uniquelySolvableGames.forEach((game, index) => {
             console.log("Game: " + index);
             console.log(game.toString());
