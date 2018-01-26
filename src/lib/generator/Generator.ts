@@ -126,7 +126,17 @@ export class Generator {
         return solvedGames;
     }
 
-    //TODO document and comment
+    /**
+     * Returns an array of {@SudokuGame}s that are uniquely solvable given a solved game.
+     *
+     * It uses 'maxTries' tries to find puzzles from a given solved game. If a symmetry is given
+     * it is obseverd.
+     *
+     * @param {SudokuGame} game the solved game to start with
+     * @param {number} maxTries the minimum Number of game to be returned
+     * @param {SymmetryFunction} symmetry optional, the symmetry to observe
+     * @returns {SudokuGame[]} the puzzles
+     */
     private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: SymmetryFunction) {
         let uniquelySolvableGames: SudokuGame[] = [];
         let oldGame, newGame, otherNewGame: SudokuGame;
