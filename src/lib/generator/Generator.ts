@@ -69,6 +69,7 @@ export class Generator {
                 Generator.getUniquelySolvableGames(game, maxTries, symmetry));
         });
 
+        //TODO rate and chose game
         return uniquelySolvableGames;
     }
 
