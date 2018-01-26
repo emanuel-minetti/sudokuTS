@@ -95,19 +95,19 @@ export class ToughRules {
     constructor() {
         this.rules = [];
 
-        let xwRule = new SolverRule('X-Wing Rule: ', 13, ToughRules._xwRuleFn);
+        let xwRule = new SolverRule('X-Wing Rule: ', 50, ToughRules._xwRuleFn);
         this.rules.push(xwRule);
 
-        let scRule = new SolverRule('Simple Coloring Rule: ', 14, ToughRules._scRuleFn);
+        let scRule = new SolverRule('Simple Coloring Rule: ', 55, ToughRules._scRuleFn);
         this.rules.push(scRule);
 
-        let ywRule = new SolverRule('Y-Wing Rule: ', 15, ToughRules._ywRuleFn);
+        let ywRule = new SolverRule('Y-Wing Rule: ', 60, ToughRules._ywRuleFn);
         this.rules.push(ywRule);
 
-        let sfRule = new SolverRule('Swordfish Rule: ', 16, ToughRules._sfRuleFn);
+        let sfRule = new SolverRule('Swordfish Rule: ', 65, ToughRules._sfRuleFn);
         this.rules.push(sfRule);
 
-        let xyzwRule = new SolverRule('XYZ-Wing Rule: ', 17, ToughRules._xyzwRuleFn);
+        let xyzwRule = new SolverRule('XYZ-Wing Rule: ', 70, ToughRules._xyzwRuleFn);
         this.rules.push(xyzwRule);
     }
 }

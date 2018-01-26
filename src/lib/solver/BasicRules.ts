@@ -125,28 +125,28 @@ export class BasicRules {
     constructor() {
         this.rules = [];
 
-        let npRule = new SolverRule('Naked Pair Rule: ', 4, BasicRules._npRuleFn);
+        let npRule = new SolverRule('Naked Pair Rule: ', 10, BasicRules._npRuleFn);
         this.rules.push(npRule);
 
-        let hpRule = new SolverRule('Hidden Pair Rule: ', 5, BasicRules._hpRuleFn);
+        let hpRule = new SolverRule('Hidden Pair Rule: ', 15, BasicRules._hpRuleFn);
         this.rules.push(hpRule);
 
-        let ntRule = new SolverRule('Naked Triple Rule: ', 6, BasicRules._ntRuleFn);
+        let ntRule = new SolverRule('Naked Triple Rule: ', 20, BasicRules._ntRuleFn);
         this.rules.push(ntRule);
 
-        let htRule = new SolverRule('Hidden Triple Rule: ', 7, BasicRules._htRuleFn);
+        let htRule = new SolverRule('Hidden Triple Rule: ', 25, BasicRules._htRuleFn);
         this.rules.push(htRule);
 
-        let nqRule = new SolverRule('Naked Quadruple Rule: ', 8, BasicRules._nqRuleFn);
+        let nqRule = new SolverRule('Naked Quadruple Rule: ', 30, BasicRules._nqRuleFn);
         this.rules.push(nqRule);
 
-        let hqRule = new SolverRule('Hidden Quadruple Rule: ', 9, BasicRules._hqRuleFn);
+        let hqRule = new SolverRule('Hidden Quadruple Rule: ', 35, BasicRules._hqRuleFn);
         this.rules.push(hqRule);
 
-        let ppRule = new SolverRule('Pointing Pairs Rule: ', 10, BasicRules._ppRuleFn);
+        let ppRule = new SolverRule('Pointing Pairs Rule: ', 40, BasicRules._ppRuleFn);
         this.rules.push(ppRule);
 
-        let blrRule = new SolverRule('Box/Line Reduction Rule: ', 11, BasicRules._blrRuleFn);
+        let blrRule = new SolverRule('Box/Line Reduction Rule: ', 45, BasicRules._blrRuleFn);
         this.rules.push(blrRule);
     }
 };

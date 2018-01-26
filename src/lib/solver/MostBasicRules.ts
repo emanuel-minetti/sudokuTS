@@ -106,15 +106,15 @@ export class MostBasicRules {
     constructor() {
         this.rules = [];
 
-        let lsfRule: SolverRule = new SolverRule('Last Square Free Rule: ', 0.5,
+        let lsfRule: SolverRule = new SolverRule('Last Square Free Rule: ', 1,
             MostBasicRules.lsfRuleFn);
         this.rules.push(lsfRule);
 
-        let lslRule = new SolverRule('Last Square Left Rule: ', 1,
+        let lslRule = new SolverRule('Last Square Left Rule: ', 2,
             MostBasicRules.lslRuleFn);
         this.rules.push(lslRule);
 
-        let lcRule = new SolverRule('Last Candidate Rule: ', 2,
+        let lcRule = new SolverRule('Last Candidate Rule: ', 5,
             MostBasicRules.lcRuleFn);
         this.rules.push(lcRule);
     }
