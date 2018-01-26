@@ -77,7 +77,25 @@ export class Generator {
            solver.addStandardRules();
            solver.solve();
         });
-
+        //select best matching
+        // let bestRating = (maxRating - minRating) / 2;
+        // let sortedPuzzles = uniquelySolvableGames.sort(((a, b) => {
+        //     let aRating = !a.getRating();
+        //     let bRating = !b.getRating();
+        //     if (aRating <  bRating) {
+        //         return -1;
+        //     }
+        //     else if (aRating > bRating) {
+        //         return 1;
+        //     }
+        //     else {
+        //         return 0;
+        //     }
+        // }));
+        // let ratings: number = sortedPuzzles.map(puzzle => !puzzle.getRating());
+        // if (minRating < !hratings[ratings.length - 1]) {
+        //
+        // }
         return uniquelySolvableGames;
     }
 

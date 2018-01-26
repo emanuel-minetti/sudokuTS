@@ -40,8 +40,8 @@ describe('A newly created SudokuGame', () => {
         expect(sudokuGame.getSolvedState()).toBeNull();
     });
 
-    it('should not report a rating', () => {
-        expect(sudokuGame.getRating()).toBeUndefined();
+    it('should not report a rating of 0', () => {
+        expect(sudokuGame.getRating()).toBe(0);
     });
 
     it('should not be able to change the state of a game illegally', () => {
@@ -53,8 +53,8 @@ describe('A newly created SudokuGame', () => {
         expect(sudokuGame.getChangesString()).toEqual('');
     });
 
-    it('should report its rating', () => {
-        expect(sudokuGame.getRating()).toBeUndefined();
+    it('should report its rating as 0', () => {
+        expect(sudokuGame.getRating()).toBe(0);
     });
 
     it('should be able to change the state of a game legally', () => {

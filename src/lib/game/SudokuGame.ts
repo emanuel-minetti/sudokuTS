@@ -51,8 +51,8 @@ export class SudokuGame {
         return this.solvedState;
     }
 
-    getRating(): number | undefined {
-        return this.rating;
+    getRating(): number {
+        return (typeof this.rating != 'undefined' ? this.rating : 0);
     }
 
     /**
