@@ -143,7 +143,9 @@ export class Generator {
         let indices: number[];
         let newGameSolvable, otherNewGameSolvable: boolean;
 
+        //for each try
         _.range(maxTries).forEach(() => {
+            //remove pairs of indices as long the sudoku is uniquely solvable
             newGame = game;
             do {
                 oldGame = newGame;
@@ -151,10 +153,13 @@ export class Generator {
                 newGame = this.removeIndicesFromGame(oldGame, indices);
             } while (this.isUniquelySolvable(newGame));
 
+            //try to add one of indices already removed
             newGame = this.removeIndicesFromGame(oldGame, [indices[0]]);
             otherNewGame = this.removeIndicesFromGame(oldGame, [indices[1]]);
             newGameSolvable = this.isUniquelySolvable(newGame);
             otherNewGameSolvable = this.isUniquelySolvable(otherNewGame);
+
+            //add found puzzles to result
             if (newGameSolvable) {
                 uniquelySolvableGames.push(newGame);
             }
