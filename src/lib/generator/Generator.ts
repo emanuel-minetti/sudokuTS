@@ -6,10 +6,22 @@ import {Sudoku} from "../game/Sudoku";
 import {Backtracker} from "../backtracker/Backtracker";
 import {ColumnChooser} from "../backtracker/DLXHelpers";
 
-export enum Symmetry {
-    central = "central",
-    diagonal = "diagonal",
-    noSymmetry = "noSymmetry"
+//TODO implement type 'SymmetryFunction'!
+
+export class Symmetry  {
+
+    static central = (index: number) =>  {
+        return 80 - index;
+    }
+
+    static diagonal = function findDiagonalSymmetryPartner(index: number) {
+        let row = Math.floor(index / 9);
+        let column = index % 9;
+        return column * 9 + row;
+    }
+    noSymmetry = function findNoSymmetryPartner(index: number) {
+        return Generator.getRandomIndex();
+}
 }
 
 export class Generator {
@@ -29,7 +41,7 @@ export class Generator {
     static generate = (minRating: number,
                        maxRating: number,
                        maxTries: number,
-                       symmetry: Symmetry = Symmetry.central) => {
+                       symmetry = Symmetry.central) => {
         let solvedGames: SudokuGame[];
         solvedGames = Generator.getSolvedGames(maxTries);
         let uniquelySolvableGames: SudokuGame[] = [];
@@ -39,6 +51,15 @@ export class Generator {
         });
 
         return uniquelySolvableGames;
+    }
+
+    /**
+     * Gets a random index of a sudoku's square.
+     *
+     * @returns {number} the index
+     */
+    static getRandomIndex() {
+        return Math.floor(Math.random() * 81);
     }
 
     /**
@@ -87,7 +108,7 @@ export class Generator {
     }
 
     //TODO document and comment
-    private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: Symmetry) {
+    private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry) {
         let uniquelySolvableGames: SudokuGame[] = [];
         let oldGame, newGame, otherNewGame: SudokuGame;
         let indices: number[];
@@ -117,29 +138,6 @@ export class Generator {
         });
 
         return uniquelySolvableGames;
-    }
-
-    private static findCentralSymmetryPartner(index: number) {
-        return 80 - index;
-    }
-
-    private static findDiagonalSymmetryPartner(index: number) {
-        let row = Math.floor(index / 9);
-        let column = index % 9;
-        return column * 9 + row;
-    }
-
-    private static findNoSymmetryPartner(index: number) {
-        return this.getRandomIndex();
-    }
-
-    /**
-     * Gets a random index of a sudoku's square.
-     *
-     * @returns {number} the index
-     */
-    private static getRandomIndex() {
-        return Math.floor(Math.random() * 81);
     }
 
     /**
