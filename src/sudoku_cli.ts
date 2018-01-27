@@ -43,9 +43,9 @@ try {
         }
     }
     else if (options.generate) {
-        let game = Generator.generate(0, 100, 2, Symmetry.central);
+        let game = Generator.generate(0, 100, 5, Symmetry.central);
         if (game !== null)
-            console.log(game.getOriginalState().toString());
+            console.log(game.toString());
         }
         else {
         console.log('No game found!')

@@ -92,18 +92,26 @@ export class Generator {
                 return 0;
             }
         }));
-        if (minRating < sortedPuzzles[sortedPuzzles.length - 1].getRating()) {
+        //return null if no puzzle in range is found
+        if (minRating > sortedPuzzles[sortedPuzzles.length - 1].getRating()) {
             return null;
         }
-        if (maxRating > sortedPuzzles[0].getRating()) {
+        if (maxRating < sortedPuzzles[0].getRating()) {
             return null;
         }
+        //find best matching
         let justBelowIndex = sortedPuzzles.reduce((justBelowIndex, puzzle: SudokuGame, puzzleIndex: number): number =>
-                puzzle.getRating() < bestRating ? puzzleIndex : justBelowIndex
+                (puzzle.getRating() < bestRating ? puzzleIndex : justBelowIndex)
             , 0);
-        return (sortedPuzzles[justBelowIndex].getRating() - bestRating) <
-        (sortedPuzzles[justBelowIndex + 1].getRating() - bestRating) ?
-            sortedPuzzles[justBelowIndex] : sortedPuzzles[justBelowIndex + 1];
+        //return puzzle
+        if (justBelowIndex === sortedPuzzles.length - 1) {
+            return sortedPuzzles[justBelowIndex];
+        }
+        else {
+            return (sortedPuzzles[justBelowIndex].getRating() - bestRating <
+            (sortedPuzzles[justBelowIndex + 1].getRating() - bestRating) ?
+                sortedPuzzles[justBelowIndex] : sortedPuzzles[justBelowIndex + 1]);
+        }
     }
 
     /**
