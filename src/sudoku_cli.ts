@@ -46,8 +46,8 @@ try {
         let game = Generator.generate(0, 100, 5, Symmetry.central);
         if (game !== null)
             console.log(game.toString());
-        }
-        else {
+    }
+    else {
         console.log('No game found!')
     }
 }
