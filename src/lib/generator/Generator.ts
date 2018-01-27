@@ -13,17 +13,17 @@ import {Solver} from "../solver/Solver";
  * @param {number} index
  * @returns {number}
  */
-export type SymmetryFunction = (index: number) =>  number;
+export type SymmetryFunction = (index: number) => number;
 
 /**
  * A class exporting {@code SymmetryFunction}s to be used by the {@code Generator}.
  */
-export class Symmetry  {
+export class Symmetry {
 
     /**
      * The central symmetry. {@see SymmetryFunction}
      */
-    static central: SymmetryFunction = (index: number) =>  {
+    static central: SymmetryFunction = (index: number) => {
         return 80 - index;
     }
 
@@ -73,30 +73,37 @@ export class Generator {
         });
         //rate puzzles
         uniquelySolvableGames.forEach(game => {
-           let solver = new Solver(game);
-           solver.addStandardRules();
-           solver.solve();
+            let solver = new Solver(game);
+            solver.addStandardRules();
+            solver.solve();
         });
         //select best matching
-        // let bestRating = (maxRating - minRating) / 2;
-        // let sortedPuzzles = uniquelySolvableGames.sort(((a, b) => {
-        //     let aRating = !a.getRating();
-        //     let bRating = !b.getRating();
-        //     if (aRating <  bRating) {
-        //         return -1;
-        //     }
-        //     else if (aRating > bRating) {
-        //         return 1;
-        //     }
-        //     else {
-        //         return 0;
-        //     }
-        // }));
-        // let ratings: number = sortedPuzzles.map(puzzle => !puzzle.getRating());
-        // if (minRating < !hratings[ratings.length - 1]) {
-        //
-        // }
-        return uniquelySolvableGames;
+        let bestRating = (maxRating - minRating) / 2;
+        let sortedPuzzles = uniquelySolvableGames.sort(((a, b) => {
+            let aRating = a.getRating();
+            let bRating = b.getRating();
+            if (aRating < bRating) {
+                return -1;
+            }
+            else if (aRating > bRating) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        }));
+        if (minRating < sortedPuzzles[sortedPuzzles.length - 1].getRating()) {
+            return null;
+        }
+        if (maxRating > sortedPuzzles[0].getRating()) {
+            return null;
+        }
+        let justBelowIndex = sortedPuzzles.reduce((justBelowIndex, puzzle: SudokuGame, puzzleIndex: number): number =>
+                puzzle.getRating() < bestRating ? puzzleIndex : justBelowIndex
+            , 0);
+        return (sortedPuzzles[justBelowIndex].getRating() - bestRating) <
+        (sortedPuzzles[justBelowIndex + 1].getRating() - bestRating) ?
+            sortedPuzzles[justBelowIndex] : sortedPuzzles[justBelowIndex + 1];
     }
 
     /**

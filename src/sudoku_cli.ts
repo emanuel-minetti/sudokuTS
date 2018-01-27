@@ -43,11 +43,12 @@ try {
         }
     }
     else if (options.generate) {
-        let uniquelySolvableGames = Generator.generate(0, 100, 2, Symmetry.central);
-        uniquelySolvableGames.forEach((game, index) => {
-            console.log("Game: " + index);
-            console.log(game.toString());
-        });
+        let game = Generator.generate(0, 100, 2, Symmetry.central);
+        if (game !== null)
+            console.log(game.getOriginalState().toString());
+        }
+        else {
+        console.log('No game found!')
     }
 }
 catch (e) {
