@@ -141,7 +141,7 @@ export class Sudoku {
     }
 
     /**
-     * Returns a string representation of a sudoku in one line
+     * Returns a string representation of a sudoku in a single line
      *
      * @returns {string} the string representation of the sudoku
      */
