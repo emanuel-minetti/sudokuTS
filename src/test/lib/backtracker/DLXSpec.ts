@@ -16,8 +16,7 @@ describe('A newly created DLX', () => {
                 [false, true, false, false, false, false, true],
                 [false, false, false, true, true, false, true]
             ],
-            resultHandler,
-            ColumnChooser.chooseColumnSmallest
+            resultHandler
         )).toThrowError('At least one row has a wrong length');
     });
 
@@ -121,9 +120,7 @@ describe('A newly created DLX', () => {
                 emptyRow.map((entry, columnIndex) => [3, 5, 9].indexOf(columnIndex) !== -1),
                 emptyRow.map((entry, columnIndex) => [3, 7, 11].indexOf(columnIndex) !== -1)
             ],
-            resultHandler,
-            ColumnChooser.chooseColumnSmallest,
-            true
+            resultHandler
         );
         dlx.solve();
         expect(resultHandler.getResult()).toEqual(
@@ -177,7 +174,7 @@ describe('A newly created DLX', () => {
             ],
             resultHandler,
             ColumnChooser.chooseColumnSmallest,
-            false
+            1
         );
         dlx.solve();
         expect(resultHandler.getResult()).toEqual(

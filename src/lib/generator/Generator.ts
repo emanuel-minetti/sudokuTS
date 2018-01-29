@@ -125,7 +125,7 @@ export class Generator {
             solvedGame = new SudokuGame(sudoku);
             //solve game randomly
             backtracker = new Backtracker(solvedGame);
-            backtracker.solve(false, ColumnChooser.chooseColumnRandom);
+            backtracker.solve(1, ColumnChooser.chooseColumnRandom);
             solvedGames.push(solvedGame);
         });
         return solvedGames;
@@ -218,7 +218,7 @@ export class Generator {
     private static isUniquelySolvable(game: SudokuGame) {
         let gameCopy = new SudokuGame(game.getCurrentState().toSimpleString())
         let backtracker = new Backtracker(gameCopy);
-        backtracker.solve();
+        backtracker.solve(2);
         return backtracker.solvedGames.length === 1;
     }
 }

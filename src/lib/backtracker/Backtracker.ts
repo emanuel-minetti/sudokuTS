@@ -35,14 +35,14 @@ export class Backtracker {
      *      {@code ColumnChooser.chooseColumnSmallest}
      */
     //TODO Third: recall findAll to 'tactics'
-    public solve(findAll: boolean = true, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
+    public solve(findAll: number = 0, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         //get a result handler, a dlx and solve it.
         let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
         let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy, findAll);
         dlx.solve();
         let solutions = sudokuResultHandler.getResult();
         //if findAll is set remember solutions
-        if (findAll) {
+        if (findAll === 0) {
             let newSolvedGame: SudokuGame;
             solutions.forEach(solution => {
                 let currentStateCopy = Sudoku.copy(this.game.getCurrentState());

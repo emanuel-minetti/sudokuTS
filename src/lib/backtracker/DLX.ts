@@ -21,9 +21,11 @@ export class DLX {
     private root: DataObject;
     private currentSolution: DataObject[];
     private columns: ColumnObject[];
-    private findAll: boolean;
+    private findAtMost: number;
+    private found: number;
     private running: boolean;
 
+    //TODO adjust documentation
     /**
      * Constructs the representation of a Dancing Links problem.
      *
@@ -44,8 +46,7 @@ export class DLX {
                 rows: boolean[][],
                 resultHandler: IResultHandler,
                 chooseColumnFn: TChooseColumnFn = ColumnChooser.chooseColumnSmallest,
-                //TODO First: recall to 'find less than' and refactor to be a number
-                findAll: boolean = true) {
+                findAtMost: number = 0) {
         //validate input
         if (!rows.reduce((haveRightLength, currentRow) =>
                 haveRightLength && currentRow.length === names.length, true)) {
@@ -58,7 +59,8 @@ export class DLX {
         this.currentSolution = [];
         this.resultHandler = resultHandler;
         this.chooseColumn = chooseColumnFn;
-        this.findAll = findAll;
+        this.findAtMost = findAtMost;
+        this.found = 0;
         this.running = false;
 
         //create columns
@@ -129,8 +131,15 @@ export class DLX {
     private search(depth: number) {
         if (this.root.right == this.root) {
             this.resultHandler.processResult(this.currentSolution);
-            if (!this.findAll) {
-                this.running = false;
+            // if not finding all solutions ...
+            if (this.findAtMost !== 0 ) {
+                // ... count this one and ...
+                this.found++;
+                // ... if already found enough solutions ...
+                if (this.findAtMost >= this.found) {
+                    // ... stop running
+                    this.running = false;
+                }
             }
             return;
         }
@@ -145,6 +154,7 @@ export class DLX {
                     this.cover(innerColumnToCover.column);
                     innerColumnToCover = innerColumnToCover.right;
                 }
+                // if still running
                 if (this.running) {
                     this.search(depth + 1);
                 }

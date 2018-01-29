@@ -140,7 +140,7 @@ describe('A newly created Backtracker', () => {
     2** 4*7 ***
     `);
         let backtracker = new Backtracker(game);
-        backtracker.solve(false, ColumnChooser.chooseColumnRandom);
+        backtracker.solve(1, ColumnChooser.chooseColumnRandom);
         expect(game.isSolved()).toBe(true);
     });
 
@@ -159,7 +159,7 @@ describe('A newly created Backtracker', () => {
     *** 4*7 ***
     `);
         let backtracker = new Backtracker(game);
-        backtracker.solve(true);
+        backtracker.solve();
         expect(backtracker.solvedGames.length).toBe(18);
     });
 
@@ -178,7 +178,7 @@ describe('A newly created Backtracker', () => {
     *** 4*7 ***
     `);
         let backtracker = new Backtracker(game);
-        backtracker.solve(false);
+        backtracker.solve(1);
         expect(backtracker.solvedGames.length).toBe(0);
         expect(game.isSolved()).toBe(true);
     });
@@ -198,7 +198,7 @@ describe('A newly created Backtracker', () => {
     *** *** ***
     `);
         let backtracker = new Backtracker(game);
-        backtracker.solve(false, ColumnChooser.chooseColumnRandom);
+        backtracker.solve(1, ColumnChooser.chooseColumnRandom);
         expect(backtracker.solvedGames.length).toBe(0);
         expect(game.isSolved()).toBe(true);
     });

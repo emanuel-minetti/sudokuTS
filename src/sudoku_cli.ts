@@ -29,7 +29,7 @@ try {
         else if (options.backtrack) {
             let game = new SudokuGame(sudokuString);
             let backtracker = new Backtracker(game);
-            backtracker.solve(true);
+            backtracker.solve(0);
             if (backtracker.solvedGames.length !== 1) {
                 console.log("!!!!!!!!!!!!!!!!!!!!1MULTIPLE SOLUTIONS FOUND!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 backtracker.solvedGames.forEach((game, index) => {
