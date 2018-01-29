@@ -27,6 +27,7 @@ export class Backtracker {
         this._solvedGames = [];
     }
 
+    //TODO adjust documentation
     /**
      * Solves a sudoku puzzle with backtracking.
      *
@@ -34,15 +35,15 @@ export class Backtracker {
      * @param {TChooseColumnFn} strategy the column choosing strategy. Defaults to
      *      {@code ColumnChooser.chooseColumnSmallest}
      */
-    //TODO Third: recall findAll to 'tactics'
-    public solve(findAll: number = 0, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
+    public solve(tactic: BacktrackerTactics = BacktrackerTactics.findAll,
+                 strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         //get a result handler, a dlx and solve it.
         let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
-        let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy, findAll);
+        let dlx = new DLX(this._columnNames, this._rows, sudokuResultHandler, strategy, tactic);
         dlx.solve();
         let solutions = sudokuResultHandler.getResult();
         //if findAll is set remember solutions
-        if (findAll === 0) {
+        if (tactic === BacktrackerTactics.findAll) {
             let newSolvedGame: SudokuGame;
             solutions.forEach(solution => {
                 let currentStateCopy = Sudoku.copy(this.game.getCurrentState());
@@ -158,7 +159,11 @@ export class Backtracker {
     }
 }
 
-//TODO Second: Introduce enum 'Tactic' with members: findAll, findTwo and findOne
+export enum BacktrackerTactics {
+    findOne = 1,
+    findMoreThanOne = 2,
+    findAll = 0
+}
 
 /**
  * A result handler specific to solutions of a sudoku puzzle.
