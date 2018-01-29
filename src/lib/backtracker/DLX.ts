@@ -44,6 +44,7 @@ export class DLX {
                 rows: boolean[][],
                 resultHandler: IResultHandler,
                 chooseColumnFn: TChooseColumnFn = ColumnChooser.chooseColumnSmallest,
+                //TODO First: recall to 'find less than' and refactor to be a number
                 findAll: boolean = true) {
         //validate input
         if (!rows.reduce((haveRightLength, currentRow) =>

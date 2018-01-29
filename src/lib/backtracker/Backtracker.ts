@@ -34,6 +34,7 @@ export class Backtracker {
      * @param {TChooseColumnFn} strategy the column choosing strategy. Defaults to
      *      {@code ColumnChooser.chooseColumnSmallest}
      */
+    //TODO Third: recall findAll to 'tactics'
     public solve(findAll: boolean = true, strategy: TChooseColumnFn = ColumnChooser.chooseColumnSmallest) {
         //get a result handler, a dlx and solve it.
         let sudokuResultHandler = new SudokuResultHandler(this.game.getCurrentState());
@@ -156,6 +157,8 @@ export class Backtracker {
         return (((value - 1) * 81) + square.getIndex());
     }
 }
+
+//TODO Second: Introduce enum 'Tactic' with members: findAll, findTwo and findOne
 
 /**
  * A result handler specific to solutions of a sudoku puzzle.
