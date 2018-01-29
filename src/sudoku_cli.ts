@@ -43,9 +43,12 @@ try {
         }
     }
     else if (options.generate) {
-        let game = Generator.generate(0, 100, 5, Symmetry.central);
-        if (game !== null)
+        let game = Generator.generate(0, 100, 2, Symmetry.central);
+        if (game !== null) {
+            //TODO BUG!! Should return a game solved by solver not backtracker!
             console.log(game.toString());
+            console.log("Rating: " + game.getRating());
+        }
     }
     else {
         console.log('No game found!')
