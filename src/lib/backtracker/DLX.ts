@@ -25,22 +25,22 @@ export class DLX {
     private found: number;
     private running: boolean;
 
-    //TODO adjust documentation
     /**
      * Constructs the representation of a Dancing Links problem.
      *
-     * Expects the names of the columns and an array of rows, which are
-     * expected to have the same length as the names. It also expects an
-     * result handler, implementing `IResultHandler`, which is responsible
-     * for returning the result in the favored way. Optionally a rule for
-     * choosing the nest column to cover can be given.
+     * Expects the names of the columns and an array of rows, which are expected to have the same length as the names.
+     * It also expects an result handler, implementing `IResultHandler`, which is responsible for returning the result
+     * in a favored way. Optionally a rule for choosing the nest column to cover can be given. Also optional is a
+     * parameter called 'findAtMost'. If at least 'findAtMost' solutions are found, the algorithm is stopped. The
+     * default for this parameter is 0, which is used to find all solutions of the given problem.
      *
      * @param {string[]} names the names of the columns
      * @param {boolean[][]} rows the rows of the problem
      * @param {IResultHandler} resultHandler the result handler
      * @param {TChooseColumnFn} chooseColumnFn the rule for choosing a column.
      *      Optional, defaults to {@code ColumnChooser.chooseColumnSmallest}.
-     * @param {boolean} findAll whether to find all ore one solution. Optional, defauts to {@code true}
+     * @param {number} findAtMost the maximum number of solutions to find. If 0 is given all solutions will be found.
+     *      Optional, defaults to {@code true}
      */
     constructor(names: string[],
                 rows: boolean[][],
