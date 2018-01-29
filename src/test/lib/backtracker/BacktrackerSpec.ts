@@ -1,5 +1,5 @@
 import {SudokuGame} from "../../../lib/game/SudokuGame";
-import {Backtracker} from "../../../lib/backtracker/Backtracker";
+import {Backtracker, BacktrackerTactics} from "../../../lib/backtracker/Backtracker";
 import {ColumnChooser} from "../../../lib/backtracker/DLXHelpers";
 
 describe('A newly created empty Backtracker', () => {
@@ -140,7 +140,7 @@ describe('A newly created Backtracker', () => {
     2** 4*7 ***
     `);
         let backtracker = new Backtracker(game);
-        backtracker.solve(1, ColumnChooser.chooseColumnRandom);
+        backtracker.solve(BacktrackerTactics.findOne, ColumnChooser.chooseColumnRandom);
         expect(game.isSolved()).toBe(true);
     });
 
@@ -178,7 +178,7 @@ describe('A newly created Backtracker', () => {
     *** 4*7 ***
     `);
         let backtracker = new Backtracker(game);
-        backtracker.solve(1);
+        backtracker.solve(BacktrackerTactics.findOne);
         expect(backtracker.solvedGames.length).toBe(0);
         expect(game.isSolved()).toBe(true);
     });
@@ -198,7 +198,7 @@ describe('A newly created Backtracker', () => {
     *** *** ***
     `);
         let backtracker = new Backtracker(game);
-        backtracker.solve(1, ColumnChooser.chooseColumnRandom);
+        backtracker.solve(BacktrackerTactics.findOne, ColumnChooser.chooseColumnRandom);
         expect(backtracker.solvedGames.length).toBe(0);
         expect(game.isSolved()).toBe(true);
     });

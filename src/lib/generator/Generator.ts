@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import {SudokuGame} from "../game/SudokuGame";
 import {RulesHelper} from "../solver/RulesHelper";
 import {Sudoku} from "../game/Sudoku";
-import {Backtracker} from "../backtracker/Backtracker";
+import {Backtracker, BacktrackerTactics} from "../backtracker/Backtracker";
 import {ColumnChooser} from "../backtracker/DLXHelpers";
 import {Solver} from "../solver/Solver";
 
@@ -125,7 +125,7 @@ export class Generator {
             solvedGame = new SudokuGame(sudoku);
             //solve game randomly
             backtracker = new Backtracker(solvedGame);
-            backtracker.solve(1, ColumnChooser.chooseColumnRandom);
+            backtracker.solve(BacktrackerTactics.findOne, ColumnChooser.chooseColumnRandom);
             solvedGames.push(solvedGame);
         });
         return solvedGames;
@@ -218,7 +218,7 @@ export class Generator {
     private static isUniquelySolvable(game: SudokuGame) {
         let gameCopy = new SudokuGame(game.getCurrentState().toSimpleString())
         let backtracker = new Backtracker(gameCopy);
-        backtracker.solve(2);
+        backtracker.solve(BacktrackerTactics.findMoreThanOne);
         return backtracker.solvedGames.length === 1;
     }
 }

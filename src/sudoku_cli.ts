@@ -1,7 +1,7 @@
 import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
-import {Backtracker} from "./lib/backtracker/Backtracker";
+import {Backtracker, BacktrackerTactics} from "./lib/backtracker/Backtracker";
 import {Generator, Symmetry} from "./lib/generator/Generator";
 
 try {
@@ -29,7 +29,7 @@ try {
         else if (options.backtrack) {
             let game = new SudokuGame(sudokuString);
             let backtracker = new Backtracker(game);
-            backtracker.solve(0);
+            backtracker.solve(BacktrackerTactics.findAll);
             if (backtracker.solvedGames.length !== 1) {
                 console.log("!!!!!!!!!!!!!!!!!!!!1MULTIPLE SOLUTIONS FOUND!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 backtracker.solvedGames.forEach((game, index) => {

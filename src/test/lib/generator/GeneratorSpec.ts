@@ -14,7 +14,7 @@ describe('A Generator', () => {
         expect(puzzle).not.toBeNull();
     });
     it('should return null with too high a rating', function () {
-        let puzzle = Generator.generate(200, 201, 1, Symmetry.central);
+        let puzzle = Generator.generate(200, 201, 2, Symmetry.central);
         expect(puzzle).toBeNull();
     });
 });
