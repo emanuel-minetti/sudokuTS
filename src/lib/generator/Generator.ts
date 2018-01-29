@@ -135,7 +135,7 @@ export class Generator {
      * Returns an array of {@SudokuGame}s that are uniquely solvable given a solved game.
      *
      * It uses 'maxTries' tries to find puzzles from a given solved game. If a symmetry is given
-     * it is obseverd.
+     * it is observed.
      *
      * @param {SudokuGame} game the solved game to start with
      * @param {number} maxTries the minimum Number of game to be returned
