@@ -36,7 +36,7 @@ export class Generator {
         });
         //rate puzzles
         //TODO Is this the bug? The game must be newly (unsolved) created?
-        //TODO Shouldn't getUniquelySovableGames() do this?
+        //TODO Shouldn't getUniquelySolvableGames() do this?
         uniquelySolvableGames.forEach(game => {
             let solver = new Solver(game);
             solver.addStandardRules();
@@ -246,7 +246,7 @@ export class Symmetry {
     }
 
     /**
-     * The diagonal symmetry along the main diagonal of a mtrix. {@see SymmetryFunction}
+     * The diagonal symmetry along the main diagonal of a matrix. {@see SymmetryFunction}
      */
     static diagonal = (index: number) => {
         let row = Math.floor(index / 9);
