@@ -35,6 +35,8 @@ export class Generator {
                 Generator.getUniquelySolvableGames(game, maxTries, symmetry));
         });
         //rate puzzles
+        //TODO Is this the bug? The game must be newly (unsolved) created?
+        //TODO Shouldn't getUniquelySovableGames() do this?
         uniquelySolvableGames.forEach(game => {
             let solver = new Solver(game);
             solver.addStandardRules();
