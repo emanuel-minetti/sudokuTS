@@ -1,4 +1,5 @@
-import {Generator, Symmetry} from "../../../lib/generator/Generator";
+import {Generator} from "../../../lib/generator/Generator";
+import {Symmetry} from "../../../lib/generator/Symmetry";
 
 describe('A Generator', () => {
     it('should return a puzzle with central symmetry', function () {
