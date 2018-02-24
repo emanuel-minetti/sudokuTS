@@ -2,7 +2,8 @@ import {SudokuGame} from "./lib/game/SudokuGame";
 import {Solver} from "./lib/solver/Solver";
 import {SudokuCli} from "./lib/cli/SudokuCli";
 import {Backtracker, BacktrackerTactics} from "./lib/backtracker/Backtracker";
-import {Generator, Symmetry} from "./lib/generator/Generator";
+import {Generator} from "./lib/generator/Generator";
+import {Symmetry} from "./lib/generator/Symmetry";
 
 try {
     let options = SudokuCli.parseArguments(process.argv);
@@ -46,8 +47,8 @@ try {
         let game = Generator.generate(0, 100, 2, Symmetry.central);
         if (game !== null) {
             //TODO BUG!! Should return a game solved by solver not backtracker!
-            console.log(game.toString());
-            console.log("Rating: " + game.getRating());
+            // console.log(game.toString());
+            // console.log("Rating: " + game.getRating());
         }
     }
     else {

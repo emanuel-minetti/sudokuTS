@@ -6,6 +6,7 @@ import {Sudoku} from "../game/Sudoku";
 import {Backtracker, BacktrackerTactics} from "../backtracker/Backtracker";
 import {ColumnChooser} from "../backtracker/DLXHelpers";
 import {Solver} from "../solver/Solver";
+import {Symmetry, SymmetryFunction} from "./Symmetry";
 
 export class Generator {
 
@@ -28,12 +29,18 @@ export class Generator {
         //generate solved games
         let solvedGames: SudokuGame[];
         solvedGames = Generator.getSolvedGames(maxTries);
+        //TODO remove debugging
+        console.log("Solved games: ");
+        solvedGames.forEach(solvedGame => console.log(solvedGame.toString()));
         //turn solved games into uniquely solvable games ( = puzzles)
         let uniquelySolvableGames: SudokuGame[] = [];
         solvedGames.forEach(game => {
             uniquelySolvableGames = _.concat(uniquelySolvableGames,
                 Generator.getUniquelySolvableGames(game, maxTries, symmetry));
         });
+        //TODO remove debugging
+        console.log("Puzzles: ");
+        uniquelySolvableGames.forEach(puzzle => console.log(puzzle.toString()));
         //rate puzzles
         //TODO Is this the bug? The game must be newly (unsolved) created?
         //TODO Shouldn't getUniquelySolvableGames() do this?
@@ -145,6 +152,7 @@ export class Generator {
      * @returns {SudokuGame[]} the puzzles
      */
     private static getUniquelySolvableGames(game: SudokuGame, maxTries: number, symmetry: SymmetryFunction) {
+        //TODO Bug is starting here!!!!
         let uniquelySolvableGames: SudokuGame[] = [];
         let oldGame, newGame, otherNewGame: SudokuGame;
         let indices: number[];
@@ -222,42 +230,5 @@ export class Generator {
         let backtracker = new Backtracker(gameCopy);
         backtracker.solve(BacktrackerTactics.findMoreThanOne);
         return backtracker.solvedGames.length === 1;
-    }
-}
-
-/**
- * Returns the index of a symmetry partner for the given index.
- *
- * @param {number} index
- * @returns {number}
- */
-export type SymmetryFunction = (index: number) => number;
-
-/**
- * A class exporting {@code SymmetryFunction}s to be used by the {@code Generator}.
- */
-export class Symmetry {
-
-    /**
-     * The central symmetry. {@see SymmetryFunction}
-     */
-    static central: SymmetryFunction = (index: number) => {
-        return 80 - index;
-    }
-
-    /**
-     * The diagonal symmetry along the main diagonal of a matrix. {@see SymmetryFunction}
-     */
-    static diagonal = (index: number) => {
-        let row = Math.floor(index / 9);
-        let column = index % 9;
-        return column * 9 + row;
-    }
-
-    /**
-     * No symmetry. {@see SymmetryFunction}
-     */
-    static noSymmetry = (index: number) => {
-        return Generator.getRandomIndex();
     }
 }
