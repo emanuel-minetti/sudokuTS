@@ -121,6 +121,7 @@ export class Generator {
             return Math.floor(Math.random() * max);
         }
 
+        //TODO An other bug: It isn't choosing a random permutation. It always returns the range in main diagonal
         //for each game
         _.range(numberOfGames).map(() => {
             sudoku = new Sudoku();
