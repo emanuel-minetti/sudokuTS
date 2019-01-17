@@ -135,7 +135,7 @@ export class Generator {
      * Returns an array of {@SudokuGame}s that are uniquely solvable given a solved game.
      *
      * It uses 'maxTries' tries to find puzzles from a given solved game. If a symmetry is given
-     * it is obseverd.
+     * it is observed.
      *
      * @param {SudokuGame} game the solved game to start with
      * @param {number} maxTries the minimum Number of game to be returned
@@ -244,7 +244,7 @@ export class Symmetry {
     }
 
     /**
-     * The diagonal symmetry along the main diagonal of a mtrix. {@see SymmetryFunction}
+     * The diagonal symmetry along the main diagonal of a matrix. {@see SymmetryFunction}
      */
     static diagonal = (index: number) => {
         let row = Math.floor(index / 9);
